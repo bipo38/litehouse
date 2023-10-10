@@ -1,33 +1,42 @@
 import lighthouse from "lighthouse";
 import * as chromeLauncher from "chrome-launcher";
-
+import configs from "./configs.js";
 
 const args = process.argv
-const url = args[0]
-const config = [0]
-
+const url = args[2]
+const config = args[3].parseInt()
 
 const startChrome = async (callback) => {
-    const flags = {
-      chromeFlags: ["--quiet", "--headless"],
-    };
-    const chrome = await chromeLauncher.launch(flags);
-  
-    const result = await callback(chrome.port);
-  
-    await chrome.kill();
-  
-    return result;
+  const flags = {
+    chromeFlags: ["--quiet", "--headless"],
   };
+  const chrome = await chromeLauncher.launch(flags);
+
+  const result = await callback(chrome.port);
+
+  await chrome.kill();
+
+  return result;
+};
 
 
-  const startLighthouse = async () =>  {
+const startLighthouse = async () => {
 
-    await startChrome(async(port) => {
-    return  await lighthouse(url, { port }, config );
-    })
-    
-  }
+  const result = await startChrome(async (port) => {
+    return await lighthouse(url, { port }, confgs[config]);
+  })
+
+  return result
+}
 
 
-await process.stdout.write(startLighthouse)
+
+
+process.stdout.write(JSON.stringify(await startLighthouse))
+
+
+
+
+
+
+
