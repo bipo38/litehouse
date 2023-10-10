@@ -1,16 +1,16 @@
-import { db } from "./db.ts";
+import { db } from "./db";
 import path from "path";
 import fs from "node:fs";
 
 const route: string = "./migrations/";
 
 const init = () => {
-  db((Db: object) => {
+  db((Db: any) => {
     migrate(Db);
   });
 };
 
-const migrate = (Db: object) => {
+const migrate = (Db: any) => {
   const filenames = fs.readdirSync(route);
 
   filenames.forEach((f: string) => {

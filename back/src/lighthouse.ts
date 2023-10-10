@@ -1,4 +1,4 @@
-import { insertReport } from "./queries.ts";
+import { insertReport } from "./queries";
 
 interface Item {
   lhr: {
