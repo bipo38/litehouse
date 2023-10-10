@@ -1,17 +1,7 @@
-// import { Hono } from 'hono'
-//
-// const app = new Hono()
-//
-// app.get('/', (c) => c.text('Hello Hono!'))
-//
-// export default app
+import { Hono } from "hono";
 
+const app = new Hono();
 
-const res = Bun.spawn(["node", "lighthouse/main.js", "https://www.google.com", "pito"]);
+app.get("/", (c) => c.text("Hello Hono!"));
 
-const text = await new Response(res.stdout).text();
-
-console.log(text);
-// const json = JSON.parse(text);
-
-// console.log(json);
+export default app;

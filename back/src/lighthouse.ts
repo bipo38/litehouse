@@ -1,3 +1,5 @@
+import { insertReport } from "./queries.ts";
+
 interface Item {
   lhr: {
     configSettings: {
@@ -73,7 +75,7 @@ const startAnalysis = async (): Promise<void> => {
     result.results.push(parsedItem);
   }
 
-  await Bun.write("test.json", JSON.stringify(result.results));
+  insertReport(result);
 };
 
 startAnalysis();
