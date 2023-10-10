@@ -1,5 +1,3 @@
-// import { insertReport } from "./db";
-
 interface Item {
   lhr: {
     configSettings: {
@@ -24,11 +22,9 @@ interface Item {
 
 const { links } = await Bun.file("./links.json").json();
 
-
-
 const parsedLhrFile = (
   items: Item[],
-  link: { name: string; url: string },
+  link: { name: string; url: string }
 ): object => {
   const metrics: Record<string, Record<string, number>> = {};
 
@@ -58,27 +54,26 @@ const startAnalysis = async (): Promise<void> => {
     const items: Array<any> = [];
 
     for (let i = 0; i != 2; i++) {
-
-      const cmd = Bun.spawn(["node", "lighthouse/main.js", `${link}`, `${i.toString()}`])
+      const cmd = Bun.spawn([
+        "node",
+        "lighthouse/main.js",
+        `${link.url}`,
+        `${i.toString()}`,
+      ]);
 
       const text = await new Response(cmd.stdout).text();
 
-      const parsed = JSON.parse(text)
+      const parsed = JSON.parse(text);
 
-      items.push(parsed)
-
+      items.push(parsed);
     }
-
 
     const parsedItem: object = parsedLhrFile(items, link);
 
     result.results.push(parsedItem);
   }
 
-  console.log(result);
-
-
-  // insertReport(result);
+  await Bun.write("test.json", JSON.stringify(result.results));
 };
 
-await startAnalysis();
+startAnalysis();

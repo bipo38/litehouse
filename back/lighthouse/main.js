@@ -4,7 +4,8 @@ import configs from "./configs.js";
 
 const args = process.argv
 const url = args[2]
-const config = args[3].parseInt()
+const config = args[3]
+
 
 const startChrome = async (callback) => {
   const flags = {
@@ -23,7 +24,7 @@ const startChrome = async (callback) => {
 const startLighthouse = async () => {
 
   const result = await startChrome(async (port) => {
-    return await lighthouse(url, { port }, confgs[config]);
+    return await lighthouse(url, { port }, configs[config]);
   })
 
   return result
@@ -32,7 +33,7 @@ const startLighthouse = async () => {
 
 
 
-process.stdout.write(JSON.stringify(await startLighthouse))
+process.stdout.write(JSON.stringify(await startLighthouse()))
 
 
 
