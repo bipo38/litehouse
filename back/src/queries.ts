@@ -1,16 +1,18 @@
+import { log } from "console";
 import { db } from "./db";
 
-export const getReports = () => {
+export const selectReports = () => {
   return db((Db: any) => {
     const query = Db.query("SELECT * FROM reports;");
     return query.all();
   });
 };
 
-export const getReport = (id: string) => {
+export const selectReport = (id: string) => {
   return db((Db: any) => {
-    const query = Db.query("SELECT * FROM reports WHERE id =?");
-    return query.all();
+    const query = Db.query("SELECT * FROM reports WHERE id = ?");
+
+    return query.get(id);
   });
 };
 
