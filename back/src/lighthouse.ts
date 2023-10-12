@@ -1,50 +1,6 @@
 import { insertReport } from "./queries";
 
-interface Item {
-  lhr: {
-    configSettings: {
-      formFactor: string;
-    };
-    categories: {
-      performance: {
-        score: number;
-      };
-      seo: {
-        score: number;
-      };
-      accessibility: {
-        score: number;
-      };
-      "best-practices": {
-        score: number;
-      };
-    };
-  };
-}
-
 const { links } = await Bun.file("./links.json").json();
-
-const parsedLhrFile = (
-  items: Item[],
-  link: { name: string; url: string }
-): object => {
-  const metrics: Record<string, Record<string, number>> = {};
-
-  items.forEach((item: Item) => {
-    metrics[item.lhr.configSettings.formFactor] = {
-      seo: item.lhr.categories.seo?.score * 100,
-      performance: item.lhr.categories.performance?.score * 100,
-      accessibility: item.lhr.categories.accessibility?.score * 100,
-      bestPractices: item.lhr.categories["best-practices"]?.score * 100,
-    };
-  });
-
-  return {
-    name: link.name,
-    url: link.url,
-    metrics,
-  };
-};
 
 const startAnalysis = async (): Promise<void> => {
   let result: Analysis = {
@@ -76,6 +32,28 @@ const startAnalysis = async (): Promise<void> => {
   }
 
   insertReport(result);
+};
+
+const parsedLhrFile = (
+  items: Item[],
+  link: { name: string; url: string }
+): object => {
+  const metrics: Record<string, Record<string, number>> = {};
+
+  items.forEach((item: Item) => {
+    metrics[item.lhr.configSettings.formFactor] = {
+      seo: item.lhr.categories.seo?.score * 100,
+      performance: item.lhr.categories.performance?.score * 100,
+      accessibility: item.lhr.categories.accessibility?.score * 100,
+      bestPractices: item.lhr.categories["best-practices"]?.score * 100,
+    };
+  });
+
+  return {
+    name: link.name,
+    url: link.url,
+    metrics,
+  };
 };
 
 startAnalysis();
