@@ -8,6 +8,7 @@ app.use(
     'reports/*',
     jwt({
         secret: Bun.env.JWT_SECRET!,
+        cookie: 'jwt',
     })
 )
 

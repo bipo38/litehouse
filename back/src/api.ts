@@ -2,29 +2,21 @@ import { jwt } from 'hono/jwt'
 import { selectReport, selectReports } from './queries'
 
 import { Hono } from 'hono'
-import { createUser } from './controllers/user'
+import { createUser, signInUser } from './controllers/user'
 import { Answer } from './types/answer'
+import { setCookie } from 'hono/cookie'
 
 const api = new Hono()
 
 //Auth
-// api.post('/login', async (c: any) => {
-//     const { name } = await c.req.json()
+api.post('/login', async (c: any) => {
+    const result: Answer = await signInUser(c)
 
-//     return c.text(`${name}`)
-// })
+    return c.json({ message: result.message }, result.status)
+})
 
 api.post('/signup', async (c: any) => {
-    const user = await c.req.json()
-
-    const result: Answer = await createUser(user)
-
-    if (result.jwt) {
-        return c.json(
-            { message: result.message, jwt: result.jwt },
-            result.status
-        )
-    }
+    const result: Answer = await createUser(c)
 
     return c.json({ message: result.message }, result.status)
 })

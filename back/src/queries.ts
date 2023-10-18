@@ -4,6 +4,8 @@ import type { SignUpUser } from './controllers/user'
 import type { Analysis } from './lighthouse'
 import { currentDate } from './utils'
 
+// Reports
+
 export const selectReports = () => {
     return db((Db: any) => {
         const query = Db.query('SELECT * FROM reports;')
@@ -30,15 +32,13 @@ export const insertReport = (report: Analysis) => {
 
 //User
 
-export const insertUser = (user: SignUpUser) => {
-    let result = ''
-
-    db((Db: any) => {
+export const insertUser = (user: SignUpUser): void => {
+    return db((Db: any) => {
         const query = Db.query(
             'INSERT INTO users(name,password,email,created_at) values (?,?,?,?)'
         )
 
-        result = query.get(
+        query.get(
             user.name,
             user.password,
             user.email,
@@ -46,8 +46,11 @@ export const insertUser = (user: SignUpUser) => {
             currentDate()
         )
     })
+}
 
-    console.log(result)
-
-    return result
+export const selectUser = (email: string) => {
+    return db((Db: any) => {
+        const query = Db.query('SELECT * FROM users WHERE email = ? ')
+        return query.get(email)
+    })
 }

@@ -1,11 +1,11 @@
-import { insertUser } from '../queries'
-import { Answer } from '../types/answer'
-import { answerBuild, passwordEncrypt } from '../utils'
-import { z } from 'zod'
+import { setCookie } from 'hono/cookie'
+import { insertUser, selectUser } from '../queries'
+import { reponseBuild, passwordEncrypt } from '../utils'
 import { UserRegister } from '../validators/schemas'
 import { sign } from 'hono/jwt'
 
 export interface SignUpUser {
+    id: number
     name: string
     email: string
     password: string
@@ -14,29 +14,57 @@ export interface SignUpUser {
 }
 
 export interface User {
+    id: number
     email: string
     password: string
 }
 
-export const createUser = async (user: SignUpUser): Promise<any> => {
-    const parserUser = UserRegister.safeParse(user)
+export const createUser = async (c: any): Promise<any> => {
+    const req = await c.req.json()
+
+    const parserUser = UserRegister.safeParse(req)
 
     if (!parserUser.success) {
         console.error(parserUser.error)
 
-        return answerBuild('Content type invalid', 400)
+        return reponseBuild('Content type invalid', 400)
     }
 
-    user.password = await passwordEncrypt(user.password)
+    req.password = await passwordEncrypt(req.password)
 
     try {
-        const result = insertUser(user)
-        console.log(result, 'user')
+        insertUser(req)
 
-        const token = await sign('tu abuela', Bun.env.JWT_SECRET!)
-
-        return answerBuild('User created succesfully', 201, token)
+        return reponseBuild('User created succesfully', 201)
     } catch {
-        return answerBuild('Email alredy registered', 200)
+        return reponseBuild('Email alredy registered', 200)
     }
+}
+
+export const signInUser = async (c: any) => {
+    const req = await c.req.json()
+
+    const user = selectUser(req.email)
+
+    const invalid = reponseBuild('Invalid Credentials', 401)
+
+    if (!user) {
+        return invalid
+    }
+
+    const verify = await Bun.password.verify(req.password, user.password)
+
+    if (!verify) {
+        return invalid
+    }
+
+    const token = await createToken(user.id)
+
+    setCookie(c, 'jwt', token)
+
+    return reponseBuild('Succesful', 200)
+}
+
+const createToken = async (id: number) => {
+    return await sign(id, Bun.env.JWT_TOKEN!)
 }

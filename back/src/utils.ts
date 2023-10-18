@@ -1,4 +1,3 @@
-import { sign } from 'hono/jwt'
 import { Answer } from './types/answer'
 
 export const currentDate = () => {
@@ -9,14 +8,6 @@ export const passwordEncrypt = async (pass: string): Promise<any> => {
     return await Bun.password.hash(pass)
 }
 
-export const answerBuild = (
-    message: any,
-    status: number,
-    jwt?: string
-): Answer => {
-    if (jwt) {
-        return { message: message, status: status, jwt: jwt }
-    }
-
+export const reponseBuild = (message: any, status: number): Answer => {
     return { message: message, status: status }
 }
