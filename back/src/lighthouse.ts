@@ -1,7 +1,7 @@
 import { insertReport } from './queries'
 import { currentDate } from './utils'
 
-export interface Analysis {
+export interface Analysys {
     created_at: string
     results: Array<object>
 }
@@ -30,8 +30,8 @@ interface Item {
 
 const { links } = await Bun.file('./links.json').json()
 
-const startAnalysis = async (): Promise<void> => {
-    let result: Analysis = {
+export const startAnalysys = async (): Promise<void> => {
+    let result: Analysys = {
         results: [],
         created_at: currentDate(),
     }
@@ -83,5 +83,3 @@ const parsedLhrFile = (
         metrics,
     }
 }
-
-startAnalysis()

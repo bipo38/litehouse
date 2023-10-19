@@ -1,7 +1,7 @@
 import { db } from './db'
 
 import type { RegisterUser } from './controllers/user'
-import type { Analysis } from './lighthouse'
+import type { Analysys } from './lighthouse'
 import { currentDate } from './utils'
 
 export const selectReports = () => {
@@ -19,7 +19,7 @@ export const selectReport = (id: string) => {
     })
 }
 
-export const insertReport = (report: Analysis) => {
+export const insertReport = (report: Analysys) => {
     db((Db: any) => {
         const query = Db.query(
             'INSERT INTO reports(created_at, result ,average , user_id) values (? ,? ,? , ?)'

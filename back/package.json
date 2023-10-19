@@ -2,7 +2,8 @@
     "type": "module",
     "scripts": {
         "dev": "bun run --hot src/index.ts",
-        "light": "bun run src/lighthouse.ts",
+        "light": "bun run src/scripts/lighthouse.ts",
+        "migrate" :"bun run src/scripts/migrate.ts",
         "test": "bun run src/test.ts"
     },
     "dependencies": {
