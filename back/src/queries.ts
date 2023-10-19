@@ -4,8 +4,6 @@ import type { RegisterUser } from './controllers/user'
 import type { Analysis } from './lighthouse'
 import { currentDate } from './utils'
 
-// Reports
-
 export const selectReports = () => {
     return db((Db: any) => {
         const query = Db.query('SELECT * FROM reports;')
@@ -29,8 +27,6 @@ export const insertReport = (report: Analysis) => {
         query.run(report.created_at, JSON.stringify(report.results), '90', 1)
     })
 }
-
-//User
 
 export const insertUser = (user: any): void => {
     return db((Db: any) => {

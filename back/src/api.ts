@@ -8,7 +8,6 @@ import { setCookie } from 'hono/cookie'
 
 const api = new Hono()
 
-//Auth
 api.post('/login', async (c: any) => {
     const result: Answer = await loginUser(c)
 
@@ -21,7 +20,6 @@ api.post('/register', async (c: any) => {
     return c.json({ message: result.message }, result.status)
 })
 
-//Routes
 api.get('/reports', async (c: any): Promise<Response> => {
     const reports = await selectReports()
 
@@ -41,7 +39,6 @@ api.get('/reports/:id', async (c: any): Promise<Response> => {
     return c.json({ report: report, ok: true })
 })
 
-//Handling
 api.notFound((c: any) => {
     return c.text('Something not exist', 404)
 })
