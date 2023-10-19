@@ -1,15 +1,15 @@
 {
-  "type": "module",
-  "scripts": {
-    "dev": "bun run  src/index.ts",
-    "light": "bun run  src/lighthouse.ts",
-    "migrate": "bun run src/migrations.ts"
-  },
-  "dependencies": {
-    "hono": "^3.7.2"
-  },
-  "devDependencies": {
-    "bun-types": "^0.6.2"
-  }
+    "type": "module",
+    "scripts": {
+        "dev": "bun run --hot src/index.ts",
+        "light": "bun run src/lighthouse.ts",
+        "test": "bun run src/test.ts"
+    },
+    "dependencies": {
+        "hono": "^3.7.2",
+        "zod": "^3.22.4"
+    },
+    "devDependencies": {
+        "bun-types": "^0.6.2"
+    }
 }
-
