@@ -1,11 +1,12 @@
-import { Database } from "bun:sqlite";
+import { Database } from 'bun:sqlite'
 
 export const db = (callback: Function) => {
-  const db = new Database(Bun.env.DB_NAME, { create: true });
+  
+    const db = new Database(Bun.env.DB_NAME)
 
-  const result = callback(db);
+    const result = callback(db)
 
-  db.close();
+    db.close()
 
-  return result;
-};
+    return result
+}

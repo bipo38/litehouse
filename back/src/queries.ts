@@ -1,6 +1,6 @@
 import { db } from './db'
 
-import type { SignUpUser, User } from './controllers/user'
+import type { RegisterUser } from './controllers/user'
 import type { Analysis } from './lighthouse'
 import { currentDate } from './utils'
 
@@ -48,7 +48,7 @@ export const insertUser = (user: any): void => {
     })
 }
 
-export const selectUser = (email: string): SignUpUser => {
+export const selectUser = (email: string): RegisterUser => {
     return db((Db: any) => {
         const query = Db.query('SELECT * FROM users WHERE email = ? ')
         return query.get(email)

@@ -2,7 +2,7 @@ import { jwt } from 'hono/jwt'
 import { selectReport, selectReports } from './queries'
 
 import { Hono } from 'hono'
-import { createUser, signInUser } from './controllers/user'
+import { createUser, loginUser } from './controllers/user'
 import { Answer } from './types/answer'
 import { setCookie } from 'hono/cookie'
 
@@ -10,12 +10,12 @@ const api = new Hono()
 
 //Auth
 api.post('/login', async (c: any) => {
-    const result: Answer = await signInUser(c)
+    const result: Answer = await loginUser(c)
 
     return c.json({ message: result.message }, result.status)
 })
 
-api.post('/signup', async (c: any) => {
+api.post('/register', async (c: any) => {
     const result: Answer = await createUser(c)
 
     return c.json({ message: result.message }, result.status)

@@ -4,7 +4,7 @@ import { reponseBuild, passwordEncrypt } from '../utils'
 import { UserRegister } from '../validators/schemas'
 import { sign } from 'hono/jwt'
 
-export interface SignUpUser {
+export interface RegisterUser {
     id: number
     name: string
     email: string
@@ -41,7 +41,7 @@ export const createUser = async (c: any): Promise<any> => {
     }
 }
 
-export const signInUser = async (c: any) => {
+export const loginUser = async (c: any) => {
     const req = await c.req.json()
 
     const user = selectUser(req.email)

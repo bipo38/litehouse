@@ -3,7 +3,6 @@
     "scripts": {
         "dev": "bun run --hot src/index.ts",
         "light": "bun run src/lighthouse.ts",
-        "migrate": "bun run src/migrations.ts",
         "test": "bun run src/test.ts"
     },
     "dependencies": {
