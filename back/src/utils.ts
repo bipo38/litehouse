@@ -11,3 +11,7 @@ export const passwordEncrypt = async (pass: string): Promise<any> => {
 export const reponseBuild = (message: any, status: number): Answer => {
     return { message: message, status: status }
 }
+
+export const runMigrations = () => {
+    Bun.spawn(['bun', 'run', 'migrate'])
+}

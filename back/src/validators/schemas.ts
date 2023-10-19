@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const UserRegister = z
     .object({
-        name: z.string().min(1, { message: 'Invalid username' }),
+        name: z.string().min(1, { message: 'Invalid username' }).trim(),
         email: z
             .string()
             .min(1, { message: 'This field has to be filled.' })

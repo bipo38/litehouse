@@ -2,7 +2,7 @@ import { Hono } from 'hono'
 import { api } from './api'
 import { jwt, sign } from 'hono/jwt'
 
-const app = new Hono()
+export const app = new Hono()
 
 app.use(
     'reports/*',
