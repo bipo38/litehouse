@@ -1,32 +1,6 @@
 import { insertReport } from './queries'
 import { currentDate } from './utils'
-
-export interface Analysys {
-    created_at: string
-    results: Array<object>
-}
-
-interface Item {
-    lhr: {
-        configSettings: {
-            formFactor: string
-        }
-        categories: {
-            performance: {
-                score: number
-            }
-            seo: {
-                score: number
-            }
-            accessibility: {
-                score: number
-            }
-            'best-practices': {
-                score: number
-            }
-        }
-    }
-}
+import { Item, Analysys } from './models/lighthouse'
 
 const { links } = await Bun.file('./links.json').json()
 

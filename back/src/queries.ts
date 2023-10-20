@@ -1,7 +1,7 @@
 import { db } from './db'
 
-import type { RegisterUser } from './controllers/user'
-import type { Analysys } from './lighthouse'
+import type { RegisterUser } from './models/user'
+import type { Analysys } from './models/lighthouse'
 import { currentDate } from './utils'
 
 export const selectReports = () => {
