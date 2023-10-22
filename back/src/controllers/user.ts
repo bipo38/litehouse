@@ -3,8 +3,9 @@ import { insertUser, selectUser } from '../queries'
 import { reponseBuild, passwordEncrypt } from '../utils'
 import { UserRegister } from '../validators/schemas'
 import { sign } from 'hono/jwt'
+import { Answer } from '../types/answer'
 
-export const createUser = async (c: any): Promise<any> => {
+export const createUser = async (c: any): Promise<Answer> => {
     const req = await c.req.json()
 
     const parserUser = UserRegister.safeParse(req)
@@ -26,7 +27,7 @@ export const createUser = async (c: any): Promise<any> => {
     }
 }
 
-export const loginUser = async (c: any) => {
+export const loginUser = async (c: any): Promise<Answer> => {
     const req = await c.req.json()
 
     const user = selectUser(req.email)

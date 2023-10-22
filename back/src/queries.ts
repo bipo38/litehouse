@@ -4,18 +4,20 @@ import type { RegisterUser } from './models/user'
 import type { Analysys } from './models/lighthouse'
 import { currentDate } from './utils'
 
-export const selectReports = () => {
+export const selectReports = (id: any) => {
     return db((Db: any) => {
-        const query = Db.query('SELECT * FROM reports;')
-        return query.all()
+        const query = Db.query('SELECT * FROM reports WHERE user_id  =  ?;')
+        return query.all(id)
     })
 }
 
-export const selectReport = (id: string) => {
+export const selectReport = (user: any, id: any) => {
     return db((Db: any) => {
-        const query = Db.query('SELECT * FROM reports WHERE id = ?')
+        const query = Db.query(
+            'SELECT * FROM reports WHERE user_id = ? AND id = '
+        )
 
-        return query.get(id)
+        return query.get(user, id)
     })
 }
 

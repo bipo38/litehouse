@@ -1,42 +1,32 @@
-import { jwt } from 'hono/jwt'
-import { selectReport, selectReports } from './queries'
-
 import { Hono } from 'hono'
+import { selectReport, selectReports } from './queries'
 import { createUser, loginUser } from './controllers/user'
-import { Answer } from './types/answer'
-import { setCookie } from 'hono/cookie'
+import { getReport, listReports } from './controllers/report'
 
 const api = new Hono()
 
 api.post('/login', async (c: any) => {
-    const result: Answer = await loginUser(c)
+    const result = await loginUser(c)
 
-    return c.json({ message: result.message }, result.status)
+    return c.json({ content: result.content }, result.status)
 })
 
 api.post('/register', async (c: any) => {
-    const result: Answer = await createUser(c)
+    const result = await createUser(c)
 
-    return c.json({ message: result.message }, result.status)
+    return c.json({ content: result.content }, result.status)
 })
 
 api.get('/reports', async (c: any): Promise<Response> => {
-    const reports = await selectReports()
+    const result = listReports(c)
 
-    if (!reports) {
-        return c.json({ error: 'Not Found', ok: false }, 404)
-    }
-    return c.json({ reports, ok: true }, 200)
+    return c.json({ content: result.content }, result.status)
 })
 
 api.get('/reports/:id', async (c: any): Promise<Response> => {
-    const { id } = c.req.param()
+    const report = getReport(c)
 
-    const report = await selectReport(id)
-    if (!report) {
-        return c.json({ error: 'Not Found', ok: false }, 404)
-    }
-    return c.json({ report: report, ok: true })
+    return c.json({ report: report.content }, report.status)
 })
 
 api.notFound((c: any) => {

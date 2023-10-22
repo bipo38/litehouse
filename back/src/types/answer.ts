@@ -1,4 +1,4 @@
 export interface Answer {
-    message: string
+    content: any
     status: number
 }
