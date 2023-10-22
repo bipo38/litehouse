@@ -3,6 +3,6 @@ CREATE TABLE IF NOT EXISTS urls(
     urls TEXT NOT NULL,
     user_id INTEGER NOT NULL UNIQUE,
     cron VARCHAR(10) NOT NULL,
-    FOREIGN KEY(user_id) REFERENCES users(id),
-    created_at DATETIME NOT NULL
+    created_at DATETIME NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES users(id)
 );

@@ -4,4 +4,4 @@ CREATE TABLE IF NOT EXISTS users(
        password varchar(30) NOT NULL,
        email nvarchar(255) NOT NULL UNIQUE,
        created_at DATETIME NOT NULL
-)
+);
