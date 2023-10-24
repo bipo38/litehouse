@@ -14,10 +14,11 @@ export const getReport = (c: any): Answer => {
     const payload = c.get('jwtPayload')
     const { id } = c.req.param()
 
-    console.log(payload)
-
     const report = selectReport(payload, id)
-    console.log(report)
+
+    if (!report) {
+        return reponseBuild('Report not exist', 404)
+    }
 
     return reponseBuild(report, 200)
 }
