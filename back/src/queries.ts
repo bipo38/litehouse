@@ -21,24 +21,25 @@ export const selectReport = (userId: number, reportId: number): Report => {
     })
 }
 
-export const insertReport = (analsys: Analysis, userId: number): void => {
+export const insertReport = (analysis: Analysis, userId: number): void => {
     const reportId = countUserReports(userId) + 1
 
     db((Db: any) => {
         const query = Db.query(
-            'INSERT INTO reports(report_id,analsys,user_id) values (? ,? ,?):'
+            'INSERT INTO reports(report_id,analysis,user_id) values (? ,? ,?);'
         )
-        query.run(reportId, analsys, userId)
+
+        query.run(reportId, JSON.stringify(analysis), userId)
     })
 }
 
 export const insertUser = (user: UserDefault): void => {
     return db((Db: any) => {
         const query = Db.query(
-            'INSERT INTO users(name,password,email,) values (?,?,?);'
+            'INSERT INTO users(name,password,email) values (?,?,?);'
         )
 
-        query.get(user.name, user.password, user.email)
+        query.run(user.name, user.password, user.email)
     })
 }
 
@@ -64,8 +65,8 @@ export const deleteFromDb = (
 const countUserReports = (userId: number): number => {
     return db((Db: any) => {
         const query = Db.query(
-            'SELECT COUNT(*) FROM reports WHERE user_id  =  ?;'
+            'SELECT COUNT(user_id) FROM reports WHERE user_id = ?;'
         )
-        return query.all(userId)
+        return parseInt(query.get()['COUNT(user_id)'])
     })
 }

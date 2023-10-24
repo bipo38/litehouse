@@ -1,148 +1,119 @@
-// import { afterAll, beforeAll, describe, expect, test } from 'bun:test'
-// import { init as initMigrations } from '../../migrations'
-// import { unlinkSync } from 'node:fs'
-// import { passwordEncrypt } from '../../utils'
-// import {
-//     deleteFromDb,
-//     insertReport,
-//     insertUser,
-//     selectReport,
-//     selectUser,
-// } from '../../queries'
-// import { app } from '../../index'
+import { afterAll, beforeAll, describe, expect, test } from 'bun:test'
+import { init as initMigrations } from '../../migrations'
+import { unlinkSync } from 'node:fs'
+import { passwordEncrypt } from '../../utils'
+import {
+    deleteFromDb,
+    insertReport,
+    insertUser,
+    selectReport,
+    selectUser,
+} from '../../queries'
+import { app } from '../../index'
 
-// import { sign } from 'hono/jwt'
-// import { mockAnalysis } from '../../mokcs/Analysis'
+import { sign } from 'hono/jwt'
+import { mockAnalysis } from '../../mocks/Analysis'
+import { mockUserDefault } from '../../mocks/User'
 
-// beforeAll(() => {
-//     process.env.DB_NAME = 'test.db'
+beforeAll(() => {
+    process.env.DB_NAME = 'test.db'
 
-//     initMigrations()
-// })
+    initMigrations()
+})
 
-// afterAll(() => {
-//     unlinkSync(Bun.env.DB_NAME!)
-// })
+afterAll(() => {
+    unlinkSync(Bun.env.DB_NAME!)
+})
 
-// describe('List Posts Controller', () => {
-//     test('List Reports: GET /reports', async () => {
-//         const password = 'hola'
-//         const passwordHash = await passwordEncrypt(password)
+describe('List Posts Controller', () => {
+    test('List Reports: GET /reports', async () => {
+        insertUser(mockUserDefault)
 
-//         const user = {
-//             name: 'Steve',
-//             email: 'steve@gmail.com',
-//             password: passwordHash,
-//             password_confirm: passwordHash,
-//         }
+        const getUser = selectUser(mockUserDefault.email)
 
-//         insertUser(user)
+        const token = 'jwt=' + (await sign(getUser.id, Bun.env.JWT_SECRET!))
 
-//         const getUser = selectUser(user.email)
+        insertReport(mockAnalysis, 1)
 
-//         const token = 'jwt=' + (await sign(getUser.id, Bun.env.JWT_SECRET!))
+        const req = new Request('http://localhost/reports', {
+            method: 'GET',
+            credentials: 'include',
 
-//         insertReport(mockAnalysis, 2)
+            headers: {
+                'Content-Type': 'application/json',
+                Cookie: token,
+            },
+        })
 
-//         const req = new Request('http://localhost/reports', {
-//             method: 'GET',
-//             credentials: 'include',
+        const res = await app.request(req)
 
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 Cookie: token,
-//             },
-//         })
+        expect(res.status).toBe(200)
 
-//         const res = await app.request(req)
+        deleteFromDb('users', 'email', mockUserDefault.email)
+        deleteFromDb('reports', 'report_id', '2')
+    })
 
-//         expect(res.status).toBe(200)
+    test('Unauthorized: GET /reports', async () => {
+        const res = await app.request('reports')
+        expect(res.status).toBe(401)
+    })
+})
 
-//         deleteFromDb('users', 'email', user.email)
-//         deleteFromDb('reports', 'created_at', '2021-09-09')
-//     })
+describe('Get post Controller', () => {
+    test('Get report: GET /reports/:id', async () => {
+        insertUser(mockUserDefault)
 
-//     test('Unauthorized: GET /reports', async () => {
-//         const res = await app.request('reports')
-//         expect(res.status).toBe(401)
-//     })
-// })
+        const getUser = selectUser(mockUserDefault.email)
 
-// describe('Get post Controller', () => {
-//     test('Get report: GET /reports/:id', async () => {
-//         const password = 'hola'
-//         const passwordHash = await passwordEncrypt(password)
+        const token = 'jwt=' + (await sign(getUser.id, Bun.env.JWT_SECRET!))
 
-//         const user = {
-//             name: 'Steve',
-//             email: 'steve@gmail.com',
-//             password: passwordHash,
-//             password_confirm: passwordHash,
-//         }
+        insertReport(mockAnalysis, 2)
 
-//         insertUser(user)
+        const req = new Request('http://localhost/reports/1', {
+            method: 'GET',
+            credentials: 'include',
 
-//         const getUser = selectUser(user.email)
+            headers: {
+                'Content-Type': 'application/json',
+                Cookie: token,
+            },
+        })
 
-//         const token = 'jwt=' + (await sign(getUser.id, Bun.env.JWT_SECRET!))
+        const res = await app.request(req)
 
-//         insertReport(mockAnalysis, 2)
+        expect(res.status).toBe(200)
 
-//         const req = new Request('http://localhost/reports/1', {
-//             method: 'GET',
-//             credentials: 'include',
+        deleteFromDb('users', 'email', mockUserDefault.email)
+    })
 
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 Cookie: token,
-//             },
-//         })
+    test('Not exist report: GET /reports/:id', async () => {
+        insertUser(mockUserDefault)
 
-//         const res = await app.request(req)
+        const getUser = selectUser(mockUserDefault.email)
 
-//         expect(res.status).toBe(200)
+        const token = 'jwt=' + (await sign(getUser.id, Bun.env.JWT_SECRET!))
 
-//         deleteFromDb('users', 'email', user.email)
-//     })
+        insertReport(mockAnalysis, 2)
 
-//     test('Not exist report: GET /reports/:id', async () => {
-//         const password = 'hola'
-//         const passwordHash = await passwordEncrypt(password)
+        const req = new Request('http://localhost/reports/5', {
+            method: 'GET',
+            credentials: 'include',
 
-//         const user = {
-//             name: 'Steve',
-//             email: 'steve@gmail.com',
-//             password: passwordHash,
-//             password_confirm: passwordHash,
-//         }
+            headers: {
+                'Content-Type': 'application/json',
+                Cookie: token,
+            },
+        })
 
-//         insertUser(user)
+        const res = await app.request(req)
 
-//         const getUser = selectUser(user.email)
+        expect(res.status).toBe(404)
 
-//         const token = 'jwt=' + (await sign(getUser.id, Bun.env.JWT_SECRET!))
+        deleteFromDb('users', 'email', mockUserDefault.email)
+    })
 
-//         insertReport(mockAnalysis, 2)
-
-//         const req = new Request('http://localhost/reports/5', {
-//             method: 'GET',
-//             credentials: 'include',
-
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 Cookie: token,
-//             },
-//         })
-
-//         const res = await app.request(req)
-
-//         expect(res.status).toBe(404)
-
-//         deleteFromDb('users', 'email', user.email)
-//     })
-
-//     test('Unauthorized: GET /reports', async () => {
-//         const res = await app.request('reports/1')
-//         expect(res.status).toBe(401)
-//     })
-// })
+    test('Unauthorized: GET /reports', async () => {
+        const res = await app.request('reports/1')
+        expect(res.status).toBe(401)
+    })
+})
