@@ -16,6 +16,7 @@ export const createUser = async (c: any): Promise<Answer> => {
         return reponseBuild('Content type invalid', 400)
     }
 
+    //remove await
     req.password = await passwordEncrypt(req.password)
 
     try {
@@ -51,6 +52,6 @@ export const loginUser = async (c: any): Promise<Answer> => {
     return reponseBuild('Succesful', 200)
 }
 
-const createToken = async (id: number) => {
+const createToken = async (id: number): Promise<string> => {
     return await sign(id, Bun.env.JWT_TOKEN!)
 }

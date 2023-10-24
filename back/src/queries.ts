@@ -1,69 +1,71 @@
 import { db } from './db'
 
-import type { RegisterUser } from './models/user'
-import type { Analysys } from './models/lighthouse'
-import { currentDate } from './utils'
+import type { UserDefault, UserRegister } from './models/user'
+import type { Analysis } from './models/lighthouse'
+import { Report } from './models/report'
 
-export const selectReports = (id: any) => {
+export const selectReports = (id: number): Report => {
     return db((Db: any) => {
         const query = Db.query('SELECT * FROM reports WHERE user_id  =  ?;')
         return query.all(id)
     })
 }
 
-export const selectReport = (userId: any, reportId: any) => {
+export const selectReport = (userId: number, reportId: number): Report => {
     return db((Db: any) => {
         const query = Db.query(
-            'SELECT * FROM reports WHERE  user_id = ? AND report_id = ?'
+            'SELECT * FROM reports WHERE  user_id = ? AND report_id = ?;'
         )
-        const r = query.get(userId, reportId)
 
-        return r
+        return query.get(userId, reportId)
     })
 }
 
-export const insertReport = (report: Analysys, userId: number) => {
+export const insertReport = (analsys: Analysis, userId: number): void => {
+    const reportId = countUserReports(userId) + 1
+
     db((Db: any) => {
         const query = Db.query(
-            'INSERT INTO reports(created_at, result ,average , user_id , report_id) values (? ,? ,? , ?, ?)'
+            'INSERT INTO reports(report_id,analsys,user_id) values (? ,? ,?):'
         )
-        query.run(
-            report.created_at,
-            JSON.stringify(report.results),
-            '90',
-            userId,
-            1
-        )
+        query.run(reportId, analsys, userId)
     })
 }
 
-export const insertUser = (user: any): void => {
+export const insertUser = (user: UserDefault): void => {
     return db((Db: any) => {
         const query = Db.query(
-            'INSERT INTO users(name,password,email,created_at) values (?,?,?,?)'
+            'INSERT INTO users(name,password,email,) values (?,?,?);'
         )
 
-        query.get(
-            user.name,
-            user.password,
-            user.email,
-            // user.created_at
-            currentDate()
-        )
+        query.get(user.name, user.password, user.email)
     })
 }
 
-export const selectUser = (email: string): RegisterUser => {
+export const selectUser = (email: string): UserRegister => {
     return db((Db: any) => {
-        const query = Db.query('SELECT * FROM users WHERE email = ? ')
+        const query = Db.query('SELECT * FROM users WHERE email = ?;')
         return query.get(email)
     })
 }
 
-export const deleteFromDb = (table: string, field: string, value: string) => {
+export const deleteFromDb = (
+    table: string,
+    field: string,
+    value: string
+): void => {
     db((Db: any) => {
-        const query = Db.query(`DELETE FROM ${table} WHERE ${field} = ?`)
+        const query = Db.query(`DELETE FROM ${table} WHERE ${field} = ?;`)
 
         query.run(value)
+    })
+}
+
+const countUserReports = (userId: number): number => {
+    return db((Db: any) => {
+        const query = Db.query(
+            'SELECT COUNT(*) FROM reports WHERE user_id  =  ?;'
+        )
+        return query.all(userId)
     })
 }

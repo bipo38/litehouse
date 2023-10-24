@@ -1,9 +1,9 @@
-CREATE TABLE IF NOT EXISTS reports(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    report_id INTEGER,
-    result TEXT NOT NULL,
-    average TEXT NOT NULL,
-    user_id INTEGER NOT NULL,
-    created_at DATETIME NOT NULL,
-    FOREIGN KEY(user_id) REFERENCES users(id)
-);
+CREATE TABLE
+    IF NOT EXISTS reports (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        report_id INTEGER,
+        analysys TEXT NOT NULL,
+        user_id INTEGER NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP FOREIGN KEY (user_id) REFERENCES users (id)
+    );

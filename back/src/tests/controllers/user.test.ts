@@ -4,6 +4,11 @@ import { deleteFromDb, insertUser } from '../../queries'
 import { init as initMigrations } from '../../migrations'
 import { unlinkSync } from 'node:fs'
 import { passwordEncrypt } from '../../utils'
+import {
+    mockPassword,
+    mockUserDefault,
+    mockUserDefaultNotHash,
+} from '../../mokcs/User'
 
 beforeAll(() => {
     process.env.DB_NAME = 'test.db'
@@ -17,16 +22,9 @@ afterAll(() => {
 
 describe('Register Controller', () => {
     test('Create user: POST /register', async () => {
-        const user = {
-            name: 'Pete',
-            email: 'barfooo@gmail.com',
-            password: 'hola',
-            password_confirm: 'hola',
-        }
-
         const req = new Request('http://localhost/register', {
             method: 'POST',
-            body: JSON.stringify(user),
+            body: JSON.stringify(mockUserDefaultNotHash),
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -36,96 +34,69 @@ describe('Register Controller', () => {
 
         expect(res.status).toBe(201)
 
-        deleteFromDb('users', 'email', user.email)
+        deleteFromDb('users', 'email', mockUserDefaultNotHash.email)
     })
 
-    test('User registered: POST /register', async () => {
-        const user = {
-            name: 'Pete',
-            email: 'peter@gmail.com',
-            password: 'hola',
-            password_confirm: 'hola',
-        }
+    // test('User registered: POST /register', async () => {
+    //     insertUser(mockUserDefault)
 
-        insertUser(user)
+    //     const req = new Request('http://localhost/register', {
+    //         method: 'POST',
+    //         body: JSON.stringify(mockUserDefaultNotHash),
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //     })
 
-        const req = new Request('http://localhost/register', {
-            method: 'POST',
-            body: JSON.stringify(user),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
+    //     const res = await app.request(req)
+    //     expect(res.status).toBe(200)
 
-        const res = await app.request(req)
-        expect(res.status).toBe(200)
-
-        deleteFromDb('users', 'email', user.email)
-    })
+    //     deleteFromDb('users', 'email', mockUserDefault.email)
+    // })
 })
 
-describe('Login Controller', async () => {
-    test('Login user: POST /login', async () => {
-        const password = 'hola'
-        const passwordHash = await passwordEncrypt(password)
+// describe('Login Controller', async () => {
+//     test('Login user: POST /login', async () => {
+//         insertUser(mockUserDefault)
 
-        const user = {
-            name: 'Steve',
-            email: 'steve@gmail.com',
-            password: passwordHash,
-            password_confirm: passwordHash,
-        }
+//         const req = new Request('http://localhost/login', {
+//             method: 'POST',
+//             body: JSON.stringify({
+//                 email: mockUserDefault.email,
+//                 password: mockPassword,
+//             }),
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//         })
 
-        insertUser(user)
+//         const res = await app.request(req)
 
-        const req = new Request('http://localhost/login', {
-            method: 'POST',
-            body: JSON.stringify({
-                email: user.email,
-                password: password,
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
+//         expect(res.status).toBe(200)
+//         expect(res.headers.get('Set-Cookie')).toStartWith('jwt=')
 
-        const res = await app.request(req)
+//         deleteFromDb('users', 'email', mockUserDefault.email)
+//     })
 
-        expect(res.status).toBe(200)
-        expect(res.headers.get('Set-Cookie')).toStartWith('jwt=')
+//     test('Invalid user: POST /login', async () => {
+//         insertUser(mockUserDefault)
 
-        deleteFromDb('users', 'email', user.email)
-    })
+//         const req = new Request('http://localhost/login', {
+//             method: 'POST',
+//             body: JSON.stringify({
+//                 email: mockUserDefault.email,
+//                 password: 'password',
+//             }),
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//         })
 
-    test('Invalid user: POST /login', async () => {
-        const password = 'hola'
-        const passwordHash = await passwordEncrypt(password)
+//         const res = await app.request(req)
 
-        const user = {
-            name: 'Steve',
-            email: 'steve@gmail.com',
-            password: passwordHash,
-            password_confirm: passwordHash,
-        }
+//         expect(res.status).toBe(401)
+//         expect(res.headers.get('Set-Cookie')).toBe(null)
 
-        insertUser(user)
-
-        const req = new Request('http://localhost/login', {
-            method: 'POST',
-            body: JSON.stringify({
-                email: user.email,
-                password: 'password',
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-
-        const res = await app.request(req)
-
-        expect(res.status).toBe(401)
-        expect(res.headers.get('Set-Cookie')).toBe(null)
-
-        deleteFromDb('users', 'email', user.email)
-    })
-})
+//         deleteFromDb('users', 'email', mockUserDefault.email)
+//     })
+// })

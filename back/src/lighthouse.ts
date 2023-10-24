@@ -1,17 +1,12 @@
-import { insertReport } from './queries'
-import { currentDate } from './utils'
-import { Item, Analysys } from './models/lighthouse'
+import { Analysis, Item, Metrics, Stats } from './models/lighthouse'
 
 const { links } = await Bun.file('./links.json').json()
 
-export const startAnalysys = async (): Promise<Analysys> => {
-    let result: Analysys = {
-        results: [],
-        created_at: currentDate(),
-    }
+export const startAnalysys = async (): Promise<Analysis> => {
+    const result: Analysis = []
 
     for await (const link of links) {
-        const items: Array<any> = []
+        const items = []
 
         for (let i = 0; i != 2; i++) {
             const cmd = Bun.spawn([
@@ -28,9 +23,9 @@ export const startAnalysys = async (): Promise<Analysys> => {
             items.push(parsed)
         }
 
-        const parsedItem: object = parseLhrFile(items, link)
+        const parsedItem = parseLhrFile(items, link)
 
-        result.results.push(parsedItem)
+        result.push(parsedItem)
     }
 
     return result
@@ -39,11 +34,11 @@ export const startAnalysys = async (): Promise<Analysys> => {
 const parseLhrFile = (
     items: Item[],
     link: { name: string; url: string }
-): object => {
-    const metrics: Record<string, Record<string, number>> = {}
+): Metrics => {
+    const metrics: Record<string, Stats> = {}
 
     items.forEach((item: Item) => {
-        const i = (metrics[item.lhr.configSettings.formFactor] = {
+        metrics[item.lhr.configSettings.formFactor] = {
             seo: item.lhr.categories.seo?.score * 100,
             performance: item.lhr.categories.performance?.score * 100,
             accessibility: item.lhr.categories.accessibility?.score * 100,
@@ -54,12 +49,12 @@ const parseLhrFile = (
                     item.lhr.categories.accessibility?.score * 100 +
                     item.lhr.categories['best-practices']?.score * 100) /
                 4,
-        })
+        }
     })
 
     return {
         name: link.name,
         url: link.url,
-        metrics,
+        stats: metrics,
     }
 }
