@@ -1,7 +1,6 @@
 import { afterAll, beforeAll, describe, expect, test } from 'bun:test'
 import { app } from '../../index'
-import { db } from '../../db'
-import { insertUser } from '../../queries'
+import { deleteFromDb, insertUser } from '../../queries'
 import { init as initMigrations } from '../../migrations'
 import { unlinkSync } from 'node:fs'
 import { passwordEncrypt } from '../../utils'
@@ -130,11 +129,3 @@ describe('Login Controller', async () => {
         deleteFromDb('users', 'email', user.email)
     })
 })
-
-const deleteFromDb = (table: string, field: string, value: string) => {
-    db((Db: any) => {
-        const query = Db.query(`DELETE FROM ${table} WHERE ${field} = ?`)
-
-        query.run(value)
-    })
-}

@@ -11,22 +11,29 @@ export const selectReports = (id: any) => {
     })
 }
 
-export const selectReport = (user: any, id: any) => {
+export const selectReport = (userId: any, reportId: any) => {
     return db((Db: any) => {
         const query = Db.query(
-            'SELECT * FROM reports WHERE user_id = ? AND id = '
+            'SELECT * FROM reports WHERE  user_id = ? AND report_id = ?'
         )
+        const r = query.get(userId, reportId)
 
-        return query.get(user, id)
+        return r
     })
 }
 
-export const insertReport = (report: Analysys) => {
+export const insertReport = (report: Analysys, userId: number) => {
     db((Db: any) => {
         const query = Db.query(
-            'INSERT INTO reports(created_at, result ,average , user_id) values (? ,? ,? , ?)'
+            'INSERT INTO reports(created_at, result ,average , user_id , report_id) values (? ,? ,? , ?, ?)'
         )
-        query.run(report.created_at, JSON.stringify(report.results), '90', 1)
+        query.run(
+            report.created_at,
+            JSON.stringify(report.results),
+            '90',
+            userId,
+            1
+        )
     })
 }
 
@@ -50,5 +57,13 @@ export const selectUser = (email: string): RegisterUser => {
     return db((Db: any) => {
         const query = Db.query('SELECT * FROM users WHERE email = ? ')
         return query.get(email)
+    })
+}
+
+export const deleteFromDb = (table: string, field: string, value: string) => {
+    db((Db: any) => {
+        const query = Db.query(`DELETE FROM ${table} WHERE ${field} = ?`)
+
+        query.run(value)
     })
 }

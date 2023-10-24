@@ -2,11 +2,12 @@ import { Hono } from 'hono'
 import { selectReport, selectReports } from './queries'
 import { createUser, loginUser } from './controllers/user'
 import { getReport, listReports } from './controllers/report'
+import { Answer } from './types/answer'
 
 const api = new Hono()
 
 api.post('/login', async (c: any) => {
-    const result = await loginUser(c)
+    const result: Answer = await loginUser(c)
 
     return c.json({ content: result.content }, result.status)
 })

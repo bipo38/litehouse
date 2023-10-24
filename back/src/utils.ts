@@ -9,5 +9,5 @@ export const passwordEncrypt = async (pass: string): Promise<any> => {
 }
 
 export const reponseBuild = (message: any, status: number): Answer => {
-    return { message: message, status: status }
+    return { content: message, status: status }
 }
