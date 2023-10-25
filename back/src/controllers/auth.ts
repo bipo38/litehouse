@@ -1,19 +1,17 @@
 import { setCookie } from 'hono/cookie'
 import { insertUser, selectUser } from '../queries'
 import { reponseBuild, passwordEncrypt } from '../utils'
-import { UserRegister } from '../validators/schemas'
+import { ValidateUserRegister } from '../validators/schemas'
 import { sign } from 'hono/jwt'
 import { Answer } from '../models/answer'
 
-export const createUser = async (c: any): Promise<Answer> => {
+export const saveUser = async (c: any): Promise<Answer> => {
     const req = await c.req.json()
 
-    const parserUser = UserRegister.safeParse(req)
+    const validateUser = ValidateUserRegister.safeParse(req)
 
-    if (!parserUser.success) {
-        console.error(parserUser.error)
-
-        return reponseBuild('Content type invalid', 400)
+    if (!validateUser.success) {
+        return reponseBuild('Content type invalid', 422)
     }
 
     req.password = await passwordEncrypt(req.password)
@@ -23,7 +21,7 @@ export const createUser = async (c: any): Promise<Answer> => {
 
         return reponseBuild('User created succesfully', 201)
     } catch {
-        return reponseBuild('Email alredy registered', 200)
+        return reponseBuild('Failed creatng user', 200)
     }
 }
 

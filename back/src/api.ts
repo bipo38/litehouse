@@ -1,7 +1,8 @@
 import { Hono } from 'hono'
-import { createUser, loginUser } from './controllers/auth'
-import { getReport, listReports } from './controllers/report'
+import { saveUser, loginUser } from './controllers/auth'
+import { showReport, showReports } from './controllers/report'
 import { Answer } from './models/answer'
+import { savePage } from './controllers/page'
 
 const api = new Hono()
 
@@ -12,21 +13,27 @@ api.post('/login', async (c) => {
 })
 
 api.post('/register', async (c) => {
-    const result = await createUser(c)
+    const result = await saveUser(c)
 
     return c.json({ content: result.content }, result.status)
 })
 
 api.get('/reports', async (c): Promise<Response> => {
-    const result = listReports(c)
+    const result = showReports(c)
 
     return c.json({ content: result.content }, result.status)
 })
 
 api.get('/reports/:id', async (c): Promise<Response> => {
-    const report = getReport(c)
+    const report = showReport(c)
 
     return c.json({ report: report.content }, report.status)
+})
+
+api.post('/reports/page', async (c): Promise<Response> => {
+    const page = await savePage(c) 
+
+    return c.json({ content: page.content }, page.status)
 })
 
 api.notFound((c) => {

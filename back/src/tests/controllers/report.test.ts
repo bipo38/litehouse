@@ -1,7 +1,14 @@
-import { afterAll, beforeAll, describe, expect, test } from 'bun:test'
+import {
+    afterAll,
+    afterEach,
+    beforeAll,
+    beforeEach,
+    describe,
+    expect,
+    test,
+} from 'bun:test'
 import { init as initMigrations } from '../../migrations'
 import { unlinkSync } from 'node:fs'
-import { passwordEncrypt } from '../../utils'
 import {
     deleteFromDb,
     insertReport,
@@ -13,23 +20,25 @@ import { app } from '../../index'
 
 import { sign } from 'hono/jwt'
 import { mockAnalysis } from '../../mocks/analysis'
-import { mockUserDefault } from '../../mocks/user'
+import { mockUserRegister } from '../../mocks/user'
 
 beforeAll(() => {
     process.env.DB_NAME = 'test.db'
+})
 
+beforeEach(() => {
     initMigrations()
 })
 
-afterAll(() => {
+afterEach(() => {
     unlinkSync(Bun.env.DB_NAME!)
 })
 
-describe('List Posts Controller', () => {
-    test('List Reports: GET /reports', async () => {
-        insertUser(mockUserDefault)
+describe('Show Posts Controller', () => {
+    test('Show Reports: GET /reports', async () => {
+        insertUser(mockUserRegister)
 
-        const getUser = selectUser(mockUserDefault.email)
+        const getUser = selectUser(mockUserRegister.email)
 
         const token = 'jwt=' + (await sign(getUser.id, Bun.env.JWT_SECRET!))
 
@@ -49,7 +58,7 @@ describe('List Posts Controller', () => {
 
         expect(res.status).toBe(200)
 
-        deleteFromDb('users', 'email', mockUserDefault.email)
+        deleteFromDb('users', 'email', mockUserRegister.email)
         deleteFromDb('reports', 'report_id', '2')
     })
 
@@ -59,15 +68,15 @@ describe('List Posts Controller', () => {
     })
 })
 
-describe('Get post Controller', () => {
-    test('Get report: GET /reports/:id', async () => {
-        insertUser(mockUserDefault)
+describe('Show post Controller', () => {
+    test('Show report: GET /reports/:id', async () => {
+        insertUser(mockUserRegister)
 
-        const getUser = selectUser(mockUserDefault.email)
+        const getUser = selectUser(mockUserRegister.email)
 
         const token = 'jwt=' + (await sign(getUser.id, Bun.env.JWT_SECRET!))
 
-        insertReport(mockAnalysis, 2)
+        insertReport(mockAnalysis, 1)
 
         const req = new Request('http://localhost/reports/1', {
             method: 'GET',
@@ -83,17 +92,17 @@ describe('Get post Controller', () => {
 
         expect(res.status).toBe(200)
 
-        deleteFromDb('users', 'email', mockUserDefault.email)
+        deleteFromDb('users', 'email', mockUserRegister.email)
     })
 
     test('Not exist report: GET /reports/:id', async () => {
-        insertUser(mockUserDefault)
+        insertUser(mockUserRegister)
 
-        const getUser = selectUser(mockUserDefault.email)
+        const getUser = selectUser(mockUserRegister.email)
 
         const token = 'jwt=' + (await sign(getUser.id, Bun.env.JWT_SECRET!))
 
-        insertReport(mockAnalysis, 2)
+        insertReport(mockAnalysis, 1)
 
         const req = new Request('http://localhost/reports/5', {
             method: 'GET',
@@ -109,7 +118,7 @@ describe('Get post Controller', () => {
 
         expect(res.status).toBe(404)
 
-        deleteFromDb('users', 'email', mockUserDefault.email)
+        deleteFromDb('users', 'email', mockUserRegister.email)
     })
 
     test('Unauthorized: GET /reports', async () => {

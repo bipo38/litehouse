@@ -8,3 +8,8 @@ export interface Report {
     createdAt: Date
     updatedAt: Date
 }
+
+export interface ReportBase {
+    analysis: Analysis
+    userId: number
+}

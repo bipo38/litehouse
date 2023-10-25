@@ -1,4 +1,4 @@
-export interface UserRegister {
+export interface User {
     id: number
     name: string
     email: string
@@ -8,14 +8,14 @@ export interface UserRegister {
     updatedAt: Date
 }
 
-export interface UserDefault {
+export interface UserRegister {
     name: string
     email: string
     password: string
     password_confirm: string
 }
 
-export interface User {
+export interface UserBase {
     id: number
     email: string
     password: string

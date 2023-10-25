@@ -1,19 +1,18 @@
+import { Page } from './controllers/page'
 import { Item, Metrics, Stats } from './models/lighthouse'
 import { Analysis } from './types/analysis'
 
-const { links } = await Bun.file('./links.json').json()
-
-export const startAnalysys = async (): Promise<Analysis> => {
+export const startAnalysys = async (page: Page): Promise<Analysis> => {
     const result: Analysis = []
 
-    for await (const link of links) {
+    for await (const url of page.urls) {
         const items = []
 
         for (let i = 0; i != 2; i++) {
             const cmd = Bun.spawn([
                 'node',
                 'lighthouse/main.js',
-                `${link.url}`,
+                `${url.url}`,
                 `${i.toString()}`,
             ])
 
@@ -24,7 +23,7 @@ export const startAnalysys = async (): Promise<Analysis> => {
             items.push(parsed)
         }
 
-        const parsedItem = parseLhrFile(items, link)
+        const parsedItem = parseLhrFile(items, url)
 
         result.push(parsedItem)
     }
@@ -34,7 +33,7 @@ export const startAnalysys = async (): Promise<Analysis> => {
 
 const parseLhrFile = (
     items: Item[],
-    link: { name: string; url: string }
+    url: { name: string; url: string }
 ): Metrics => {
     const metrics: Record<string, Stats> = {}
 
@@ -54,8 +53,8 @@ const parseLhrFile = (
     })
 
     return {
-        name: link.name,
-        url: link.url,
+        name: url.name,
+        url: url.url,
         stats: metrics,
     }
 }

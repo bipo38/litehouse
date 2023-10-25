@@ -1,19 +1,19 @@
-import { UserDefault, UserRegister } from '../models/user'
+import { UserRegister } from '../models/user'
 import { passwordEncrypt } from '../utils'
 
 export const mockPassword = 'hola'
 const mockHashPassword = await passwordEncrypt(mockPassword)
 
-export const mockUserDefault = {
+export const mockUserRegister = {
     name: 'Steve',
     email: 'steve@gmail.com',
     password: mockHashPassword,
     password_confirm: mockHashPassword,
-} as UserDefault
+} as UserRegister
 
-export const mockUserDefaultNotHash = {
+export const mockUserRegisterNotHash = {
     name: 'Steve',
     email: 'steve@gmail.com',
     password: mockPassword,
     password_confirm: mockPassword,
-} as UserDefault
+} as UserRegister

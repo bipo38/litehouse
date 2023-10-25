@@ -2,7 +2,7 @@ import { selectReport, selectReports } from '../queries'
 import { Answer } from '../models/answer'
 import { reponseBuild } from '../utils'
 
-export const listReports = (c: any): Answer => {
+export const showReports = (c: any): Answer => {
     const payload = c.get('jwtPayload')
 
     const reports = selectReports(payload)
@@ -10,7 +10,7 @@ export const listReports = (c: any): Answer => {
     return reponseBuild(reports, 200)
 }
 
-export const getReport = (c: any): Answer => {
+export const showReport = (c: any): Answer => {
     const payload = c.get('jwtPayload')
     const { id } = c.req.param()
 
