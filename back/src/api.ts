@@ -1,5 +1,5 @@
 import { Hono } from 'hono'
-import { createUser, loginUser } from './controllers/user'
+import { createUser, loginUser } from './controllers/auth'
 import { getReport, listReports } from './controllers/report'
 import { Answer } from './models/answer'
 
