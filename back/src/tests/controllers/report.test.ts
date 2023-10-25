@@ -1,5 +1,4 @@
 import {
-    afterAll,
     afterEach,
     beforeAll,
     beforeEach,
@@ -9,13 +8,7 @@ import {
 } from 'bun:test'
 import { init as initMigrations } from '../../migrations'
 import { unlinkSync } from 'node:fs'
-import {
-    deleteFromDb,
-    insertReport,
-    insertUser,
-    selectReport,
-    selectUser,
-} from '../../queries'
+import { insertReport, insertUser, selectUser } from '../../queries'
 import { app } from '../../index'
 
 import { sign } from 'hono/jwt'
@@ -57,9 +50,6 @@ describe('Show Posts Controller', () => {
         const res = await app.request(req)
 
         expect(res.status).toBe(200)
-
-        deleteFromDb('users', 'email', mockUserRegister.email)
-        deleteFromDb('reports', 'report_id', '2')
     })
 
     test('Unauthorized: GET /reports', async () => {
@@ -91,8 +81,6 @@ describe('Show post Controller', () => {
         const res = await app.request(req)
 
         expect(res.status).toBe(200)
-
-        deleteFromDb('users', 'email', mockUserRegister.email)
     })
 
     test('Not exist report: GET /reports/:id', async () => {
@@ -117,8 +105,6 @@ describe('Show post Controller', () => {
         const res = await app.request(req)
 
         expect(res.status).toBe(404)
-
-        deleteFromDb('users', 'email', mockUserRegister.email)
     })
 
     test('Unauthorized: GET /reports', async () => {
