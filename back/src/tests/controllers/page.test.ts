@@ -9,7 +9,7 @@ import {
 import { unlinkSync } from 'node:fs'
 import { init as initMigrations } from '../../migrations'
 import { mockUserRegister } from '../../mocks/user'
-import { deleteFromDb, insertPage, insertUser, selectUser } from '../../queries'
+import { insertPage, insertUser, selectUser } from '../../queries'
 import { sign } from 'hono/jwt'
 import { mockPageBase, mockPageReq, mockPageReqWrong } from '../../mocks/page'
 import { app } from '../../index'

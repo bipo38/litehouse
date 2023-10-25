@@ -90,16 +90,3 @@ export const selectPage = (page: Page): Page => {
         return query.all(page.userId)
     })
 }
-
-//Generic
-export const deleteFromDb = (
-    table: string,
-    field: string,
-    value: string | number
-): void => {
-    db((Db: Database) => {
-        const query = Db.query(`DELETE FROM ${table} WHERE ${field} = ?;`)
-
-        query.run(value)
-    })
-}
