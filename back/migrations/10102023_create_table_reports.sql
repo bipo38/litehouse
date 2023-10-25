@@ -1,8 +1,9 @@
 CREATE TABLE IF NOT EXISTS reports(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    result TEXT NOT NULL,
-    average TEXT NOT NULL,
+    report_id INTEGER NOT NULL,
+    analysis TEXT NOT NULL,
     user_id INTEGER NOT NULL,
-    created_at DATETIME NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(user_id) REFERENCES users(id)
 );

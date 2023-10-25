@@ -1,5 +1,5 @@
 import { selectReport, selectReports } from '../queries'
-import { Answer } from '../types/answer'
+import { Answer } from '../models/answer'
 import { reponseBuild } from '../utils'
 
 export const listReports = (c: any): Answer => {
@@ -15,6 +15,10 @@ export const getReport = (c: any): Answer => {
     const { id } = c.req.param()
 
     const report = selectReport(payload, id)
+
+    if (!report) {
+        return reponseBuild('Report not exist', 404)
+    }
 
     return reponseBuild(report, 200)
 }

@@ -1,13 +1,9 @@
-import { Answer } from './types/answer'
+import { Answer } from './models/answer'
 
-export const currentDate = () => {
-    return Intl.DateTimeFormat('es-ES').format(Date.now())
-}
-
-export const passwordEncrypt = async (pass: string): Promise<any> => {
+export const passwordEncrypt = async (pass: string): Promise<string> => {
     return await Bun.password.hash(pass)
 }
 
 export const reponseBuild = (message: any, status: number): Answer => {
-    return { message: message, status: status }
+    return { content: message, status: status }
 }

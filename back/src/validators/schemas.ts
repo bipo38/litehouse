@@ -6,10 +6,9 @@ export const UserRegister = z
         email: z
             .string()
             .min(1, { message: 'This field has to be filled.' })
-            .email('Invalid email'),
+            .email({message: 'Invalid email'}),
         password: z.string(),
         password_confirm: z.string(),
-        // created_at: z.date(),
     })
     .refine((user) => user.password === user.password_confirm, {
         message: "Passwords don't match",

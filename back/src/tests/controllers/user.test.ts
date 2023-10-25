@@ -1,10 +1,14 @@
 import { afterAll, beforeAll, describe, expect, test } from 'bun:test'
 import { app } from '../../index'
-import { db } from '../../db'
-import { insertUser } from '../../queries'
+import { deleteFromDb, insertUser } from '../../queries'
 import { init as initMigrations } from '../../migrations'
 import { unlinkSync } from 'node:fs'
-import { passwordEncrypt } from '../../utils'
+
+import {
+    mockPassword,
+    mockUserDefault,
+    mockUserDefaultNotHash,
+} from '../../mocks/user'
 
 beforeAll(() => {
     process.env.DB_NAME = 'test.db'
@@ -18,16 +22,9 @@ afterAll(() => {
 
 describe('Register Controller', () => {
     test('Create user: POST /register', async () => {
-        const user = {
-            name: 'Pete',
-            email: 'barfooo@gmail.com',
-            password: 'hola',
-            password_confirm: 'hola',
-        }
-
         const req = new Request('http://localhost/register', {
             method: 'POST',
-            body: JSON.stringify(user),
+            body: JSON.stringify(mockUserDefaultNotHash),
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -37,22 +34,15 @@ describe('Register Controller', () => {
 
         expect(res.status).toBe(201)
 
-        deleteFromDb('users', 'email', user.email)
+        deleteFromDb('users', 'email', mockUserDefaultNotHash.email)
     })
 
     test('User registered: POST /register', async () => {
-        const user = {
-            name: 'Pete',
-            email: 'peter@gmail.com',
-            password: 'hola',
-            password_confirm: 'hola',
-        }
-
-        insertUser(user)
+        insertUser(mockUserDefault)
 
         const req = new Request('http://localhost/register', {
             method: 'POST',
-            body: JSON.stringify(user),
+            body: JSON.stringify(mockUserDefaultNotHash),
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -61,29 +51,19 @@ describe('Register Controller', () => {
         const res = await app.request(req)
         expect(res.status).toBe(200)
 
-        deleteFromDb('users', 'email', user.email)
+        deleteFromDb('users', 'email', mockUserDefaultNotHash.email)
     })
 })
 
 describe('Login Controller', async () => {
     test('Login user: POST /login', async () => {
-        const password = 'hola'
-        const passwordHash = await passwordEncrypt(password)
-
-        const user = {
-            name: 'Steve',
-            email: 'steve@gmail.com',
-            password: passwordHash,
-            password_confirm: passwordHash,
-        }
-
-        insertUser(user)
+        insertUser(mockUserDefault)
 
         const req = new Request('http://localhost/login', {
             method: 'POST',
             body: JSON.stringify({
-                email: user.email,
-                password: password,
+                email: mockUserDefault.email,
+                password: mockPassword,
             }),
             headers: {
                 'Content-Type': 'application/json',
@@ -95,27 +75,17 @@ describe('Login Controller', async () => {
         expect(res.status).toBe(200)
         expect(res.headers.get('Set-Cookie')).toStartWith('jwt=')
 
-        deleteFromDb('users', 'email', user.email)
+        deleteFromDb('users', 'email', mockUserDefault.email)
     })
 
     test('Invalid user: POST /login', async () => {
-        const password = 'hola'
-        const passwordHash = await passwordEncrypt(password)
-
-        const user = {
-            name: 'Steve',
-            email: 'steve@gmail.com',
-            password: passwordHash,
-            password_confirm: passwordHash,
-        }
-
-        insertUser(user)
+        insertUser(mockUserDefault)
 
         const req = new Request('http://localhost/login', {
             method: 'POST',
             body: JSON.stringify({
-                email: user.email,
-                password: 'password',
+                email: mockUserDefault.email,
+                password: mockPassword.concat('h'),
             }),
             headers: {
                 'Content-Type': 'application/json',
@@ -127,14 +97,6 @@ describe('Login Controller', async () => {
         expect(res.status).toBe(401)
         expect(res.headers.get('Set-Cookie')).toBe(null)
 
-        deleteFromDb('users', 'email', user.email)
+        deleteFromDb('users', 'email', mockUserDefault.email)
     })
 })
-
-const deleteFromDb = (table: string, field: string, value: string) => {
-    db((Db: any) => {
-        const query = Db.query(`DELETE FROM ${table} WHERE ${field} = ?`)
-
-        query.run(value)
-    })
-}

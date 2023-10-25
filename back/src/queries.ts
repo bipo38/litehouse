@@ -1,54 +1,73 @@
 import { db } from './db'
+import type { UserDefault, UserRegister } from './models/user'
+import type { Analysis } from './types/analysis'
+import { Report } from './models/report'
+import Database from 'bun:sqlite'
+import { ReportsTotalUser } from './models/queries'
 
-import type { RegisterUser } from './models/user'
-import type { Analysys } from './models/lighthouse'
-import { currentDate } from './utils'
-
-export const selectReports = (id: any) => {
-    return db((Db: any) => {
+export const selectReports = (id: number): Report => {
+    return db((Db: Database) => {
         const query = Db.query('SELECT * FROM reports WHERE user_id  =  ?;')
         return query.all(id)
     })
 }
 
-export const selectReport = (user: any, id: any) => {
-    return db((Db: any) => {
+export const selectReport = (userId: number, reportId: number): Report => {
+    return db((Db: Database) => {
         const query = Db.query(
-            'SELECT * FROM reports WHERE user_id = ? AND id = '
+            'SELECT * FROM reports WHERE  user_id = ? AND report_id = ?;'
         )
 
-        return query.get(user, id)
+        return query.get(userId, reportId)
     })
 }
 
-export const insertReport = (report: Analysys) => {
-    db((Db: any) => {
+export const insertReport = (analysis: Analysis, userId: number): void => {
+    const reportId = countUserReports(userId)['COUNT(user_id)'] + 1
+
+    db((Db: Database) => {
         const query = Db.query(
-            'INSERT INTO reports(created_at, result ,average , user_id) values (? ,? ,? , ?)'
+            'INSERT INTO reports(report_id,analysis,user_id) values (? ,? ,?);'
         )
-        query.run(report.created_at, JSON.stringify(report.results), '90', 1)
+
+        query.run(reportId, JSON.stringify(analysis), userId)
     })
 }
 
-export const insertUser = (user: any): void => {
-    return db((Db: any) => {
+export const insertUser = (user: UserDefault): void => {
+    return db((Db: Database) => {
         const query = Db.query(
-            'INSERT INTO users(name,password,email,created_at) values (?,?,?,?)'
+            'INSERT INTO users(name,password,email) values (?,?,?);'
         )
 
-        query.get(
-            user.name,
-            user.password,
-            user.email,
-            // user.created_at
-            currentDate()
-        )
+        query.run(user.name, user.password, user.email)
     })
 }
 
-export const selectUser = (email: string): RegisterUser => {
-    return db((Db: any) => {
-        const query = Db.query('SELECT * FROM users WHERE email = ? ')
+export const selectUser = (email: string): UserRegister => {
+    return db((Db: Database) => {
+        const query = Db.query('SELECT * FROM users WHERE email = ?;')
         return query.get(email)
+    })
+}
+
+export const deleteFromDb = (
+    table: string,
+    field: string,
+    value: string
+): void => {
+    db((Db: Database) => {
+        const query = Db.query(`DELETE FROM ${table} WHERE ${field} = ?;`)
+
+        query.run(value)
+    })
+}
+
+const countUserReports = (userId: number): ReportsTotalUser => {
+    return db((Db: Database) => {
+        const query = Db.query(
+            'SELECT COUNT(user_id) FROM reports WHERE user_id = ?;'
+        )
+        return query.get(userId)
     })
 }

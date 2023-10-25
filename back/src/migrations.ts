@@ -1,16 +1,17 @@
 import { db } from './db'
 import path from 'path'
 import fs from 'node:fs'
+import Database from 'bun:sqlite'
 
 const route: string = './migrations/'
 
 export const init = () => {
-    db((Db: any) => {
+    db((Db: Database) => {
         migrate(Db)
     })
 }
 
-const migrate = (Db: any) => {
+const migrate = (Db: Database) => {
     const filenames = fs.readdirSync(route)
 
     filenames.forEach((f: string) => {
