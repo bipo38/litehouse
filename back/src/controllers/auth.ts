@@ -16,7 +16,6 @@ export const createUser = async (c: any): Promise<Answer> => {
         return reponseBuild('Content type invalid', 400)
     }
 
-    //remove await
     req.password = await passwordEncrypt(req.password)
 
     try {

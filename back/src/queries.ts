@@ -23,7 +23,7 @@ export const selectReport = (userId: number, reportId: number): Report => {
 }
 
 export const insertReport = (analysis: Analysis, userId: number): void => {
-    const reportId = countUserReports(userId)['COUNT(user_id)'] + 1
+    const reportId = countUserReports(userId).totalReports + 1
 
     db((Db: Database) => {
         const query = Db.query(
@@ -66,7 +66,7 @@ export const deleteFromDb = (
 const countUserReports = (userId: number): ReportsTotalUser => {
     return db((Db: Database) => {
         const query = Db.query(
-            'SELECT COUNT(user_id) FROM reports WHERE user_id = ?;'
+            'SELECT COUNT(user_id) AS totalReports FROM reports WHERE user_id = ?;'
         )
         return query.get(userId)
     })

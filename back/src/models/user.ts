@@ -4,8 +4,8 @@ export interface UserRegister {
     email: string
     password: string
     password_confirm: string
-    created_at: Date
-    updated_at: Date
+    createdAt: Date
+    updatedAt: Date
 }
 
 export interface UserDefault {

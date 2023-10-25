@@ -1,10 +1,10 @@
-import { Analysis } from './lighthouse'
+import { Analysis } from '../types/analysis'
 
 export interface Report {
     id: number
-    report_id: number
+    reportId: number
     analysis: Analysis
     userId: number
-    created_at: Date
-    updated_at: Date
+    createdAt: Date
+    updatedAt: Date
 }
