@@ -1,4 +1,3 @@
-import { password } from 'bun'
 import { UserDefault, UserRegister } from '../models/user'
 import { passwordEncrypt } from '../utils'
 

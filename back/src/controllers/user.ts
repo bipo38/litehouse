@@ -3,7 +3,7 @@ import { insertUser, selectUser } from '../queries'
 import { reponseBuild, passwordEncrypt } from '../utils'
 import { UserRegister } from '../validators/schemas'
 import { sign } from 'hono/jwt'
-import { Answer } from '../types/answer'
+import { Answer } from '../models/answer'
 
 export const createUser = async (c: any): Promise<Answer> => {
     const req = await c.req.json()

@@ -8,7 +8,7 @@ import {
     mockPassword,
     mockUserDefault,
     mockUserDefaultNotHash,
-} from '../../mocks/User'
+} from '../../mocks/user'
 
 beforeAll(() => {
     process.env.DB_NAME = 'test.db'

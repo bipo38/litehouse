@@ -1,4 +1,4 @@
-import { Analysis, Metrics } from '../models/lighthouse'
+import { Metrics } from '../models/lighthouse'
 
 export const mockMetrics = {
     name: 'Home',

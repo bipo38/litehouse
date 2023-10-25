@@ -12,8 +12,8 @@ import {
 import { app } from '../../index'
 
 import { sign } from 'hono/jwt'
-import { mockAnalysis } from '../../mocks/Analysis'
-import { mockUserDefault } from '../../mocks/User'
+import { mockAnalysis } from '../../mocks/analysis'
+import { mockUserDefault } from '../../mocks/user'
 
 beforeAll(() => {
     process.env.DB_NAME = 'test.db'

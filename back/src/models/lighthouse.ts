@@ -1,5 +1,3 @@
-export type Analysis = Array<Metrics>
-
 export interface Metrics {
     name: string
     url: string

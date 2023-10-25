@@ -1,4 +1,5 @@
-import { Analysis, Item, Metrics, Stats } from './models/lighthouse'
+import { Item, Metrics, Stats } from './models/lighthouse'
+import { Analysis } from './types/analysis'
 
 const { links } = await Bun.file('./links.json').json()
 

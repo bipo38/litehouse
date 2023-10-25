@@ -1,5 +1,5 @@
 import { selectReport, selectReports } from '../queries'
-import { Answer } from '../types/answer'
+import { Answer } from '../models/answer'
 import { reponseBuild } from '../utils'
 
 export const listReports = (c: any): Answer => {

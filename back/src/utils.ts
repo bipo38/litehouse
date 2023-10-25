@@ -1,4 +1,4 @@
-import { Answer } from './types/answer'
+import { Answer } from './models/answer'
 
 export const passwordEncrypt = async (pass: string): Promise<string> => {
     return await Bun.password.hash(pass)
