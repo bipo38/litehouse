@@ -30,8 +30,8 @@ api.get('/reports/:id', async (c): Promise<Response> => {
     return c.json({ report: report.content }, report.status)
 })
 
-api.post('/reports/page', async (c): Promise<Response> => {
-    const page = await savePage(c) 
+api.post('/page', async (c): Promise<Response> => {
+    const page = await savePage(c)
 
     return c.json({ content: page.content }, page.status)
 })

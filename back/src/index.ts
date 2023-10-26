@@ -12,6 +12,14 @@ app.use(
     })
 )
 
+app.use(
+    'page/*',
+    jwt({
+        secret: Bun.env.JWT_SECRET!,
+        cookie: 'jwt',
+    })
+)
+
 app.route('/', api)
 
 export default app

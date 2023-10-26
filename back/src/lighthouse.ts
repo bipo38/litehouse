@@ -1,5 +1,5 @@
-import { Page } from './controllers/page'
 import { Item, Metrics, Stats } from './models/lighthouse'
+import { Page } from './models/page'
 import { Analysis } from './types/analysis'
 
 export const startAnalysys = async (page: Page): Promise<Analysis> => {

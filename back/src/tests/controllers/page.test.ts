@@ -34,7 +34,7 @@ describe('Save Page Controller', () => {
 
         const token = await sign(user.id, Bun.env.JWT_SECRET!)
 
-        const req = new Request('http://localhost/reports/page', {
+        const req = new Request('http://localhost/page', {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(mockPageReq),
@@ -55,7 +55,7 @@ describe('Save Page Controller', () => {
 
         const token = await sign(user.id, Bun.env.JWT_SECRET!)
 
-        const req = new Request('http://localhost/reports/page', {
+        const req = new Request('http://localhost/page', {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(mockPageReqWrong),
@@ -77,7 +77,7 @@ describe('Save Page Controller', () => {
 
         const token = await sign(user.id, Bun.env.JWT_SECRET!)
 
-        const req = new Request('http://localhost/reports/page', {
+        const req = new Request('http://localhost/page', {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(mockPageReq),
