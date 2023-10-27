@@ -1,7 +1,7 @@
 import { UserRegister } from '../models/user'
 import { passwordEncrypt } from '../utils'
 
-export const mockPassword = 'hola'
+export const mockPassword = 'pepinator90'
 const mockHashPassword = await passwordEncrypt(mockPassword)
 
 export const mockUserRegister = {

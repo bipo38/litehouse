@@ -26,7 +26,10 @@ export const ValidateUserRegister = z
     })
 
 export const ValidateUserLogin = z.object({
-    name: z.string().min(1, { message: errors.invalid_credentials }).trim(),
+    email: z
+        .string()
+        .min(1, { message: errors.invalid_credentials })
+        .email({ message: errors.invalid_credentials }),
     password: z.string().min(1, { message: errors.invalid_credentials }).trim(),
 })
 

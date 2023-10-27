@@ -3,7 +3,7 @@ import { Page, PageBase, PageReq } from '../models/page'
 export const mockPageReq = {
     url: [
         {
-            name: 'Home',
+            title: 'Home',
             url: 'https://www.google.com',
         },
     ],
@@ -13,7 +13,7 @@ export const mockPageReq = {
 export const mockPageBase = {
     urls: [
         {
-            name: 'Home',
+            title: 'Home',
             url: 'https://www.google.com',
         },
     ],
@@ -24,7 +24,7 @@ export const mockPageBase = {
 export const mockPageReqWrong = {
     url: [
         {
-            name: 'Home',
+            title: 'Home',
             url: 'https://www.google.com',
         },
     ],
