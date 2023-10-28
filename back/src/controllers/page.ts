@@ -1,6 +1,6 @@
 import { Answer } from '../models/answer'
 import { PageBase, PageReq } from '../models/page'
-import { insertPage, selectPages } from '../queries'
+import { insertPage, selectPage, selectPages } from '../queries'
 import { jwtPayload, reponseBuild } from '../utils'
 import { ValidatePageBase } from '../validators/schemas'
 
@@ -31,13 +31,25 @@ export const savePage = async (c: any): Promise<Answer> => {
 
 export const showPages = (c: any): Answer => {
     try {
-        const page = selectPages(jwtPayload(c))
+        const pages = selectPages(jwtPayload(c))
 
-        if (page) {
-            return reponseBuild(page, 200)
+        return reponseBuild(pages, 200)
+    } catch {
+        return reponseBuild('Server Error', 500)
+    }
+}
+
+export const showPage = (c: any): Answer => {
+    const { id } = c.req.param()
+
+    try {
+        const page = selectPage(jwtPayload(c), id)
+
+        if (!page) {
+            return reponseBuild('Page not exist', 404)
         }
 
-        return reponseBuild(page, 204)
+        return reponseBuild(page, 200)
     } catch {
         return reponseBuild('Server Error', 500)
     }

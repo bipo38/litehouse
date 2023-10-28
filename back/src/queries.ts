@@ -82,11 +82,21 @@ export const selectPagesByCron = (page: Page): Array<Page> => {
     })
 }
 
-export const selectPages = (userId: number): Page => {
+export const selectPages = (userId: number): Array<Page> => {
     return db((Db: Database) => {
         const query = Db.query('SELECT * FROM pages WHERE user_id = ?;')
 
         return query.all(userId)
+    })
+}
+
+export const selectPage = (userId: number, pageId: number): Array<Page> => {
+    return db((Db: Database) => {
+        const query = Db.query(
+            'SELECT * FROM pages WHERE user_id = ? AND page_id = ?;'
+        )
+
+        return query.get(userId, pageId)
     })
 }
 
