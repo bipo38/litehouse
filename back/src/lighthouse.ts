@@ -31,10 +31,7 @@ export const startAnalysys = async (page: Page): Promise<Analysis> => {
     return result
 }
 
-const parseLhrFile = (
-    items: Item[],
-    url: PageUrl
-): Metrics => {
+const parseLhrFile = (items: Item[], url: PageUrl): Metrics => {
     const metrics: Record<string, Stats> = {}
 
     items.forEach((item: Item) => {
