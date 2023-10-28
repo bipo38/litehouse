@@ -48,6 +48,12 @@ api.get('/pages/:id', (c): Response => {
     return c.json({ content: page.content }, page.status)
 })
 
+api.put('/pages/:id', (c): Response => {
+    const page = showPage(c)
+
+    return c.json({ content: page.content }, page.status)
+})
+
 api.notFound((c) => {
     return c.text('Something not exist', 404)
 })

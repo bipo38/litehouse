@@ -9,10 +9,11 @@ import {
 import { unlinkSync } from 'node:fs'
 import { init as initMigrations } from '../../migrations'
 import { mockUserRegister } from '../../mocks/user'
-import { insertPage, insertUser, selectUser } from '../../queries'
+import { insertUser, selectUser } from '../../queries'
 import { sign } from 'hono/jwt'
-import { mockPageBase, mockPageReq, mockPageReqWrong } from '../../mocks/page'
+import { mockPageReq, mockPageReqWrong } from '../../mocks/page'
 import { app } from '../../index'
+import { insertPage } from '../../db/queries/page'
 
 beforeAll(() => {
     process.env.DB_NAME = 'test.db'
@@ -71,11 +72,12 @@ describe('Save Page Controller', () => {
 
     test('Insert Two Pages: POST /pages', async () => {
         insertUser(mockUserRegister)
-        insertPage(mockPageBase)
 
         const user = selectUser(mockUserRegister.email)
 
         const token = await sign(user.id, Bun.env.JWT_SECRET!)
+
+        insertPage(mockPageReq, user.id)
 
         const req = new Request('http://localhost/pages', {
             method: 'POST',
@@ -95,11 +97,12 @@ describe('Save Page Controller', () => {
 describe('Show Pages Controller', () => {
     test('Get pages: GET /pages', async () => {
         insertUser(mockUserRegister)
-        insertPage(mockPageBase)
 
         const user = selectUser(mockUserRegister.email)
 
         const token = await sign(user.id, Bun.env.JWT_SECRET!)
+
+        insertPage(mockPageReq, user.id)
 
         const req = new Request('http://localhost/pages', {
             method: 'GET',
@@ -140,11 +143,12 @@ describe('Show Pages Controller', () => {
 describe('Show Page Controller', () => {
     test('Show page GET /pages/:id', async () => {
         insertUser(mockUserRegister)
-        insertPage(mockPageBase)
 
         const user = selectUser(mockUserRegister.email)
 
         const token = await sign(user.id, Bun.env.JWT_SECRET!)
+
+        insertPage(mockPageReq, user.id)
 
         const req = new Request('http://localhost/pages/1', {
             method: 'GET',

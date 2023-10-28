@@ -33,14 +33,14 @@ export const ValidateUserLogin = z.object({
     password: z.string().min(1, { message: errors.invalid_credentials }).trim(),
 })
 
-export const ValidatePageBase = z
+export const ValidatePageReq = z
     .object({
         title: z
             .string()
             .min(1, { message: 'Minimun 1 character' })
             .max(30, { message: 'Max 30 characters' }),
         cron: z.string(),
-        userId: z.number(),
+        page_id: z.number().optional(),
         urls: z.array(
             z.object({
                 title: z

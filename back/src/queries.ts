@@ -4,7 +4,6 @@ import type { Analysis } from './types/analysis'
 import { Report } from './models/report'
 import Database from 'bun:sqlite'
 import { TotalCount } from './models/queries'
-import { Page, PageBase } from './models/page'
 
 //Reports
 
@@ -55,52 +54,10 @@ export const selectUser = (email: string): User => {
     })
 }
 
-//Page
-export const insertPage = (page: PageBase): void => {
-    const pageId = countUserRegisters(page.userId, 'pages').total + 1
-
-    db((Db: Database) => {
-        const query = Db.query(
-            'INSERT INTO pages(title,urls,user_id,page_id,cron) VALUES (?,?,?,?,?);'
-        )
-
-        query.run(
-            page.title,
-            JSON.stringify(page.urls),
-            page.userId,
-            pageId,
-            page.cron
-        )
-    })
-}
-
-export const selectPagesByCron = (page: Page): Array<Page> => {
-    return db((Db: Database) => {
-        const query = Db.query('SELECT * FROM pages WHERE cron = ?;')
-
-        return query.all(page.cron)
-    })
-}
-
-export const selectPages = (userId: number): Array<Page> => {
-    return db((Db: Database) => {
-        const query = Db.query('SELECT * FROM pages WHERE user_id = ?;')
-
-        return query.all(userId)
-    })
-}
-
-export const selectPage = (userId: number, pageId: number): Array<Page> => {
-    return db((Db: Database) => {
-        const query = Db.query(
-            'SELECT * FROM pages WHERE user_id = ? AND page_id = ?;'
-        )
-
-        return query.get(userId, pageId)
-    })
-}
-
-const countUserRegisters = (userId: number, table: string): TotalCount => {
+export const countUserRegisters = (
+    userId: number,
+    table: string
+): TotalCount => {
     return db((Db: Database) => {
         const query = Db.query(
             `SELECT COUNT(user_id) AS total FROM ${table} WHERE user_id = ?;`
