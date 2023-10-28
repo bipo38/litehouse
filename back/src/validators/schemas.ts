@@ -35,6 +35,10 @@ export const ValidateUserLogin = z.object({
 
 export const ValidatePageBase = z
     .object({
+        title: z
+            .string()
+            .min(1, { message: 'Minimun 1 character' })
+            .max(30, { message: 'Max 30 characters' }),
         cron: z.string(),
         userId: z.number(),
         urls: z.array(

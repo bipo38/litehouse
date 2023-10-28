@@ -1,5 +1,7 @@
 export interface Page {
     id: number
+    title: string,
+    page_id: number,
     urls: Array<PageUrl>
     userId: number
     cron: string
@@ -8,13 +10,15 @@ export interface Page {
 }
 
 export interface PageBase {
+    title: string
     urls: Array<PageUrl>
     userId: number
     cron: string
 }
 
 export interface PageReq {
-    url: Array<PageUrl>
+    title: string
+    urls: Array<PageUrl>
     cron: string
 }
 

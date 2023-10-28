@@ -1,16 +1,16 @@
 import { Answer } from '../models/answer'
 import { PageBase, PageReq } from '../models/page'
-import { insertPage } from '../queries'
-import { reponseBuild } from '../utils'
+import { insertPage, selectPages } from '../queries'
+import { jwtPayload, reponseBuild } from '../utils'
 import { ValidatePageBase } from '../validators/schemas'
 
 export const savePage = async (c: any): Promise<Answer> => {
-    const payload = c.get('jwtPayload')
     const req: PageReq = await c.req.json()
 
     const page: PageBase = {
-        userId: payload,
-        urls: req.url,
+        title: req.title,
+        userId: jwtPayload(c),
+        urls: req.urls,
         cron: req.cron,
     }
 
@@ -26,5 +26,19 @@ export const savePage = async (c: any): Promise<Answer> => {
         return reponseBuild('Sucessful creation', 201)
     } catch {
         return reponseBuild('Faling creating page', 409)
+    }
+}
+
+export const showPages = (c: any): Answer => {
+    try {
+        const page = selectPages(jwtPayload(c))
+
+        if (page) {
+            return reponseBuild(page, 200)
+        }
+
+        return reponseBuild(page, 204)
+    } catch {
+        return reponseBuild('Server Error', 500)
     }
 }

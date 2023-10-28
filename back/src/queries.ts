@@ -3,7 +3,7 @@ import type { User, UserRegister } from './models/user'
 import type { Analysis } from './types/analysis'
 import { Report } from './models/report'
 import Database from 'bun:sqlite'
-import { ReportsTotalUser } from './models/queries'
+import { TotalCount } from './models/queries'
 import { Page, PageBase } from './models/page'
 
 //Reports
@@ -26,7 +26,7 @@ export const selectReport = (userId: number, reportId: number): Report => {
 }
 
 export const insertReport = (analysis: Analysis, userId: number): void => {
-    const reportId = countUserReports(userId).totalReports + 1
+    const reportId = countUserRegisters(userId, 'reports').total + 1
 
     db((Db: Database) => {
         const query = Db.query(
@@ -34,15 +34,6 @@ export const insertReport = (analysis: Analysis, userId: number): void => {
         )
 
         query.run(reportId, JSON.stringify(analysis), userId)
-    })
-}
-
-const countUserReports = (userId: number): ReportsTotalUser => {
-    return db((Db: Database) => {
-        const query = Db.query(
-            'SELECT COUNT(user_id) AS totalReports FROM reports WHERE user_id = ?;'
-        )
-        return query.get(userId)
     })
 }
 
@@ -66,16 +57,24 @@ export const selectUser = (email: string): User => {
 
 //Page
 export const insertPage = (page: PageBase): void => {
+    const pageId = countUserRegisters(page.userId, 'pages').total + 1
+
     db((Db: Database) => {
         const query = Db.query(
-            'INSERT INTO pages(user_id,urls,cron) VALUES (?,?,?);'
+            'INSERT INTO pages(title,urls,user_id,page_id,cron) VALUES (?,?,?,?,?);'
         )
 
-        query.run(page.userId, JSON.stringify(page.urls), page.cron)
+        query.run(
+            page.title,
+            JSON.stringify(page.urls),
+            page.userId,
+            pageId,
+            page.cron
+        )
     })
 }
 
-export const selectPages = (page: Page): Array<Page> => {
+export const selectPagesByCron = (page: Page): Array<Page> => {
     return db((Db: Database) => {
         const query = Db.query('SELECT * FROM pages WHERE cron = ?;')
 
@@ -83,10 +82,20 @@ export const selectPages = (page: Page): Array<Page> => {
     })
 }
 
-export const selectPage = (page: Page): Page => {
+export const selectPages = (userId: number): Page => {
     return db((Db: Database) => {
         const query = Db.query('SELECT * FROM pages WHERE user_id = ?;')
 
-        return query.all(page.userId)
+        return query.all(userId)
+    })
+}
+
+const countUserRegisters = (userId: number, table: string): TotalCount => {
+    return db((Db: Database) => {
+        const query = Db.query(
+            `SELECT COUNT(user_id) AS total FROM ${table} WHERE user_id = ?;`
+        )
+
+        return query.get(userId)
     })
 }
