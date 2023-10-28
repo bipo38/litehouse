@@ -21,7 +21,7 @@ export const saveUser = async (c: any): Promise<Answer> => {
 
         return reponseBuild('Succesful register', 201)
     } catch {
-        return reponseBuild('Failed creatng user', 200)
+        return reponseBuild('Failed creating user', 200)
     }
 }
 
@@ -33,7 +33,7 @@ export const loginUser = async (c: any): Promise<Answer> => {
     const validateUser = ValidateUserLogin.safeParse(req)
 
     if (!validateUser.success) {
-        return invalid
+        return reponseBuild('Content type invalid', 422)
     }
 
     const user = selectUser(req.email)

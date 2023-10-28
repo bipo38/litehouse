@@ -15,6 +15,7 @@ import {
     mockPassword,
     mockUserRegister,
     mockUserRegisterNotHash,
+    mockUserRegisterNotHashInvalid,
 } from '../../mocks/user'
 
 beforeAll(() => {
@@ -58,6 +59,21 @@ describe('Register Controller', () => {
         const res = await app.request(req)
         expect(res.status).toBe(200)
     })
+
+    test('User Invalid Data Registered: POST /register', async () => {
+        insertUser(mockUserRegister)
+
+        const req = new Request('http://localhost/register', {
+            method: 'POST',
+            body: JSON.stringify(mockUserRegisterNotHashInvalid),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+
+        const res = await app.request(req)
+        expect(res.status).toBe(422)
+    })
 })
 
 describe('Login Controller', async () => {
@@ -98,6 +114,26 @@ describe('Login Controller', async () => {
         const res = await app.request(req)
 
         expect(res.status).toBe(401)
+        expect(res.headers.get('Set-Cookie')).toBe(null)
+    })
+
+    test('Invalid User Data: POST /login', async () => {
+        insertUser(mockUserRegister)
+
+        const req = new Request('http://localhost/login', {
+            method: 'POST',
+            body: JSON.stringify({
+                email: '',
+                password: mockPassword.concat('h'),
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+
+        const res = await app.request(req)
+
+        expect(res.status).toBe(422)
         expect(res.headers.get('Set-Cookie')).toBe(null)
     })
 })

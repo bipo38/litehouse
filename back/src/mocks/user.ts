@@ -17,3 +17,10 @@ export const mockUserRegisterNotHash = {
     password: mockPassword,
     password_confirm: mockPassword,
 } as UserRegister
+
+export const mockUserRegisterNotHashInvalid = {
+    name: 'Steve',
+    email: 'egmail.com',
+    password: mockPassword,
+    password_confirm: mockPassword,
+} as UserRegister
