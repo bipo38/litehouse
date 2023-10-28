@@ -185,3 +185,73 @@ describe('Show Page Controller', () => {
         expect(res.status).toBe(404)
     })
 })
+
+describe('Update Page Controller', () => {
+    test('Update Page PUT /pages/:id', async () => {
+        insertUser(mockUserRegister)
+
+        const user = selectUser(mockUserRegister.email)
+
+        const token = await sign(user.id, Bun.env.JWT_SECRET!)
+
+        insertPage(mockPageReq, user.id)
+
+        const r = mockPageReq
+        r.title = 'pio'
+
+        const req = new Request('http://localhost/pages/1', {
+            method: 'PUT',
+            credentials: 'include',
+            body: JSON.stringify(r),
+            headers: {
+                'Content-Type': 'application/json',
+                Cookie: 'jwt='.concat(token),
+            },
+        })
+
+        const res = await app.request(req)
+        expect(res.status).toBe(200)
+    })
+
+    test('Not Found Page PUT /pages/:id', async () => {
+        insertUser(mockUserRegister)
+
+        const user = selectUser(mockUserRegister.email)
+
+        const token = await sign(user.id, Bun.env.JWT_SECRET!)
+
+        const req = new Request('http://localhost/pages/1', {
+            method: 'PUT',
+            credentials: 'include',
+            body: JSON.stringify(mockPageReq),
+            headers: {
+                'Content-Type': 'application/json',
+                Cookie: 'jwt='.concat(token),
+            },
+        })
+
+        const res = await app.request(req)
+        expect(res.status).toBe(404)
+    })
+
+    test('Invalid Page PUT /pages/:id', async () => {
+        insertUser(mockUserRegister)
+
+        const user = selectUser(mockUserRegister.email)
+
+        const token = await sign(user.id, Bun.env.JWT_SECRET!)
+
+        const req = new Request('http://localhost/pages/1', {
+            method: 'PUT',
+            credentials: 'include',
+            body: JSON.stringify(mockPageReqWrong),
+            headers: {
+                'Content-Type': 'application/json',
+                Cookie: 'jwt='.concat(token),
+            },
+        })
+
+        const res = await app.request(req)
+        expect(res.status).toBe(422)
+    })
+})

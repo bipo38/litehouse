@@ -1,6 +1,11 @@
 import { Answer } from '../models/answer'
 import { PageReq } from '../models/page'
-import { insertPage, selectPage, selectPages } from '../db/queries/page'
+import {
+    insertPage,
+    selectPage,
+    selectPages,
+    updatesPage,
+} from '../db/queries/page'
 import { jwtPayload, reponseBuild } from '../utils'
 import { ValidatePageReq } from '../validators/schemas'
 
@@ -10,7 +15,6 @@ export const savePage = async (c: any): Promise<Answer> => {
     const validatePage = ValidatePageReq.safeParse(req)
 
     if (!validatePage.success) {
-        console.error(validatePage.error)
         return reponseBuild('Content type invalid', 422)
     }
 
@@ -38,6 +42,29 @@ export const showPage = (c: any): Answer => {
 
     try {
         const page = selectPage(id, jwtPayload(c))
+
+        if (!page) {
+            return reponseBuild('Page not exist', 404)
+        }
+
+        return reponseBuild(page as PageReq, 200)
+    } catch {
+        return reponseBuild('Server Error', 500)
+    }
+}
+
+export const updatePage = async (c: any): Promise<Answer> => {
+    const { id } = c.req.param()
+    const req: PageReq = await c.req.json()
+
+    const validatePage = ValidatePageReq.safeParse(req)
+
+    if (!validatePage.success) {
+        return reponseBuild('Content type invalid', 422)
+    }
+
+    try {
+        const page = updatesPage(req, jwtPayload(c), id)
 
         if (!page) {
             return reponseBuild('Page not exist', 404)

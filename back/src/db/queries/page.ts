@@ -46,3 +46,25 @@ export const selectPage = (pageId: number, userId: number): Page => {
         return query.get(userId, pageId)
     })
 }
+
+export const updatesPage = (
+    page: PageReq,
+    userId: number,
+    pageId: number
+): Page => {
+    return db((Db: Database) => {
+        const query = Db.query(
+            'UPDATE pages SET title = ? ,urls = ?,cron = ? WHERE user_id = ? AND page_id = ?;'
+        )
+
+        query.run(
+            page.title,
+            JSON.stringify(page.urls),
+            page.cron,
+            userId,
+            pageId
+        )
+
+        return selectPage(pageId, userId)
+    })
+}
