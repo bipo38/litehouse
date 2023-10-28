@@ -13,7 +13,7 @@ app.use(
 )
 
 app.use(
-    'page/*',
+    'pages/*',
     jwt({
         secret: Bun.env.JWT_SECRET!,
         cookie: 'jwt',

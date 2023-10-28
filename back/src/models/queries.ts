@@ -1,3 +1,3 @@
-export interface ReportsTotalUser {
-    totalReports: number
+export interface TotalCount {
+    total: number
 }

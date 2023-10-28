@@ -1,7 +1,7 @@
 import { setCookie } from 'hono/cookie'
 import { insertUser, selectUser } from '../queries'
 import { reponseBuild, passwordEncrypt } from '../utils'
-import { ValidateUserRegister } from '../validators/schemas'
+import { ValidateUserLogin, ValidateUserRegister } from '../validators/schemas'
 import { sign } from 'hono/jwt'
 import { Answer } from '../models/answer'
 
@@ -19,7 +19,7 @@ export const saveUser = async (c: any): Promise<Answer> => {
     try {
         insertUser(req)
 
-        return reponseBuild('User created succesfully', 201)
+        return reponseBuild('Succesful register', 201)
     } catch {
         return reponseBuild('Failed creatng user', 200)
     }
@@ -28,10 +28,15 @@ export const saveUser = async (c: any): Promise<Answer> => {
 export const loginUser = async (c: any): Promise<Answer> => {
     const req = await c.req.json()
 
-    const user = selectUser(req.email)
-
     const invalid = reponseBuild('Invalid Credentials', 401)
 
+    const validateUser = ValidateUserLogin.safeParse(req)
+
+    if (!validateUser.success) {
+        return invalid
+    }
+
+    const user = selectUser(req.email)
     if (!user) {
         return invalid
     }
@@ -42,11 +47,9 @@ export const loginUser = async (c: any): Promise<Answer> => {
         return invalid
     }
 
-    const token = await createToken(user.id)
+    setCookie(c, 'jwt', await createToken(user.id))
 
-    setCookie(c, 'jwt', token)
-
-    return reponseBuild('Succesful', 200)
+    return reponseBuild('Succesful Login', 200)
 }
 
 const createToken = async (id: number): Promise<string> => {

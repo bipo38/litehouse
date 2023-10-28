@@ -1,28 +1,51 @@
 import { z } from 'zod'
 
+const errors = {
+    invalid_credentials: 'Invalid credentials',
+    password_lenght: 'Password must be 6 characters',
+}
+
 export const ValidateUserRegister = z
     .object({
-        name: z.string().min(1, { message: 'Invalid username' }).trim(),
+        name: z
+            .string()
+            .min(1, { message: 'Invalid username. Must be 1 character.' })
+            .trim(),
         email: z
             .string()
             .min(1, { message: 'This field has to be filled.' })
             .email({ message: 'Invalid email' }),
-        password: z.string(),
-        password_confirm: z.string(),
+        password: z.string().min(6, { message: errors.password_lenght }).trim(),
+        password_confirm: z
+            .string()
+            .min(6, { message: errors.password_lenght })
+            .trim(),
     })
     .refine((user) => user.password === user.password_confirm, {
         message: "Passwords don't match",
     })
 
+export const ValidateUserLogin = z.object({
+    email: z
+        .string()
+        .min(1, { message: errors.invalid_credentials })
+        .email({ message: errors.invalid_credentials }),
+    password: z.string().min(1, { message: errors.invalid_credentials }).trim(),
+})
+
 export const ValidatePageBase = z
     .object({
+        title: z
+            .string()
+            .min(1, { message: 'Minimun 1 character' })
+            .max(30, { message: 'Max 30 characters' }),
         cron: z.string(),
         userId: z.number(),
         urls: z.array(
             z.object({
-                name: z
+                title: z
                     .string()
-                    .min(1, { message: 'Minimun one character in the name' })
+                    .min(1, { message: 'Minimun 1 character in the title' })
                     .trim(),
                 url: z.string().url(),
             })

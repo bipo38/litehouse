@@ -1,3 +1,4 @@
+import { unknown } from 'zod'
 import { Answer } from './models/answer'
 
 export const passwordEncrypt = async (pass: string): Promise<string> => {
@@ -6,4 +7,8 @@ export const passwordEncrypt = async (pass: string): Promise<string> => {
 
 export const reponseBuild = (message: any, status: number): Answer => {
     return { content: message, status: status }
+}
+
+export const jwtPayload = (req: any): number => {
+    return req.get('jwtPayload')
 }

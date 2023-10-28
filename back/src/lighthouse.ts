@@ -1,5 +1,5 @@
 import { Item, Metrics, Stats } from './models/lighthouse'
-import { Page } from './models/page'
+import { Page, PageUrl } from './models/page'
 import { Analysis } from './types/analysis'
 
 export const startAnalysys = async (page: Page): Promise<Analysis> => {
@@ -33,7 +33,7 @@ export const startAnalysys = async (page: Page): Promise<Analysis> => {
 
 const parseLhrFile = (
     items: Item[],
-    url: { name: string; url: string }
+    url: PageUrl
 ): Metrics => {
     const metrics: Record<string, Stats> = {}
 
@@ -53,7 +53,7 @@ const parseLhrFile = (
     })
 
     return {
-        name: url.name,
+        name: url.title,
         url: url.url,
         stats: metrics,
     }

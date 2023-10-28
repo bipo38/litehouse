@@ -1,20 +1,17 @@
 import { selectReport, selectReports } from '../queries'
 import { Answer } from '../models/answer'
-import { reponseBuild } from '../utils'
+import { jwtPayload, reponseBuild } from '../utils'
 
 export const showReports = (c: any): Answer => {
-    const payload = c.get('jwtPayload')
-
-    const reports = selectReports(payload)
+    const reports = selectReports(jwtPayload(c))
 
     return reponseBuild(reports, 200)
 }
 
 export const showReport = (c: any): Answer => {
-    const payload = c.get('jwtPayload')
     const { id } = c.req.param()
 
-    const report = selectReport(payload, id)
+    const report = selectReport(jwtPayload(c), id)
 
     if (!report) {
         return reponseBuild('Report not exist', 404)
