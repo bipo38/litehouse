@@ -1,5 +1,5 @@
 import Database from 'bun:sqlite'
-import { countUserRegisters } from '../../queries'
+import { countUserRegisters } from '../queries'
 import { Page, PageReq } from '../../models/page'
 import { db } from '../../db'
 

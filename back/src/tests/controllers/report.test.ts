@@ -8,12 +8,13 @@ import {
 } from 'bun:test'
 import { init as initMigrations } from '../../migrations'
 import { unlinkSync } from 'node:fs'
-import { insertReport, insertUser, selectUser } from '../../queries'
+import { insertUser, selectUser } from '../../db/queries/user'
 import { app } from '../../index'
 
 import { sign } from 'hono/jwt'
 import { mockAnalysis } from '../../mocks/analysis'
 import { mockUserRegister } from '../../mocks/user'
+import { insertReport } from '../../db/queries/report'
 
 beforeAll(() => {
     process.env.DB_NAME = 'test.db'

@@ -1,5 +1,5 @@
 import { setCookie } from 'hono/cookie'
-import { insertUser, selectUser } from '../queries'
+import { insertUser, selectUser } from '../db/queries/user'
 import { reponseBuild, passwordEncrypt } from '../utils'
 import { ValidateUserLogin, ValidateUserRegister } from '../validators/schemas'
 import { sign } from 'hono/jwt'

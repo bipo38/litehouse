@@ -1,4 +1,5 @@
-import { selectReport, selectReports } from '../queries'
+
+import { selectReport, selectReports } from '../db/queries/report'
 import { Answer } from '../models/answer'
 import { jwtPayload, reponseBuild } from '../utils'
 

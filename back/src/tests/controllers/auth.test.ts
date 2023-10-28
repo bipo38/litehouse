@@ -7,7 +7,7 @@ import {
     test,
 } from 'bun:test'
 import { app } from '../../index'
-import { insertUser } from '../../queries'
+import { insertUser } from '../../db/queries/user'
 import { init as initMigrations } from '../../migrations'
 import { unlinkSync } from 'node:fs'
 
