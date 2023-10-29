@@ -13,7 +13,7 @@ export const mockPageReqWrong = {
 
 export const mockPageReq = {
     title: 'Google',
-    urls: [mockPageUrl],
+    urls: [mockPageUrl, mockPageUrl],
     cron: 'month',
 } as PageReq
 
@@ -22,6 +22,6 @@ export const mockPage = {
     title: 'Google',
     page_id: 1,
     urls: [mockPageUrl],
-    userId: 1,
+    user_id: 1,
     cron: 'week',
 } as Page

@@ -5,7 +5,7 @@ import { Analysis } from './types/analysis'
 export const startAnalysys = async (page: Page): Promise<Analysis> => {
     const result: Analysis = []
 
-    for await (const url of page.urls) {
+    for await (const url of JSON.parse(page.urls) as Array<PageUrl>) {
         const items = []
 
         for (let i = 0; i != 2; i++) {
@@ -15,11 +15,8 @@ export const startAnalysys = async (page: Page): Promise<Analysis> => {
                 `${url.url}`,
                 `${i.toString()}`,
             ])
-
             const text = await new Response(cmd.stdout).text()
-
             const parsed = JSON.parse(text)
-
             items.push(parsed)
         }
 
@@ -40,12 +37,13 @@ const parseLhrFile = (items: Item[], url: PageUrl): Metrics => {
             performance: item.lhr.categories.performance?.score * 100,
             accessibility: item.lhr.categories.accessibility?.score * 100,
             bestPractices: item.lhr.categories['best-practices']?.score * 100,
-            average:
+            average: Math.trunc(
                 (item.lhr.categories.performance?.score * 100 +
                     item.lhr.categories.seo?.score * 100 +
                     item.lhr.categories.accessibility?.score * 100 +
                     item.lhr.categories['best-practices']?.score * 100) /
-                4,
+                    4
+            ),
         }
     })
 

@@ -2,14 +2,14 @@ import { Analysis } from '../types/analysis'
 
 export interface Report {
     id: number
-    reportId: number
+    report_id: number
     analysis: Analysis
-    userId: number
-    createdAt: Date
-    updatedAt: Date
+    user_id: number
+    created_at: Date
+    updated_at: Date
 }
 
 export interface ReportBase {
     analysis: Analysis
-    userId: number
+    user_id: number
 }

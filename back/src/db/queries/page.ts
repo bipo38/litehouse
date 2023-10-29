@@ -21,11 +21,11 @@ export const insertPage = (page: PageReq, userId: number): void => {
     })
 }
 
-export const selectPagesByCron = (page: Page): Array<Page> => {
+export const selectPagesByCron = (cron: string): Array<Page> => {
     return db((Db: Database) => {
         const query = Db.query('SELECT * FROM pages WHERE cron = ?;')
 
-        return query.all(page.cron)
+        return query.all(cron)
     })
 }
 

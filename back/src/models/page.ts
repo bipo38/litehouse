@@ -3,10 +3,10 @@ export interface Page {
     title: string
     page_id: number
     urls: Array<PageUrl>
-    userId: number
+    user_id: number
     cron: string
-    createdAt: Date
-    updatedAt: Date
+    created_at: Date
+    updated_at: Date
 }
 
 export interface PageReq {
