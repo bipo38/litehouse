@@ -1,4 +1,3 @@
-import { unknown } from 'zod'
 import { Answer } from './models/answer'
 
 export const passwordEncrypt = async (pass: string): Promise<string> => {
