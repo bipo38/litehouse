@@ -1,10 +1,7 @@
 import { CronJob } from 'cron'
-import { insertPage, selectPagesByCron } from './db/queries/page'
+import { selectPagesByCron } from './db/queries/page'
 import { startAnalysys } from './lighthouse'
 import { insertReport } from './db/queries/report'
-import { mockPage, mockPageReq } from './mocks/page'
-import { Page, PageUrl } from './models/page'
-import { mockAnalysis } from './mocks/analysis'
 
 export const jobWeek = new CronJob(
     '0 3 * * 3',
