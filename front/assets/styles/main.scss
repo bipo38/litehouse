@@ -1,4 +1,4 @@
-@use "imports";
+@use "./imports";
 @import url("https://fonts.googleapis.com/css2?family=Agbalumo&family=Josefin+Sans:wght@400;500&display=swap");
 
 *,
@@ -17,7 +17,7 @@ html {
 
     line-height: 1.5;
 
-    background-color: #f6fcfe;
+    background-color: var(--clr-background);
 
     color: var(--clr-text);
 }

@@ -1,19 +1,28 @@
 :root {
-    --clr-background: hsl(195, 80, 98);
+    --hue-shadows: 223;
+    --hue-primary: 223;
+    --hue-background: 195;
 
-    --clr-primary: hsl(197, 64%, 73%);
-    --clr-secondary: hsl(197, 64%, 87%);
+    --clr-primary: hsl(var(--hue-primary), 97%, 45%);
+    --clr-secondary: hsl(223, 97%, 86%);
+
+    --clr-background: hsl(var(--hue-background), 80%, 98%);
+
+
     --clr-text: hsl(196, 65%, 8%);
+    --clr-text-secondary: hsl(var(--hue-background), 80%, 98%);
 
-    --clr-primary-shadow-900: hsl(195, 80%, 10%);
-    --clr-primary-shadow-800: hsl(195, 80%, 20%);
-    --clr-primary-shadow-700: hsl(195, 80%, 30%);
-    --clr-primary-shadow-600: hsl(195, 80%, 40%);
-    --clr-primary-shadow-500: hsl(195, 80%, 50%);
-    --clr-primary-shadow-400: hsl(195, 80%, 60%);
-    --clr-primary-shadow-300: hsl(195, 80%, 70%);
-    --clr-primary-shadow-200: hsl(195, 80%, 80%);
-    --clr-primary-shadow-100: hsl(195, 80%, 90%);
+
+    --clr-primary-shadow-900: hsl(var(--hue-shadows), 95%, 10%);
+    --clr-primary-shadow-950: hsl(var(--hue-shadows), 95%, 20%);
+    --clr-primary-shadow-700: hsl(var(--hue-shadows), 95%, 30%);
+    --clr-primary-shadow-650: hsl(var(--hue-shadows), 95%, 35%);
+    --clr-primary-shadow-600: hsl(var(--hue-shadows), 95%, 40%);
+    --clr-primary-shadow-500: hsl(var(--hue-shadows), 95%, 50%);
+    --clr-primary-shadow-400: hsl(var(--hue-shadows), 95%, 60%);
+    --clr-primary-shadow-300: hsl(var(--hue-shadows), 95%, 70%);
+    --clr-primary-shadow-200: hsl(var(--hue-shadows), 95%, 80%);
+    --clr-primary-shadow-100: hsl(var(--hue-shadows), 95%, 90%);
 
     --clr-gray-1: #d5d2d1;
     --clr-gray-2: #c0bdbc;

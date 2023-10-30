@@ -1,6 +1,7 @@
 <template>
     <div class="page--home">
         <h1>Working 🔨</h1>
+        <button class="button--primary button">Hola</button>
     </div>
 </template>
 

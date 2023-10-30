@@ -1,0 +1,27 @@
+button,
+.button {
+    border: none;
+    cursor: pointer;
+
+    border-radius: 4px;
+
+    padding: 0.25em 0.75em;
+    min-width: 10ch;
+    min-height: 44px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    line-height: 1.1;
+    text-align: center;
+
+    &--primary {
+        background-color: var(--clr-primary);
+        color: var(--clr-text-secondary);
+    }
+
+    &--block {
+        width: 100%;
+    }
+}
