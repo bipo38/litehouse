@@ -21,6 +21,11 @@ button,
         color: var(--clr-text-secondary);
     }
 
+    &--secondary {
+        background-color: var(--clr-secondary);
+        color: var(--clr-text);
+    }
+
     &--block {
         width: 100%;
     }
