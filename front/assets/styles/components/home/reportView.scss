@@ -1,0 +1,22 @@
+.report-view {
+    display: flex;
+    flex-direction: column;
+
+    cursor: pointer;
+
+    padding: 0.4em;
+
+    text-decoration: none;
+    color: inherit;
+
+    border-radius: 8px;
+
+    max-width: 300px;
+
+    border: 1px solid #333;
+
+    &__info {
+        flex: 2;
+        font-weight: 700;
+    }
+}

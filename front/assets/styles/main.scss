@@ -43,6 +43,34 @@ h4 {
     hyphens: auto;
 }
 
+h1,
+.h1 {
+    --font-size: var(--headline-1);
+
+    font-size: var(--headline-1);
+}
+
+h2,
+.h2 {
+    --font-size: var(--headline-2);
+
+    font-size: var(--headline-2);
+}
+
+h3,
+.h3 {
+    --font-size: var(--headline-3);
+
+    font-size: var(--headline-3);
+}
+
+h4,
+.h4 {
+    --font-size: var(--headline-4);
+
+    font-size: var(--headline-4);
+}
+
 input,
 button,
 textarea,
@@ -57,4 +85,25 @@ canvas,
 svg {
     display: block;
     max-width: 100%;
+}
+
+.layout--default {
+    min-width: 100vw;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    > main {
+        padding: 0 0.5em;
+
+        flex: 1;
+
+        display: flex;
+        flex-direction: column;
+
+        .page {
+            width: 100%;
+        }
+    }
 }
