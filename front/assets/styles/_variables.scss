@@ -1,35 +1,33 @@
 :root {
-    --hue-shadows: 223;
-    --hue-primary: 223;
-    --hue-background: 195;
+    --hue: 223;
 
-    --clr-primary: hsl(var(--hue-primary), 97%, 45%);
-    --clr-secondary: hsl(223, 97%, 86%);
+    --clr-primary: hsl(var(--hue), 97%, 45%);
+    --clr-secondary: hsl(var(--hue), 97%, 86%);
 
-    --clr-background: hsl(var(--hue-background), 80%, 98%);
+    --clr-background: hsl(var(--hue), 80%, 98%);
 
-    --clr-text: hsl(196, 65%, 8%);
-    --clr-text-secondary: hsl(var(--hue-background), 80%, 98%);
+    --clr-text: hsl(var(--hue), 65%, 8%);
+    --clr-text-secondary: hsl(var(--hue), 80%, 98%);
 
-    --clr-primary-shadow-900: hsl(var(--hue-shadows), 95%, 10%);
-    --clr-primary-shadow-950: hsl(var(--hue-shadows), 95%, 20%);
-    --clr-primary-shadow-700: hsl(var(--hue-shadows), 95%, 30%);
-    --clr-primary-shadow-650: hsl(var(--hue-shadows), 95%, 35%);
-    --clr-primary-shadow-600: hsl(var(--hue-shadows), 95%, 40%);
-    --clr-primary-shadow-500: hsl(var(--hue-shadows), 95%, 50%);
-    --clr-primary-shadow-400: hsl(var(--hue-shadows), 95%, 60%);
-    --clr-primary-shadow-300: hsl(var(--hue-shadows), 95%, 70%);
-    --clr-primary-shadow-200: hsl(var(--hue-shadows), 95%, 80%);
-    --clr-primary-shadow-100: hsl(var(--hue-shadows), 95%, 90%);
+    --clr-primary-shadow-900: hsl(var(--hue), 95%, 10%);
+    --clr-primary-shadow-950: hsl(var(--hue), 95%, 20%);
+    --clr-primary-shadow-700: hsl(var(--hue), 95%, 30%);
+    --clr-primary-shadow-650: hsl(var(--hue), 95%, 35%);
+    --clr-primary-shadow-600: hsl(var(--hue), 95%, 40%);
+    --clr-primary-shadow-500: hsl(var(--hue), 95%, 50%);
+    --clr-primary-shadow-400: hsl(var(--hue), 95%, 60%);
+    --clr-primary-shadow-300: hsl(var(--hue), 95%, 70%);
+    --clr-primary-shadow-200: hsl(var(--hue), 95%, 80%);
+    --clr-primary-shadow-100: hsl(var(--hue), 95%, 90%);
 
-    --clr-gray-1: #d5d2d1;
-    --clr-gray-2: #c0bdbc;
-    --clr-gray-3: #9b9897;
-    --clr-gray-4: #807e7d;
-    --clr-gray-5: #676565;
-    --clr-gray-7: #4d4c4c;
-    --clr-gray-8: #333;
-    --clr-gray-9: #1a1919;
+    --clr-gray-1: hsl(var(--hue), 5%, 83%);
+    --clr-gray-2: hsl(var(--hue), 3%, 75%);
+    --clr-gray-3: hsl(var(--hue), 2%, 60%);
+    --clr-gray-4: hsl(var(--hue), 15%, 50%);
+    --clr-gray-5: hsl(var(--hue), 1%, 40%);
+    --clr-gray-7: hsl(var(--hue), 1%, 30%);
+    --clr-gray-8: hsl(var(--hue), 0%, 20%);
+    --clr-gray-9: hsl(var(--hue), 2%, 10%);
 
     --headline-1: 3.052rem;
     --headline-2: 2.441rem;
