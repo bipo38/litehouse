@@ -7,7 +7,7 @@ definePageMeta({
 <template>
     <div class="page--signin">
 
-        <h1>Sign in</h1>
+        <h2>Sign in</h2>
         <form @submit.prevent="">
             <input class="input--default" type="email" required placeholder="Email">
             <input class="input--default" type="password" required placeholder="Password">

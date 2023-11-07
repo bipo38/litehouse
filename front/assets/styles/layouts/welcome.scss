@@ -7,4 +7,37 @@
     > div {
         flex: 1;
     }
+
+    &__banner {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        > div {
+            display: flex;
+            align-items: center;
+            gap: 0.6em;
+
+            h1 {
+                margin: 0;
+            }
+
+            i {
+                width: 70px;
+                height: 70px;
+            }
+        }
+
+        > p {
+            margin-top: 0;
+
+            text-align: center;
+
+            color: var(--clr-gray-5);
+        }
+
+        background: radial-gradient(circle at center, var(--clr-gray-2) 0.5px, var(--clr-background) 0.5px);
+        background-size: 10px 10px;
+    }
 }
