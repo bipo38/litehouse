@@ -1,5 +1,5 @@
 <template>
-    <main class="page--home">
+    <div class="page page--home">
 
         <div class="page--home__intro">
             <div>
@@ -9,10 +9,10 @@
             <p>Lighthouse in a simple way</p>
         </div>
         <div class="page--home__login-btns">
-            <button class="button--primary button--big" aria-label="Sign in button">Sign in</button>
-            <button class="button--outline button--big" aria-label="Sign up button">Sign up</button>
+            <nuxt-link to="/" class="button button--primary button--big" aria-label="Sign in button">Sign in</nuxt-link>
+            <nuxt-link to="/" class="button button--outline button--big" aria-label="Sign up button">Sign up</nuxt-link>
         </div>
-    </main>
+    </div>
 </template>
 
 <style lang="scss">

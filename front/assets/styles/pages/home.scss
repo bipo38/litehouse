@@ -1,11 +1,17 @@
 .page--home {
-    max-width: 1200px;
-    margin: 0 auto;
-
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    gap: 1em;
+    flex: 1;
+
+    margin: 0 auto;
+
+    gap: 0.8em;
+
+    // background: radial-gradient(circle at center, var(--clr-gray-2) 0.5px, var(--clr-background) 0.5px);
+    // background-size: 10px 10px;
 
     &__intro {
         display: flex;
@@ -27,12 +33,11 @@
                 margin: 0;
             }
         }
-
         > p {
-            margin: 0;
+            margin-top: 0;
+
             text-align: center;
 
-            // color: var(--clr-gray-5);
             color: var(--clr-gray-5);
         }
     }
