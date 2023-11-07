@@ -1,5 +1,11 @@
+<script setup lang="ts">
+definePageMeta({
+    layout: 'welcome'
+})
+</script>
+
 <template>
-    <div class="page page--signin">
+    <div class="page--signin">
 
         <h1>Sign in</h1>
         <form @submit.prevent="">
