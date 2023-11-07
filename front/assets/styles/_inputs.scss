@@ -1,0 +1,27 @@
+input,
+.input {
+    line-height: 1.25;
+
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+
+    outline-offset: var(--outline-offset);
+
+    border-radius: var(--radius);
+
+    &--default {
+        background-color: transparent;
+        border: 1px solid var(--clr-border);
+
+        &:placeholder-shown {
+            color: var(--clr-gray-5);
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--clr-gray-5);
+        }
+    }
+}

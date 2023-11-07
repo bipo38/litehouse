@@ -1,4 +1,24 @@
-a {
+a,
+.link {
     text-decoration: none;
     color: inherit;
+
+    outline-offset: var(--outline-offset);
+
+    &--underline {
+        color: var(--clr-gray-5);
+
+        &:hover {
+            text-decoration: underline;
+            color: var(--clr-gray-5);
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--clr-gray-5);
+        }
+    }
+
+    &--small {
+        font-size: 0.875rem;
+    }
 }

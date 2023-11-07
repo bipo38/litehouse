@@ -1,0 +1,32 @@
+.page--signin {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    flex: 1;
+
+    gap: 0.8em;
+
+    h1 {
+        margin: 0;
+    }
+
+    > form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8em;
+
+        > label {
+            display: flex;
+            flex-direction: column;
+
+            font-weight: 500;
+        }
+    }
+
+    &__links {
+        display: flex;
+        gap: 0.4em;
+    }
+}

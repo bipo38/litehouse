@@ -27,10 +27,6 @@ body {
     font-family: var(--ff-base);
 
     margin: 0;
-
-    :is(a, button) {
-        outline-offset: max(2px, 0.08em);
-    }
 }
 
 p,
