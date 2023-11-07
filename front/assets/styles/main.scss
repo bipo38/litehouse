@@ -8,7 +8,6 @@
 }
 
 * {
-    margin: 0;
     padding: 0;
 }
 
@@ -26,6 +25,8 @@ body {
     -webkit-font-smoothing: antialiased;
 
     font-family: var(--ff-base);
+
+    margin: 0;
 
     :is(a, button) {
         outline-offset: max(2px, 0.08em);
@@ -95,7 +96,7 @@ svg {
     flex-direction: column;
 
     > main {
-        padding: 0 0.5em;
+        padding: 0 0.4em;
 
         flex: 1;
 
