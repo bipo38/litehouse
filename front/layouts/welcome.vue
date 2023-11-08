@@ -2,7 +2,7 @@
     <div class="layout--welcome">
         <div class="layout--welcome__banner">
             <div>
-                <h1>Litehouse</h1>
+                <h1>LiteHouse</h1>
                 <MiscIconLoader name="light" />
             </div>
             <p>Lighthouse in a simple way</p>
@@ -12,5 +12,7 @@
 </template>
 
 <style lang="scss">
-@use '~/assets/styles/layouts/welcome.scss'
+@use '~/assets/styles/layouts/welcome.scss';
+@use '~/assets/styles/pages/login.scss';
 </style>
+

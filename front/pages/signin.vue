@@ -5,7 +5,7 @@ definePageMeta({
 </script>
 
 <template>
-    <div class="page--signin">
+    <div class="page--login">
 
         <h2>Sign in</h2>
         <form @submit.prevent="">
@@ -14,14 +14,9 @@ definePageMeta({
 
             <button class="button--primary">Sign in</button>
         </form>
-        <div class="page--signin__links">
-            <nuxt-link to="/" class="link--underline link--small">Forgot password?</nuxt-link>
-
+        <div class="page--login__links">
             <nuxt-link to="/signup" class="link--underline link--small">Not registered yet?</nuxt-link>
+            <nuxt-link to="/" class="link--underline link--small">Forgot password?</nuxt-link>
         </div>
     </div>
 </template>
-
-<style lang="scss">
-@use '~/assets/styles/pages/signin.scss'
-</style>
