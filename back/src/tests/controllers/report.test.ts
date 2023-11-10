@@ -8,7 +8,7 @@ import {
 } from 'bun:test'
 import { init as initMigrations } from '../../migrations'
 import { unlinkSync } from 'node:fs'
-import { insertUser, selectUser } from '../../db/queries/user'
+import { insertUser, selectUserByEmail } from '../../db/queries/user'
 import { app } from '../../index'
 
 import { sign } from 'hono/jwt'
@@ -29,16 +29,16 @@ afterEach(() => {
 })
 
 describe('Show Posts Controller', () => {
-    test('Show Reports: GET /reports', async () => {
+    test('Show Reports: GET /api/reports', async () => {
         insertUser(mockUserRegister)
 
-        const getUser = selectUser(mockUserRegister.email)
+        const getUser = selectUserByEmail(mockUserRegister.email)
 
         const token = 'jwt=' + (await sign(getUser.id, Bun.env.JWT_SECRET!))
 
         insertReport(mockAnalysis, 1)
 
-        const req = new Request('http://localhost/reports', {
+        const req = new Request('http://localhost/api/reports', {
             method: 'GET',
             credentials: 'include',
 
@@ -53,23 +53,23 @@ describe('Show Posts Controller', () => {
         expect(res.status).toBe(200)
     })
 
-    test('Unauthorized: GET /reports', async () => {
-        const res = await app.request('reports')
+    test('Unauthorized: GET /api/reports', async () => {
+        const res = await app.request('api/reports')
         expect(res.status).toBe(401)
     })
 })
 
 describe('Show post Controller', () => {
-    test('Show report: GET /reports/:id', async () => {
+    test('Show report: GET /api/reports/:id', async () => {
         insertUser(mockUserRegister)
 
-        const getUser = selectUser(mockUserRegister.email)
+        const getUser = selectUserByEmail(mockUserRegister.email)
 
         const token = 'jwt=' + (await sign(getUser.id, Bun.env.JWT_SECRET!))
 
         insertReport(mockAnalysis, 1)
 
-        const req = new Request('http://localhost/reports/1', {
+        const req = new Request('http://localhost/api/reports/1', {
             method: 'GET',
             credentials: 'include',
 
@@ -84,16 +84,16 @@ describe('Show post Controller', () => {
         expect(res.status).toBe(200)
     })
 
-    test('Not exist report: GET /reports/:id', async () => {
+    test('Not exist report: GET /api/reports/:id', async () => {
         insertUser(mockUserRegister)
 
-        const getUser = selectUser(mockUserRegister.email)
+        const getUser = selectUserByEmail(mockUserRegister.email)
 
         const token = 'jwt=' + (await sign(getUser.id, Bun.env.JWT_SECRET!))
 
         insertReport(mockAnalysis, 1)
 
-        const req = new Request('http://localhost/reports/5', {
+        const req = new Request('http://localhost/api/reports/5', {
             method: 'GET',
             credentials: 'include',
 
@@ -109,7 +109,7 @@ describe('Show post Controller', () => {
     })
 
     test('Unauthorized: GET /reports', async () => {
-        const res = await app.request('reports/1')
+        const res = await app.request('api/reports/1')
         expect(res.status).toBe(401)
     })
 })
