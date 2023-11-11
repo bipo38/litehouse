@@ -1,11 +1,12 @@
+import { boolean } from 'zod'
 import { Answer } from './models/answer'
 
 export const passwordEncrypt = async (pass: string): Promise<string> => {
     return await Bun.password.hash(pass)
 }
 
-export const reponseBuild = (message: any, status: number): Answer => {
-    return { content: message, status: status }
+export const responseBuild = (data: any, status: number , ok: boolean): Answer => {
+    return { data, status , ok }
 }
 
 export const jwtPayload = (req: any): number => {

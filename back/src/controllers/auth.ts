@@ -1,9 +1,11 @@
 import { setCookie } from 'hono/cookie'
-import { insertUser, selectUser } from '../db/queries/user'
-import { reponseBuild, passwordEncrypt } from '../utils'
+import { insertUser, selectUserByEmail } from '../db/queries/user'
+import { responseBuild, passwordEncrypt } from '../utils'
 import { ValidateUserLogin, ValidateUserRegister } from '../validators/schemas'
 import { sign } from 'hono/jwt'
 import { Answer } from '../models/answer'
+import { User, UserBase } from '../models/user'
+
 
 export const saveUser = async (c: any): Promise<Answer> => {
     const req = await c.req.json()
@@ -11,7 +13,7 @@ export const saveUser = async (c: any): Promise<Answer> => {
     const validateUser = ValidateUserRegister.safeParse(req)
 
     if (!validateUser.success) {
-        return reponseBuild('Content type invalid', 422)
+        return responseBuild('Content type invalid', 422 , false)
     }
 
     req.password = await passwordEncrypt(req.password)
@@ -19,24 +21,24 @@ export const saveUser = async (c: any): Promise<Answer> => {
     try {
         insertUser(req)
 
-        return reponseBuild('Succesful register', 201)
+        return responseBuild('Succesful register', 201 , true)
     } catch {
-        return reponseBuild('Failed creating user', 200)
+        return responseBuild('Failed creating user', 200 , true)
     }
 }
 
 export const loginUser = async (c: any): Promise<Answer> => {
     const req = await c.req.json()
 
-    const invalid = reponseBuild('Invalid Credentials', 401)
+    const invalid = responseBuild('Invalid Credentials', 401, false)
 
     const validateUser = ValidateUserLogin.safeParse(req)
 
     if (!validateUser.success) {
-        return reponseBuild('Content type invalid', 422)
+        return responseBuild('Content type invalid', 422, false)
     }
 
-    const user = selectUser(req.email)
+    const user = selectUserByEmail(req.email)
     if (!user) {
         return invalid
     }
@@ -49,7 +51,8 @@ export const loginUser = async (c: any): Promise<Answer> => {
 
     setCookie(c, 'jwt', await createToken(user.id))
 
-    return reponseBuild('Succesful Login', 200)
+
+    return responseBuild({ name: user.name, email: user.email } as UserBase, 200 , true)
 }
 
 const createToken = async (id: number): Promise<string> => {

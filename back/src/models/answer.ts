@@ -1,4 +1,5 @@
 export interface Answer {
-    content: any
+    ok: boolean
     status: number
+    data: any
 }

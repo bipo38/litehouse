@@ -9,7 +9,7 @@ import {
 import { unlinkSync } from 'node:fs'
 import { init as initMigrations } from '../../migrations'
 import { mockUserRegister } from '../../mocks/user'
-import { insertUser, selectUser } from '../../db/queries/user'
+import { insertUser, selectUserByEmail } from '../../db/queries/user'
 import { sign } from 'hono/jwt'
 import { mockPageReq, mockPageReqWrong } from '../../mocks/page'
 import { app } from '../../index'
@@ -28,14 +28,14 @@ afterEach(() => {
 })
 
 describe('Save Page Controller', () => {
-    test('Save Page: POST /pages', async () => {
+    test('Save Page: POST /api/pages', async () => {
         insertUser(mockUserRegister)
 
-        const user = selectUser(mockUserRegister.email)
+        const user = selectUserByEmail(mockUserRegister.email)
 
         const token = await sign(user.id, Bun.env.JWT_SECRET!)
 
-        const req = new Request('http://localhost/pages', {
+        const req = new Request('http://localhost/api/pages', {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(mockPageReq),
@@ -49,14 +49,14 @@ describe('Save Page Controller', () => {
         expect(res.status).toBe(201)
     })
 
-    test('Invalid Page : POST /pages', async () => {
+    test('Invalid Page : POST /api/pages', async () => {
         insertUser(mockUserRegister)
 
-        const user = selectUser(mockUserRegister.email)
+        const user = selectUserByEmail(mockUserRegister.email)
 
         const token = await sign(user.id, Bun.env.JWT_SECRET!)
 
-        const req = new Request('http://localhost/pages', {
+        const req = new Request('http://localhost/api/pages', {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(mockPageReqWrong),
@@ -70,16 +70,16 @@ describe('Save Page Controller', () => {
         expect(res.status).toBe(422)
     })
 
-    test('Insert Two Pages: POST /pages', async () => {
+    test('Insert Two Pages: POST /api/pages', async () => {
         insertUser(mockUserRegister)
 
-        const user = selectUser(mockUserRegister.email)
+        const user = selectUserByEmail(mockUserRegister.email)
 
         const token = await sign(user.id, Bun.env.JWT_SECRET!)
 
         insertPage(mockPageReq, user.id)
 
-        const req = new Request('http://localhost/pages', {
+        const req = new Request('http://localhost/api/pages', {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(mockPageReq),
@@ -95,16 +95,16 @@ describe('Save Page Controller', () => {
 })
 
 describe('Show Pages Controller', () => {
-    test('Get pages: GET /pages', async () => {
+    test('Get pages: GET /api/pages', async () => {
         insertUser(mockUserRegister)
 
-        const user = selectUser(mockUserRegister.email)
+        const user = selectUserByEmail(mockUserRegister.email)
 
         const token = await sign(user.id, Bun.env.JWT_SECRET!)
 
         insertPage(mockPageReq, user.id)
 
-        const req = new Request('http://localhost/pages', {
+        const req = new Request('http://localhost/api/pages', {
             method: 'GET',
             credentials: 'include',
             body: JSON.stringify(mockPageReq),
@@ -118,14 +118,14 @@ describe('Show Pages Controller', () => {
         expect(res.status).toBe(200)
     })
 
-    test('Get 0 pages: GET /pages', async () => {
+    test('Get 0 pages: GET /api/pages', async () => {
         insertUser(mockUserRegister)
 
-        const user = selectUser(mockUserRegister.email)
+        const user = selectUserByEmail(mockUserRegister.email)
 
         const token = await sign(user.id, Bun.env.JWT_SECRET!)
 
-        const req = new Request('http://localhost/pages', {
+        const req = new Request('http://localhost/api/pages', {
             method: 'GET',
             credentials: 'include',
             body: JSON.stringify(mockPageReq),
@@ -141,16 +141,16 @@ describe('Show Pages Controller', () => {
 })
 
 describe('Show Page Controller', () => {
-    test('Show page GET /pages/:id', async () => {
+    test('Show page GET /api/pages/:id', async () => {
         insertUser(mockUserRegister)
 
-        const user = selectUser(mockUserRegister.email)
+        const user = selectUserByEmail(mockUserRegister.email)
 
         const token = await sign(user.id, Bun.env.JWT_SECRET!)
 
         insertPage(mockPageReq, user.id)
 
-        const req = new Request('http://localhost/pages/1', {
+        const req = new Request('http://localhost/api/pages/1', {
             method: 'GET',
             credentials: 'include',
             body: JSON.stringify(mockPageReq),
@@ -164,14 +164,14 @@ describe('Show Page Controller', () => {
         expect(res.status).toBe(200)
     })
 
-    test('Not found page GET /pages/:id', async () => {
+    test('Not found page GET /api/pages/:id', async () => {
         insertUser(mockUserRegister)
 
-        const user = selectUser(mockUserRegister.email)
+        const user = selectUserByEmail(mockUserRegister.email)
 
         const token = await sign(user.id, Bun.env.JWT_SECRET!)
 
-        const req = new Request('http://localhost/pages/1', {
+        const req = new Request('http://localhost/api/pages/1', {
             method: 'GET',
             credentials: 'include',
             body: JSON.stringify(mockPageReq),
@@ -187,10 +187,10 @@ describe('Show Page Controller', () => {
 })
 
 describe('Update Page Controller', () => {
-    test('Update Page PUT /pages/:id', async () => {
+    test('Update Page PUT /api/pages/:id', async () => {
         insertUser(mockUserRegister)
 
-        const user = selectUser(mockUserRegister.email)
+        const user = selectUserByEmail(mockUserRegister.email)
 
         const token = await sign(user.id, Bun.env.JWT_SECRET!)
 
@@ -199,7 +199,7 @@ describe('Update Page Controller', () => {
         const r = mockPageReq
         r.title = 'pio'
 
-        const req = new Request('http://localhost/pages/1', {
+        const req = new Request('http://localhost/api/pages/1', {
             method: 'PUT',
             credentials: 'include',
             body: JSON.stringify(r),
@@ -213,14 +213,14 @@ describe('Update Page Controller', () => {
         expect(res.status).toBe(200)
     })
 
-    test('Not Found Page PUT /pages/:id', async () => {
+    test('Not Found Page PUT /api/pages/:id', async () => {
         insertUser(mockUserRegister)
 
-        const user = selectUser(mockUserRegister.email)
+        const user = selectUserByEmail(mockUserRegister.email)
 
         const token = await sign(user.id, Bun.env.JWT_SECRET!)
 
-        const req = new Request('http://localhost/pages/1', {
+        const req = new Request('http://localhost/api/pages/1', {
             method: 'PUT',
             credentials: 'include',
             body: JSON.stringify(mockPageReq),
@@ -234,14 +234,14 @@ describe('Update Page Controller', () => {
         expect(res.status).toBe(404)
     })
 
-    test('Invalid Page PUT /pages/:id', async () => {
+    test('Invalid Page PUT /api/pages/:id', async () => {
         insertUser(mockUserRegister)
 
-        const user = selectUser(mockUserRegister.email)
+        const user = selectUserByEmail(mockUserRegister.email)
 
         const token = await sign(user.id, Bun.env.JWT_SECRET!)
 
-        const req = new Request('http://localhost/pages/1', {
+        const req = new Request('http://localhost/api/pages/1', {
             method: 'PUT',
             credentials: 'include',
             body: JSON.stringify(mockPageReqWrong),

@@ -6,8 +6,18 @@ export default defineNuxtConfig({
   googleFonts: {
     families: {
       Inter: {
-        wght: [300, 400, 500, 700, 900],
+        wght: [400, 500, 700, 900],
       },
     },
+  },
+  runtimeConfig: {
+    apiUrl: process.env.API_URL || "http://localhost:8000",
+
+    public: {
+      apiUrl: process.env.API_URL || "http://localhost:8000",
+    },
+  },
+  imports: {
+    dirs: ["composables"],
   },
 });

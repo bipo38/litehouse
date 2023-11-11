@@ -31,8 +31,8 @@ afterEach(() => {
 })
 
 describe('Register Controller', () => {
-    test('Create user: POST /register', async () => {
-        const req = new Request('http://localhost/register', {
+    test('Create user: POST /api/register', async () => {
+        const req = new Request('http://localhost/api/register', {
             method: 'POST',
             body: JSON.stringify(mockUserRegisterNotHash),
             headers: {
@@ -45,10 +45,10 @@ describe('Register Controller', () => {
         expect(res.status).toBe(201)
     })
 
-    test('User registered: POST /register', async () => {
+    test('User registered: POST /api/register', async () => {
         insertUser(mockUserRegister)
 
-        const req = new Request('http://localhost/register', {
+        const req = new Request('http://localhost/api/register', {
             method: 'POST',
             body: JSON.stringify(mockUserRegisterNotHash),
             headers: {
@@ -60,10 +60,10 @@ describe('Register Controller', () => {
         expect(res.status).toBe(200)
     })
 
-    test('User Invalid Data Registered: POST /register', async () => {
+    test('User Invalid Data Registered: POST /api/register', async () => {
         insertUser(mockUserRegister)
 
-        const req = new Request('http://localhost/register', {
+        const req = new Request('http://localhost/api/register', {
             method: 'POST',
             body: JSON.stringify(mockUserRegisterNotHashInvalid),
             headers: {
@@ -77,10 +77,10 @@ describe('Register Controller', () => {
 })
 
 describe('Login Controller', async () => {
-    test('Login user: POST /login', async () => {
+    test('Login user: POST /api/login', async () => {
         insertUser(mockUserRegister)
 
-        const req = new Request('http://localhost/login', {
+        const req = new Request('http://localhost/api/login', {
             method: 'POST',
             body: JSON.stringify({
                 email: mockUserRegister.email,
@@ -97,10 +97,10 @@ describe('Login Controller', async () => {
         expect(res.headers.get('Set-Cookie')).toStartWith('jwt=')
     })
 
-    test('Invalid user: POST /login', async () => {
+    test('Invalid user: POST /api/login', async () => {
         insertUser(mockUserRegister)
 
-        const req = new Request('http://localhost/login', {
+        const req = new Request('http://localhost/api/login', {
             method: 'POST',
             body: JSON.stringify({
                 email: mockUserRegister.email,
@@ -117,10 +117,10 @@ describe('Login Controller', async () => {
         expect(res.headers.get('Set-Cookie')).toBe(null)
     })
 
-    test('Invalid User Data: POST /login', async () => {
+    test('Invalid User Data: POST /api/login', async () => {
         insertUser(mockUserRegister)
 
-        const req = new Request('http://localhost/login', {
+        const req = new Request('http://localhost/api/login', {
             method: 'POST',
             body: JSON.stringify({
                 email: '',
