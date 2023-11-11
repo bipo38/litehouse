@@ -6,13 +6,14 @@ import { sign } from 'hono/jwt'
 import { Answer } from '../models/answer'
 import { User, UserBase } from '../models/user'
 
+
 export const saveUser = async (c: any): Promise<Answer> => {
     const req = await c.req.json()
 
     const validateUser = ValidateUserRegister.safeParse(req)
 
     if (!validateUser.success) {
-        return responseBuild('Content type invalid', 422)
+        return responseBuild('Content type invalid', 422 , false)
     }
 
     req.password = await passwordEncrypt(req.password)
@@ -20,21 +21,21 @@ export const saveUser = async (c: any): Promise<Answer> => {
     try {
         insertUser(req)
 
-        return responseBuild('Succesful register', 201)
+        return responseBuild('Succesful register', 201 , true)
     } catch {
-        return responseBuild('Failed creating user', 200)
+        return responseBuild('Failed creating user', 200 , true)
     }
 }
 
 export const loginUser = async (c: any): Promise<Answer> => {
     const req = await c.req.json()
 
-    const invalid = responseBuild('Invalid Credentials', 401)
+    const invalid = responseBuild('Invalid Credentials', 401, false)
 
     const validateUser = ValidateUserLogin.safeParse(req)
 
     if (!validateUser.success) {
-        return responseBuild('Content type invalid', 422)
+        return responseBuild('Content type invalid', 422, false)
     }
 
     const user = selectUserByEmail(req.email)
@@ -51,7 +52,7 @@ export const loginUser = async (c: any): Promise<Answer> => {
     setCookie(c, 'jwt', await createToken(user.id))
 
 
-    return responseBuild({ name: user.name, email: user.email } as UserBase, 200)
+    return responseBuild({ name: user.name, email: user.email } as UserBase, 200 , true)
 }
 
 const createToken = async (id: number): Promise<string> => {

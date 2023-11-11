@@ -3,20 +3,20 @@ definePageMeta({
     layout: 'welcome'
 })
 
+
 const email = ref('')
 const password = ref('')
 
-const data = ref('')
+let dataRes : Ref<response | null> = ref(null);
+
 
 const login = async () => {
-    const res = await useApi().post("/api/login", {
+dataRes.value = await useApi().post("/api/login", {
         body: {
             email: email.value,
             password: password.value,
         },
     })
-
-    data.value = res.data
 }
 
 </script>
@@ -29,6 +29,10 @@ const login = async () => {
             <input class="input--default" type="email" required placeholder="Email" v-model="email">
             <input class="input--default" type="password" required placeholder="Password" v-model="password">
 
+            <div v-if="dataRes?.ok "  >
+                {{ dataRes.data }}     
+            </div>
+
             <button class="button--primary">Sign in</button>
         </form>
         <div class="page--login__links">
@@ -36,6 +40,6 @@ const login = async () => {
             <nuxt-link to="/" class="link--underline link--small">Forgot password?</nuxt-link>
         </div>
 
-        {{ data }}
+        
     </div>
 </template>

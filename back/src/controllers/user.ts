@@ -7,10 +7,13 @@ export const showUser = (c: any): Answer => {
     const payload = jwtPayload(c)
 
     try {
-
         const user = selectUserById(payload)
-        return responseBuild({ name: user.name, email: user.email } as UserBase as UserBase, 200)
+        return responseBuild(
+            { name: user.name, email: user.email } as UserBase as UserBase,
+            200,
+            true
+        )
     } catch {
-        return responseBuild('Unauthorized', 401)
+        return responseBuild('Unauthorized', 401, false)
     }
 }

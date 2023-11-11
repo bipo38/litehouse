@@ -1,3 +1,9 @@
+export interface res{
+    data?: any,
+    ok:boolean
+}
+export type response = res | null
+
 export const useApi = () => {
     return {
         // request: (
@@ -8,21 +14,21 @@ export const useApi = () => {
         //     return api(path, method, options);
         // },
 
-        get: (path: string, options: any = {}): Promise<Response> => {
+        get: (path: string, options: any = {}): Promise<response>  => {
             return api(path, "GET", options);
         },
 
-        post: (path: string, options: any = {}): Promise<Response> => {
+        post: (path: string, options: any = {}): Promise<response>  => {
             return api(path, "POST", options);
         },
 
-        delete: (path: string, options: any = {}): Promise<Response> => {
+        delete: (path: string, options: any = {}): Promise<response>  => {
             return api(path, "DELETE", options);
         },
     };
 };
 
-const api = async (path: string, method: string, options: any): Promise<Response> => {
+const api = async (path: string, method: string, options: any): Promise<response> => {
 
     const url = fullUrl(path)
 
@@ -39,15 +45,10 @@ const api = async (path: string, method: string, options: any): Promise<Response
 
     options.method = method
 
-    return $fetch(url, options)
-
-    // const { data } = await useAsyncData(
-    //     key,
-    //     () => 
-    // )
+    return await $fetch(url, options).catch((error) => error.data) as response
 
 }
-const fullUrl = (path: string) => {
+ const fullUrl = (path: string) => {
     const config = useRuntimeConfig();
     const apiUrl = config.public.apiUrl;
 
@@ -59,3 +60,7 @@ const fullUrl = (path: string) => {
 
     return apiUrl + "/" + path;
 };
+
+
+
+
