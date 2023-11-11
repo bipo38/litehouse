@@ -17,6 +17,8 @@
     "vue-router": "^4.2.5"
   },
   "dependencies": {
+    "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "eslint": "^8.53.0",
     "sass": "^1.69.5"
   }
 }
