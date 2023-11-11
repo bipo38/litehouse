@@ -1,7 +1,7 @@
 export default defineNuxtRouteMiddleware((to, from) => {
-    if(!useCookie('jwt').value){
-        return navigateTo("/signin")
-    }
+  if (!useCookie('jwt').value) {
+    return navigateTo('/signin')
+  }
 
-    return navigateTo("/reports")
+  return navigateTo('/reports')
 })
