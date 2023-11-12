@@ -6,14 +6,15 @@ import { jwtPayload, responseBuild } from '../utils'
 export const showUser = (c: any): Answer => {
     const payload = jwtPayload(c)
 
-    try {
-        const user = selectUserById(payload)
-        return responseBuild(
-            { name: user.name, email: user.email } as UserBase as UserBase,
-            200,
-            true
-        )
-    } catch {
-        return responseBuild('Unauthorized', 401, false)
+
+    if (!payload) {
+        return responseBuild('a', 401, false)
     }
+
+    const user = selectUserById(payload)
+    return responseBuild(
+        { name: user.name, email: user.email } as UserBase,
+        200,
+        true
+    )
 }

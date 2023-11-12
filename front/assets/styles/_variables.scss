@@ -29,12 +29,18 @@
     --clr-gray-8: hsl(var(--hue), 0%, 20%);
     --clr-gray-9: hsl(var(--hue), 2%, 10%);
 
+    --clr-accent-red-2: hsl(11, 100%, 25%);
+    --clr-accent-red-1: hsl(11, 100%, 41%); 
+    --clr-accent-red-3: hsl(11, 100%, 75%);
+
     --clr-border: hsl(var(--hue), 0%, 91%);
 
     --headline-1: clamp(2.4881rem, 2.292rem + 0.9804vw, 3.0519rem);
     --headline-2: clamp(2.0738rem, 1.9459rem + 0.6391vw, 2.4413rem);
     --headline-3: clamp(1.7281rem, 1.6499rem + 0.3913vw, 1.9531rem);
     --headline-4: clamp(1.44rem, 1.3974rem + 0.213vw, 1.5625rem);
+
+    --small: 0.875rem;
 
     --outline-offset: max(2px, 0.08em);
 

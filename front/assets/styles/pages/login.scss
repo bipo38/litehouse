@@ -26,6 +26,12 @@
         }
     }
 
+    &__invalid {
+        font-size: var(--small);
+        text-align: center;
+        color: var(--clr-accent-red-1);
+    }
+
     &__links {
         display: flex;
         flex-direction: column;
