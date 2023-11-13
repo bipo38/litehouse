@@ -9,8 +9,6 @@ const password = ref('')
 
 const dataRes : Ref<response> = ref(null)
 
-console.log(useCookie('jwt'))
-
 const login = async () => {
   dataRes.value = await useApi().post('/api/login', {
     body: {
@@ -18,6 +16,10 @@ const login = async () => {
       password: password.value
     }
   })
+
+  if (dataRes.value?.ok) {
+    navigateTo('/reports')
+  }
 }
 
 </script>

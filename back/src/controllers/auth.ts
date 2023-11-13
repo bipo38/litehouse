@@ -51,9 +51,9 @@ export const loginUser = async (c: any): Promise<Answer> => {
     }
 
     setCookie(c, 'jwt', await createToken(user.id) , {
-        sameSite: 'Lax'
+        sameSite: 'Lax',
+        path: '/'
     })
-
 
     return responseBuild({ name: user.name, email: user.email } as UserBase, 200 , true)
 }

@@ -41,9 +41,9 @@ const api = async (
 
   options.credentials = 'include'
 
-  if (process.server) {
-    options.headers = useRequestHeaders(['cookie', 'user-agent'])
-  }
+  // if (process.server) {
+  options.headers = useRequestHeaders(['cookie', 'user-agent'])
+  // }
 
   options.headers.accept = 'application/json'
 

@@ -6,7 +6,6 @@ definePageMeta({
 
 const res : Ref<response> = ref(null)
 
-// const user = useState('authUser')
 const result = async () => {
   res.value = await useApi().get('/api/user')
 }
