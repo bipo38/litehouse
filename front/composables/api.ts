@@ -1,8 +1,8 @@
-export interface res{
-    data?: any,
-    ok:boolean
+export interface res {
+  data?: any;
+  ok: boolean;
 }
-export type response = res | null
+export type response = res | null;
 
 export const useApi = () => {
   return {
@@ -28,23 +28,28 @@ export const useApi = () => {
   }
 }
 
-const api = async (path: string, method: string, options: any): Promise<response> => {
+const api = async (
+  path: string,
+  method: string,
+  options: any
+): Promise<response> => {
   const url = fullUrl(path)
 
   if (options.headers === undefined) {
     options.headers = {}
   }
 
-  if (process.server) {
-    options.headers = useRequestHeaders(['cookie', 'user-agent'])
-  }
+  options.credentials = 'include'
+
+  // if (process.server) {
+  options.headers = useRequestHeaders(['cookie', 'user-agent'])
+  // }
 
   options.headers.accept = 'application/json'
-  options.headers.referer = useRequestURL().origin || ''
 
   options.method = method
 
-  return await $fetch(url, options).catch(error => error.data) as response
+  return (await $fetch(url, options).catch(error => error.data)) as response
 }
 const fullUrl = (path: string) => {
   const config = useRuntimeConfig()

@@ -6,6 +6,13 @@ import { cors } from 'hono/cors'
 
 export const app = new Hono()
 
+app.use('/api/*', cors({
+    origin: 'http://localhost:3000',
+    allowMethods: ['GET', 'HEAD', 'PUT', 'POST', 'DELETE', 'PATCH'],
+    credentials: true,
+}))
+
+
 app.use(
     '/api/reports/*',
     jwt({
@@ -28,17 +35,10 @@ app.use(
     jwt({
         secret: Bun.env.JWT_SECRET!,
         cookie: 'jwt',
-    })
+    }),
 )
 
-app.all(
-    '/*',
-    cors({
-        origin: 'http://localhost:3000',
-        allowMethods: ['POST', 'GET', 'PUT', 'DELETE'],
-        credentials: true,
-    })
-)
+
 
 
 app.route('/', api)

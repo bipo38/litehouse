@@ -4,5 +4,6 @@
     ],
     "ignorePatterns": [
         "~/assets/"
-    ]
+    ],
+    "eslint no-trailing-spaces": "error"
 }

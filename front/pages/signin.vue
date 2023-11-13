@@ -1,12 +1,13 @@
 <script setup lang="ts">
 definePageMeta({
-  layout: 'welcome'
+  layout: 'welcome',
+  middleware: ['guest']
 })
 
 const email = ref('')
 const password = ref('')
 
-const dataRes : Ref<response | null> = ref(null)
+const dataRes : Ref<response> = ref(null)
 
 const login = async () => {
   dataRes.value = await useApi().post('/api/login', {
@@ -15,6 +16,10 @@ const login = async () => {
       password: password.value
     }
   })
+
+  if (dataRes.value?.ok) {
+    navigateTo('/reports')
+  }
 }
 
 </script>
@@ -26,7 +31,7 @@ const login = async () => {
       <input v-model="email" class="input--default" type="email" required placeholder="Email">
       <input v-model="password" class="input--default" type="password" required placeholder="Password">
 
-      <div v-if="dataRes?.ok ">
+      <div v-if="dataRes && !dataRes.ok" class="page--login__invalid">
         {{ dataRes.data }}
       </div>
       <button class="button--primary">

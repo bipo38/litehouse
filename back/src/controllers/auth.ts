@@ -34,6 +34,7 @@ export const loginUser = async (c: any): Promise<Answer> => {
 
     const validateUser = ValidateUserLogin.safeParse(req)
 
+
     if (!validateUser.success) {
         return responseBuild('Content type invalid', 422, false)
     }
@@ -49,12 +50,14 @@ export const loginUser = async (c: any): Promise<Answer> => {
         return invalid
     }
 
-    setCookie(c, 'jwt', await createToken(user.id))
-
+    setCookie(c, 'jwt', await createToken(user.id) , {
+        sameSite: 'Lax',
+        path: '/'
+    })
 
     return responseBuild({ name: user.name, email: user.email } as UserBase, 200 , true)
 }
 
 const createToken = async (id: number): Promise<string> => {
-    return await sign(id, Bun.env.JWT_TOKEN!)
+    return await sign(id, Bun.env.JWT_SECRET!)
 }

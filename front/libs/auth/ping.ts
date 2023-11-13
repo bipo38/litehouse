@@ -1,16 +1,19 @@
-// export const ping = async (): Promise<boolean> => {
-//     const loggedIn = useCookie("jwt");
+export const ping = async (): Promise<boolean> => {
+  const loggedIn = useCookie('jwt')
 
-//     if (!loggedIn.value) {
-//       return false;
-//     }
+  if (!loggedIn.value) {
+    return false
+  }
 
-//     const user = useState("authUser");
+  const user = useState('authUser')
 
-//     const result = await useApi().get("/api/user");
+  const result = await useApi().get('/api/user')
 
-//     loggedIn.value = result.successful ? "true" : null;
-//     user.value = result.successful ? result.data : {};
+  if (result && result.ok) {
+    user.value = result.data
 
-//     return result.successful;
-//   };
+    return result.ok
+  }
+
+  return false
+}

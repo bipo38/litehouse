@@ -57,7 +57,7 @@ api.put('/api/pages/:id', async (c): Promise<Response> => {
 
 api.get('/api/user', async (c): Promise<Response> => {
     const user = showUser(c)
-
+2
     return c.json({ data: user.data, ok: user.ok }, user.status)
 })
 
