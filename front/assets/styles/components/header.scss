@@ -1,0 +1,27 @@
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+
+    margin-top: 2rem;
+
+    nav {
+        ul {
+            display: flex;
+            gap: 0.8em;
+
+            list-style: none;
+
+            li {
+                padding: 0.25em 0.5em;
+                border-radius: var(--radius);
+
+                &:hover {
+                    background: var(--clr-gray-1);
+                }
+
+                font-weight: 500;
+            }
+        }
+    }
+}

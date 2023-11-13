@@ -1,24 +1,25 @@
 <script setup lang="ts">
 definePageMeta({
+  layout: 'default',
   middleware: ['auth']
 
 })
 
-const res : Ref<response> = ref(null)
-
-const result = async () => {
-  res.value = await useApi().get('/api/user')
-}
+const { data } = await useAsyncData(
+  'reports',
+  () => useApi().get('api/reports')
+)
 
 </script>
 
 <template>
-  <div>
-    <button @click="result">
-      Click
-    </button>
-    <div v-if="res">
-      {{ res.data }}
+  <div class="page page--reports">
+    <div>
+      {{ data?.data.lenght ? data : 'No reports found :(' }}
     </div>
   </div>
 </template>
+
+<style lang="scss">
+@use '~/assets/styles/pages/reports.scss';
+</style>
