@@ -4,7 +4,7 @@ import { db } from '../../db'
 import { countUserRegisters } from '../queries'
 import { Analysis } from '../../types/analysis'
 
-export const selectReports = (userId: number): Report => {
+export const selectReports = (userId: number): Array<Report> => {
     return db((Db: Database) => {
         const query = Db.query('SELECT * FROM reports WHERE user_id  =  ?;')
         return query.all(userId)

@@ -3,8 +3,6 @@
     justify-content: center;
     align-items: baseline;
 
-    margin-top: 2rem;
-
     nav {
         ul {
             display: flex;
@@ -16,8 +14,24 @@
                 padding: 0.25em 0.5em;
                 border-radius: var(--radius);
 
-                &:hover {
-                    background: var(--clr-gray-1);
+                // &:hover {
+                //     background: var(--clr-gray-1);
+                // }
+
+                i {
+                    display: flex;
+                    justify-content: center;
+
+                    path {
+                        stroke-dasharray: 45px;
+                        stroke-dashoffset: 45px;
+                        animation: dash 500ms linear forwards;
+                        @keyframes dash {
+                            to {
+                                stroke-dashoffset: 0;
+                            }
+                        }
+                    }
                 }
 
                 font-weight: 500;

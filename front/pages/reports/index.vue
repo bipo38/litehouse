@@ -14,8 +14,14 @@ const { data } = await useAsyncData(
 
 <template>
   <div class="page page--reports">
-    <div>
-      {{ data?.data.lenght ? data : 'No reports found :(' }}
+    <!-- <pre>
+      {{ data?.data[0].analysis[0] }}
+    </pre> -->
+    <div v-if="data?.data" class="page--reports__reports">
+      <ReportsReportCard v-for="report in data.data" :key="report.id" :report="report" />
+    </div>
+    <div v-else>
+      Reports not found :(
     </div>
   </div>
 </template>

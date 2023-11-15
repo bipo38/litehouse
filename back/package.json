@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "bun run --hot src/index.ts",
     "light": "bun run src/scripts/lighthouse.ts",
-    "migrate": "bun run src/scripts/migrate.ts"
+    "migrate": "bun run src/scripts/migrate.ts",
+    "mock": "bun run src/scripts/mock.ts"
   },
   "dependencies": {
     "cron": "^3.1.5",

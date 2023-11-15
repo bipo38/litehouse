@@ -1,6 +1,10 @@
 <template>
   <main class="layout--default">
-    <Header />
+    <TheHeader />
     <slot />
   </main>
 </template>
+
+<style lang="scss">
+@use '~/assets/styles/layouts/default.scss';
+</style>
