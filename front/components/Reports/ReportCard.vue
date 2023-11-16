@@ -6,11 +6,20 @@ const props = defineProps({
   }
 })
 
-const analysis = JSON.parse(props.report.analysis)
-console.log(analysis);
+const analysisArr : Array<Analysis> = JSON.parse(props.report.analysis)
 
 const metricsdAverage = computed(() => {
-  const res = 90
+  if (analysisArr.length <= 0) {
+    return
+  }
+
+  let avg = 0
+
+  analysisArr.forEach((i) => {
+    avg += i.stats.mobile!.average
+  })
+
+  const res = avg / (analysisArr.length)
 
   if (res >= 90) {
     return 'green'
