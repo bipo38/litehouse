@@ -34,7 +34,7 @@ const metricsdAverage = computed(() => {
 </script>
 
 <template>
-  <div class="report">
+  <NuxtLink :to="`/reports/${report.id}`" class="report">
     <div class="report__date">
       <div>
         {{ useUtils().parseDate(report.created_at) }}
@@ -48,7 +48,7 @@ const metricsdAverage = computed(() => {
         Details
       </nuxt-link>
     </div>
-  </div>
+  </NuxtLink>
 </template>
 
 <style lang="scss">
