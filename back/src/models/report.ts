@@ -9,6 +9,14 @@ export interface Report {
     updated_at: Date
 }
 
+export interface ReportRes {
+    id: number
+    report_id: number
+    analysis: Analysis
+    created_at: Date
+    updated_at: Date
+}
+
 export interface ReportBase {
     analysis: Analysis
     user_id: number

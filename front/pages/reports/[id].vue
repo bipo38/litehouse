@@ -7,7 +7,7 @@ definePageMeta({
 
 const reportId = useRoute().params.id
 
-const { data } = await useAsyncData(
+const { data: report } = await useAsyncData(
   'reports',
   () => useApi().get(`api/reports/${reportId}`)
 )
@@ -17,7 +17,7 @@ const { data } = await useAsyncData(
 
 <template>
   <div class="page page--report">
-    <pre>{{ data }}</pre>
+    <pre>{{ report }}</pre>
   </div>
 </template>
 

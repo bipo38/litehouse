@@ -1,12 +1,13 @@
 <script setup lang="ts">
 const props = defineProps({
   report: {
-    type: Object,
+    type: Object as PropType<Report>,
     required: true
   }
 })
 
 const analysisArr : Array<Analysis> = JSON.parse(props.report.analysis)
+console.log(analysisArr)
 
 const metricsdAverage = computed(() => {
   if (analysisArr.length <= 0) {

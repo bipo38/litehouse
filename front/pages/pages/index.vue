@@ -1,35 +1,22 @@
-<script lang="ts">
-
+<script setup lang="ts">
 definePageMeta({
   layout: 'default',
   middleware: ['auth']
 
 })
+
+const { data: pages } = await useAsyncData(
+  'reports',
+  () => useApi().get('api/pages')
+)
+
+console.log(pages.value?.data)
+
 </script>
 
 <template>
-  <div class="page page--pages">
-    <div class="web">
-      <div class="web__title">
-        <div class="web__main">
-          <div class="web__drop">
-            <MiscIconLoader name="caret-down" />
-          </div>
-          <div class="web__h">
-            <h4>Google Website</h4>
-          </div>
-        </div>
-      </div>
-      <div class="web__info">
-        <div class="web__cron">
-          Weekly
-        </div>
-
-        <!-- <div class="web__edit">
-          <MiscIconLoader name="edit" />
-        </div> -->
-      </div>
-    </div>
+  <div v-if="pages" class="page page--pages">
+    <PagesPageCard v-for="page in pages.data" :key="page.id" :page="page" />
   </div>
 </template>
 

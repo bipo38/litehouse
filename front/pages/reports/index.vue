@@ -5,7 +5,7 @@ definePageMeta({
 
 })
 
-const { data } = await useAsyncData(
+const { data: reports } = await useAsyncData(
   'reports',
   () => useApi().get('api/reports')
 )
@@ -17,8 +17,8 @@ const { data } = await useAsyncData(
     <!-- <pre>
       {{ data?.data[0].analysis[0] }}
     </pre> -->
-    <div v-if="data?.data" class="page--reports__reports">
-      <ReportsReportCard v-for="report in data.data" :key="report.id" :report="report" />
+    <div v-if="reports?.data" class="page--reports__reports">
+      <ReportsReportCard v-for="report in reports.data" :key="report.id" :report="report" />
     </div>
     <div v-else>
       Reports not found :(
