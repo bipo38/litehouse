@@ -15,15 +15,15 @@ export const savePage = async (c: any): Promise<Answer> => {
     const validatePage = ValidatePageReq.safeParse(req)
 
     if (!validatePage.success) {
-        return responseBuild('Content type invalid', 422 , false)
+        return responseBuild('Content type invalid', 422, false)
     }
 
     try {
         insertPage(req, jwtPayload(c))
 
-        return responseBuild('Sucessful creation', 201 , true)
+        return responseBuild('Sucessful creation', 201, true)
     } catch {
-        return responseBuild('Faling creating page', 409  ,false)
+        return responseBuild('Faling creating page', 409, false)
     }
 }
 
@@ -31,9 +31,9 @@ export const showPages = (c: any): Answer => {
     try {
         const pages = selectPages(jwtPayload(c))
 
-        return responseBuild(pages as Array<PageReq>, 200, true)
+        return responseBuild(<Array<PageReq>>pages, 200, true)
     } catch {
-        return responseBuild('Server Error', 500  , false)
+        return responseBuild('Server Error', 500, false)
     }
 }
 
@@ -44,12 +44,12 @@ export const showPage = (c: any): Answer => {
         const page = selectPage(id, jwtPayload(c))
 
         if (!page) {
-            return responseBuild('Page not exist', 404,false)
+            return responseBuild('Page not exist', 404, false)
         }
 
-        return responseBuild(page as PageReq, 200 , true)
+        return responseBuild(page, 200, true)
     } catch {
-        return responseBuild('Server Error', 500 , false)
+        return responseBuild('Server Error', 500, false)
     }
 }
 
@@ -70,8 +70,8 @@ export const updatePage = async (c: any): Promise<Answer> => {
             return responseBuild('Page not exist', 404, false)
         }
 
-        return responseBuild(page as PageReq, 200,true)
+        return responseBuild(page, 200, true)
     } catch {
-        return responseBuild('Server Error', 500,false)
+        return responseBuild('Server Error', 500, false)
     }
 }

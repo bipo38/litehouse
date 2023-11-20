@@ -17,8 +17,8 @@ const { data: reports } = await useAsyncData(
     <!-- <pre>
       {{ data?.data[0].analysis[0] }}
     </pre> -->
-    <div v-if="reports?.data" class="page--reports__reports">
-      <ReportsReportCard v-for="report in reports.data" :key="report.id" :report="report" />
+    <div v-if="reports?.ok" class="page--reports__reports">
+      <ReportsReportCard v-for="report in reports.data" :key="report.report_id" :report="report" />
     </div>
     <div v-else>
       Reports not found :(

@@ -11,8 +11,9 @@ const urls: Array<PageUrl> = JSON.parse(props.page.urls)
 
 <template>
   <div class="page-card">
-    <p>{{ page }}</p>
-    <p>{{ urls }}</p>
+    <div class="page-card__header">
+      <p>{{ page.title }}</p>
+    </div>
   </div>
 </template>
 

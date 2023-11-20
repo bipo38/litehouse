@@ -6,7 +6,7 @@ definePageMeta({
 })
 
 const { data: pages } = await useAsyncData(
-  'reports',
+  'pages',
   () => useApi().get('api/pages')
 )
 
@@ -15,7 +15,7 @@ console.log(pages.value?.data)
 </script>
 
 <template>
-  <div v-if="pages" class="page page--pages">
+  <div v-if="pages?.ok" class="page page--pages">
     <PagesPageCard v-for="page in pages.data" :key="page.id" :page="page" />
   </div>
 </template>

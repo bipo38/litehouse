@@ -7,7 +7,6 @@ const props = defineProps({
 })
 
 const analysisArr : Array<Analysis> = JSON.parse(props.report.analysis)
-console.log(analysisArr)
 
 const metricsdAverage = computed(() => {
   if (analysisArr.length <= 0) {
@@ -17,7 +16,13 @@ const metricsdAverage = computed(() => {
   let avg = 0
 
   analysisArr.forEach((i) => {
-    avg += i.stats.mobile!.average
+    if (i.stats.mobile?.average) {
+      avg += i.stats.mobile.average
+    }
+
+    if (i.stats.desktop?.average) {
+      avg += i.stats.desktop?.average
+    }
   })
 
   const res = avg / (analysisArr.length)
@@ -35,7 +40,7 @@ const metricsdAverage = computed(() => {
 </script>
 
 <template>
-  <NuxtLink :to="`/reports/${report.id}`" class="report">
+  <NuxtLink :to="`/reports/${report.report_id}`" class="report">
     <div class="report__date">
       <div>
         {{ useUtils().parseDate(report.created_at) }}
@@ -45,9 +50,9 @@ const metricsdAverage = computed(() => {
       </div>
     </div>
     <div class="report__details">
-      <nuxt-link to="/" class="button button--primary">
+      <span role="link" to="/" class="button button--primary">
         Details
-      </nuxt-link>
+      </span>
     </div>
   </NuxtLink>
 </template>

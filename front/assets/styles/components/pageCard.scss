@@ -1,3 +1,14 @@
 .page-card {
-    color: red;
+    display: flex;
+
+    border: 1px solid var(--clr-border);
+    border-radius: calc(var(--radius) + 8px);
+
+    padding: 0.2em 0.5em;
+
+    &__header {
+        p {
+            font-weight: 700;
+        }
+    }
 }

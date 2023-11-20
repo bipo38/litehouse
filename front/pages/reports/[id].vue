@@ -8,7 +8,7 @@ definePageMeta({
 const reportId = useRoute().params.id
 
 const { data: report } = await useAsyncData(
-  'reports',
+  'report',
   () => useApi().get(`api/reports/${reportId}`)
 )
 // const analysisArr = JSON.parse(data.value)
