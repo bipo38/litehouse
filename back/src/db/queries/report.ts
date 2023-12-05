@@ -7,7 +7,15 @@ import { Analysis } from '../../types/analysis'
 export const selectReports = (userId: number): Array<Report> => {
     return db((Db: Database) => {
         const query = Db.query('SELECT * FROM reports WHERE user_id  =  ?;')
-        return query.all(userId)
+
+        const reports: Array<any> = query.all(userId)
+
+
+        return reports.map((report: any) => ({
+            ...report,
+            analysis: JSON.parse(report.analysis)
+
+        }) as Report)
     })
 }
 
@@ -17,7 +25,12 @@ export const selectReport = (userId: number, reportId: number): Report => {
             'SELECT * FROM reports WHERE  user_id = ? AND report_id = ?;'
         )
 
-        return query.get(userId, reportId)
+        let report: any = query.get(userId, reportId)
+
+        return {
+            ...report,
+            analysis: JSON.parse(report.analysis)
+        } as Report
     })
 }
 

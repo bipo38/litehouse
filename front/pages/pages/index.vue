@@ -10,8 +10,6 @@ const { data: pages } = await useAsyncData(
   () => useApi().get('api/pages')
 )
 
-console.log(pages.value?.data)
-
 </script>
 
 <template>

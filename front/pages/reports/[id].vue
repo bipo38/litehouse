@@ -11,7 +11,6 @@ const { data: report } = await useAsyncData(
   'report',
   () => useApi().get(`api/reports/${reportId}`)
 )
-// const analysisArr = JSON.parse(data.value)
 
 </script>
 

@@ -6,7 +6,7 @@ const props = defineProps({
   }
 })
 
-const analysisArr : Array<Analysis> = JSON.parse(props.report.analysis)
+const analysisArr : Array<Analysis> = props.report.analysis
 
 const metricsdAverage = computed(() => {
   if (analysisArr.length <= 0) {

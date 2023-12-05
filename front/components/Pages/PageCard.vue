@@ -1,12 +1,11 @@
 <script setup lang="ts">
-const props = defineProps({
+defineProps({
   page: {
     type: Object as PropType<Page>,
     required: true
   }
 })
 
-const urls: Array<PageUrl> = JSON.parse(props.page.urls)
 </script>
 
 <template>
