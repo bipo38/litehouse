@@ -7,6 +7,7 @@ const props = defineProps({
 })
 
 const analysisArr : Array<Analysis> = props.report.analysis
+const average: Ref<number> = ref(0)
 
 const metricsdAverage = computed(() => {
   if (analysisArr.length <= 0) {
@@ -25,13 +26,15 @@ const metricsdAverage = computed(() => {
     }
   })
 
-  const res = avg / (analysisArr.length)
+  avg = avg / (analysisArr.length)
 
-  if (res >= 90) {
+  average.value = avg
+
+  if (avg >= 90) {
     return 'green'
   }
 
-  if (res < 90 && res >= 60) {
+  if (avg < 90 && avg >= 60) {
     return 'yellow'
   }
 
@@ -43,10 +46,10 @@ const metricsdAverage = computed(() => {
   <NuxtLink :to="`/reports/${report.report_id}`" class="report">
     <div class="report__date">
       <div>
-        {{ useUtils().parseDate(report.created_at) }}
+        {{ report.title }}
       </div>
       <div>
-        <MiscIconLoader name="metrics" :class="`report__date--${metricsdAverage}`" />
+        <MiscIconLoader name="metrics" :class="`report__date--${metricsdAverage}`" :title="average" />
       </div>
     </div>
     <div class="report__details">

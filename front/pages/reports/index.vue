@@ -13,14 +13,20 @@ const { data: reports } = await useAsyncData(
 </script>
 
 <template>
-  <div class="page page--reports">
+  <div v-if="reports?.ok" class="page page--reports">
     <!-- <pre>
       {{ data?.data[0].analysis[0] }}
     </pre> -->
-    <div v-if="reports?.ok" class="page--reports__reports">
-      <ReportsReportCard v-for="report in reports.data" :key="report.report_id" :report="report" />
+    <div v-for="(report , i) in reports.data" :key="i" class="page--reports__reports">
+      <h2 class="h4">
+        Created {{ useUtils().parseDate(report.date) }}
+      </h2>
+      <div class="page--reports__cards">
+        <ReportsReportCard v-for="finalReport in report.reports" :key="finalReport.report_id" :report="finalReport" />
+      </div>
     </div>
-    <div v-else>
+
+    <div v-if="!reports?.ok">
       Reports not found :(
     </div>
   </div>

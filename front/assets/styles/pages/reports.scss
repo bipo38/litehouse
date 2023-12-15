@@ -2,11 +2,17 @@
     // flex: 1;
 
     margin: 0 auto;
+    padding: 0.4em;
 
     display: flex;
     flex-direction: column;
 
     &__reports {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__cards {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 0.8em;

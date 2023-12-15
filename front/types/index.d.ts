@@ -31,6 +31,7 @@ declare global {
 
   interface Report {
     id: number;
+    title: string;
     report_id: number;
     analysis: Array<Analysis>;
     created_at: Date;

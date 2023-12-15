@@ -35,6 +35,6 @@ const jobLighthouse = async (time: string): Promise<void> => {
     for await (const page of userPages) {
         const analysis = await startAnalysys(page)
 
-        insertReport(analysis, page.user_id)
+        insertReport(analysis, page.user_id, page.title)
     }
 }
