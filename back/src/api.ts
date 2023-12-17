@@ -28,7 +28,7 @@ api.get('/api/reports', async (c): Promise<Response> => {
 api.get('/api/reports/:id', async (c): Promise<Response> => {
     const report = showReport(c)
 
-    return c.json({ report: report.data, ok: report.ok }, report.status)
+    return c.json({ data: report.data, ok: report.ok }, report.status)
 })
 
 api.post('/api/pages', async (c): Promise<Response> => {
@@ -57,7 +57,7 @@ api.put('/api/pages/:id', async (c): Promise<Response> => {
 
 api.get('/api/user', async (c): Promise<Response> => {
     const user = showUser(c)
-2
+    2
     return c.json({ data: user.data, ok: user.ok }, user.status)
 })
 
