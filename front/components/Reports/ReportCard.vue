@@ -6,27 +6,21 @@ const props = defineProps({
   }
 })
 
-const analysisArr : Array<Analysis> = props.report.analysis
 const average: Ref<number> = ref(0)
 
 const metricsdAverage = computed(() => {
+  const analysisArr : Array<Analysis> = props.report.analysis
   if (analysisArr.length <= 0) {
     return
   }
 
   let avg = 0
 
-  analysisArr.forEach((i) => {
-    if (i.stats.mobile?.average) {
-      avg += i.stats.mobile.average
-    }
-
-    if (i.stats.desktop?.average) {
-      avg += i.stats.desktop?.average
-    }
+  analysisArr.forEach((item) => {
+    avg += item?.stats.map(stat => stat.average).reduce((acc, val) => acc + val, 0)
   })
 
-  avg = avg / (analysisArr.length)
+  avg = avg / (analysisArr.length * analysisArr[0].stats.length)
 
   average.value = avg
 

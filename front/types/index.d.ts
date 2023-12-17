@@ -1,7 +1,7 @@
 declare global {
   interface Analysis {
     name: string;
-    stats: Record<string, Stats>;
+    stats: Array<Stats>;
     url: string;
   }
 
@@ -27,6 +27,7 @@ declare global {
     accessibility: number;
     bestPractices: number;
     average: number;
+    formFactor: string;
   }
 
   interface Report {
