@@ -1,7 +1,7 @@
 export interface Metrics {
     name: string
     url: string
-    stats: Record<string, Stats>
+    stats: Array<Stats>
 }
 
 export interface Stats {
@@ -10,6 +10,7 @@ export interface Stats {
     accessibility: number
     bestPractices: number
     average: number
+    formFactor: string
 }
 
 export interface Item {

@@ -29,10 +29,8 @@ export const startAnalysys = async (page: Page): Promise<Analysis> => {
 }
 
 const parseLhrFile = (items: Item[], url: PageUrl): Metrics => {
-    const metrics: Record<string, Stats> = {}
-
-    items.forEach((item: Item) => {
-        metrics[item.lhr.configSettings.formFactor] = {
+    const metrics: Array<Stats> = items.map((item: Item) => {
+        return {
             seo: item.lhr.categories.seo?.score * 100,
             performance: item.lhr.categories.performance?.score * 100,
             accessibility: item.lhr.categories.accessibility?.score * 100,
@@ -44,6 +42,7 @@ const parseLhrFile = (items: Item[], url: PageUrl): Metrics => {
                     item.lhr.categories['best-practices']?.score * 100) /
                     4
             ),
+            formFactor: item.lhr.configSettings.formFactor,
         }
     })
 
