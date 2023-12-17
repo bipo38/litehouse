@@ -1,6 +1,6 @@
 import Database from 'bun:sqlite'
 import { countUserRegisters } from '../queries'
-import { Page, PageReq } from '../../models/page'
+import { Page, PageReq, PageUrl } from '../../models/page'
 import { db } from '../../db'
 
 export const insertPage = (page: PageReq, userId: number): void => {
@@ -25,7 +25,13 @@ export const selectPagesByCron = (cron: string): Array<Page> => {
     return db((Db: Database) => {
         const query = Db.query('SELECT * FROM pages WHERE cron = ?;')
 
-        return query.all(cron)
+        const pages: Array<any> = query.all(cron)
+
+        return pages.map((page: Page) => ({
+            ...page,
+            urls: JSON.parse(page.urls) as Array<PageUrl>
+
+        }))
     })
 }
 
@@ -33,7 +39,15 @@ export const selectPages = (userId: number): Array<Page> => {
     return db((Db: Database) => {
         const query = Db.query('SELECT * FROM pages WHERE user_id = ?;')
 
-        return query.all(userId)
+        const pages: Array<any> = query.all(userId)
+
+        return pages.map((page: Page) => ({
+            ...page,
+            urls: JSON.parse(page.urls) as Array<PageUrl>
+
+        }))
+
+
     })
 }
 

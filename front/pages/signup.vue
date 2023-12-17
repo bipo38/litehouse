@@ -8,10 +8,25 @@ definePageMeta({
   <div class="page--login">
     <h2>Sign up</h2>
     <form @submit.prevent="">
-      <input class="input--default" type="text" placeholder="Username" required>
-      <input class="input--default" type="email" placeholder="Email" required>
-      <input class="input--default" type="password" placeholder="Password" required>
-      <input class="input--default" type="password" placeholder="Password Confirm" required>
+      <label>
+        Username
+        <input class="input--default" type="text" required>
+      </label>
+
+      <label>
+        Email
+        <input class="input--default" type="email" required>
+      </label>
+
+      <label>
+        Password
+        <input class="input--default" type="password" required>
+      </label>
+
+      <label>
+        Password Confirm
+        <input class="input--default" type="password" required>
+      </label>
 
       <button class="button--primary">
         Sign in

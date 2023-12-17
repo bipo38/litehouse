@@ -8,7 +8,7 @@ export const showUser = (c: any): Answer => {
 
 
     if (!payload) {
-        return responseBuild('a', 401, false)
+        return responseBuild('Unauthorized', 401, false)
     }
 
     const user = selectUserById(payload)

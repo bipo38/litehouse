@@ -1,0 +1,17 @@
+.page--pages {
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8em;
+
+    padding: 0.4em;
+
+    @media (max-width: 780px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 530px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

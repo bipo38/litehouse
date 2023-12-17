@@ -1,9 +1,30 @@
 .page--reports {
-    flex: 1;
+    // flex: 1;
 
     margin: 0 auto;
+    padding: 0.4em;
 
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+
+    &__reports {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.8em;
+
+        padding: 0.4em;
+
+        @media (max-width: 780px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (max-width: 530px) {
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
 }

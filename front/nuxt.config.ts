@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   googleFonts: {
     families: {
       Inter: {
-        wght: [400, 500, 700, 900]
+        wght: [400, 500, 700]
       }
     }
   },

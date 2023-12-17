@@ -1,11 +1,37 @@
 import { selectReport, selectReports } from '../db/queries/report'
 import { Answer } from '../models/answer'
-import { jwtPayload, responseBuild } from '../utils'
+import { Report, ReportDated } from '../models/report'
+import { jwtPayload, parseDate, responseBuild } from '../utils'
 
 export const showReports = (c: any): Answer => {
-    const reports = selectReports(jwtPayload(c))
+    try {
+        const reports = selectReports(jwtPayload(c))
 
-    return responseBuild(reports, 200, true)
+        if (!reports) {
+            return responseBuild(reports, 200, true)
+        }
+
+        let dates = new Set(
+            reports.map((report) => parseDate(report.created_at))
+        )
+
+        const sortDateReports: Array<ReportDated> = []
+
+        dates.forEach((date) => {
+            const filterReports = reports.filter(
+                (report) => parseDate(report.created_at) === date
+            )
+
+            sortDateReports.push({
+                date: reports[0]?.created_at ?? '',
+                reports: filterReports,
+            })
+        })
+
+        return responseBuild(sortDateReports, 200, true)
+    } catch (error) {
+        return responseBuild('Server Error', 500, false)
+    }
 }
 
 export const showReport = (c: any): Answer => {

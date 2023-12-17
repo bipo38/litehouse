@@ -18,9 +18,23 @@
         flex-direction: column;
         gap: 0.8em;
 
+        width: 100%;
+        max-width: 300px;
+
         > label {
             display: flex;
             flex-direction: column;
+
+            gap: 0.4em;
+
+            div {
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+                // > a {
+                //     align-self: flex-end;
+                // }
+            }
 
             font-weight: 500;
         }

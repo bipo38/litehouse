@@ -53,6 +53,20 @@ button,
         width: 100%;
     }
 
+    &--rounded {
+        border-radius: 50%;
+        padding: 0.2rem;
+        background-color: transparent;
+
+        &:focus-visible {
+            outline: 2px solid var(--clr-secondary);
+        }
+
+        &:hover {
+            background-color: var(--clr-gray-1);
+        }
+    }
+
     &--outline {
         background-color: transparent;
 

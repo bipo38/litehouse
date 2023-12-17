@@ -1,0 +1,28 @@
+.page--card {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+
+    gap: 2em;
+
+    border: 1px solid var(--clr-border);
+    border-radius: calc(var(--radius) + 8px);
+
+    padding: 0.5rem 1rem;
+
+    &__info {
+        h2 {
+            margin: 0;
+        }
+
+        > span {
+            background-color: var(--clr-secondary);
+            text-transform: capitalize;
+            padding: 0.2rem;
+
+            border-radius: var(--radius);
+        }
+    }
+}
