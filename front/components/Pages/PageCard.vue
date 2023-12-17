@@ -9,17 +9,17 @@ defineProps({
 </script>
 
 <template>
-  <div class="page-card">
-    <div class="page-card__header">
-      <div class="page-card__title">
-        <MiscIconLoader name="caret-down" />
-        <p>{{ page.title }}</p>
-      </div>
-      <div class="page-card__edit">
-        <NuxtLink :to="`/pages/${page.page_id}`">
-          <MiscIconLoader name="edit" />
-        </NuxtLink>
-      </div>
+  <div class="page--card">
+    <div class="page--card__info">
+      <h2 class="h4">
+        {{ page.title }}
+      </h2>
+      <span>{{ page.cron }}</span>
+    </div>
+    <div class="page--card__edit">
+      <NuxtLink :to="`pages/${page.page_id}`" class="button button--primary">
+        Edit
+      </NuxtLink>
     </div>
   </div>
 </template>

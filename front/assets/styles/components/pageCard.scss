@@ -1,43 +1,28 @@
-.page-card {
+.page--card {
     display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+
+    gap: 2em;
 
     border: 1px solid var(--clr-border);
     border-radius: calc(var(--radius) + 8px);
 
     padding: 0.5rem 1rem;
 
-    box-shadow:
-        rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
-        rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
-    &__header {
-        p {
-            font-weight: 700;
+    &__info {
+        h2 {
             margin: 0;
         }
 
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
+        > span {
+            background-color: var(--clr-secondary);
+            text-transform: capitalize;
+            padding: 0.2rem;
 
-    i {
-        svg {
-            width: 25px;
-            height: 25px;
-        }
-    }
-
-    &__title {
-        display: flex;
-    }
-
-    &__edit {
-        border: 1px solid var(--clr-border);
-        border-radius: var(--radius);
-
-        padding: 0.2rem;
-
-        a {
+            border-radius: var(--radius);
         }
     }
 }
