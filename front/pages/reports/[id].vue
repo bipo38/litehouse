@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-  layout: 'default',
+  layout: 'empty',
   middleware: ['auth']
 
 })
@@ -15,8 +15,19 @@ const { data: report } = await useAsyncData(
 </script>
 
 <template>
-  <div class="page page--report">
-    <pre>{{ report }}</pre>
+  <div v-if="report?.ok" class="page page--report">
+    <h1>{{ report.data.title }}</h1>
+    <div v-for="(analysis , i) in report.data.analysis" :key="i">
+      <a :href="analysis.url" class="page--report__info" :title="analysis.url">
+        <h2 class="h3 ">
+          {{ analysis.name }}
+        </h2>
+        <MiscIconLoader name="link" />
+      </a>
+      <div class="page--report__stats">
+        <ReportsStatsSection :stats="analysis.stats" />
+      </div>
+    </div>
   </div>
 </template>
 

@@ -5,17 +5,19 @@
     align-items: center;
     justify-content: center;
 
+    box-shadow: var(--shadow-1);
+
     gap: 2em;
 
     border: 1px solid var(--clr-border);
-    border-radius: calc(var(--radius) + 8px);
+    border-radius: calc(var(--radius));
 
     padding: 0.5rem 1rem;
 
     &__info {
         display: flex;
         flex-direction: column;
-        gap: 0.2rem;
+
         h2 {
             margin: 0;
         }

@@ -40,7 +40,7 @@ const parseLhrFile = (items: Item[], url: PageUrl): Metrics => {
                     item.lhr.categories.seo?.score * 100 +
                     item.lhr.categories.accessibility?.score * 100 +
                     item.lhr.categories['best-practices']?.score * 100) /
-                    4
+                4
             ),
             formFactor: item.lhr.configSettings.formFactor,
         }

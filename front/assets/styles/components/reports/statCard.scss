@@ -1,0 +1,64 @@
+.stat-card {
+    box-shadow: var(--shadow-1);
+
+    border: 2px solid var(--clr-border);
+    padding: 0.6rem;
+
+    display: flex;
+
+    align-items: center;
+    flex-direction: column;
+
+    border-radius: var(--radius);
+
+    > div {
+        text-align: center;
+    }
+
+    &__progress {
+        display: flex;
+        gap: 0.4rem;
+
+        justify-content: flex-start;
+
+        .progress {
+            height: 5px;
+            width: 40px;
+
+            border-radius: 5px;
+
+            background-color: var(--clr-gray-2);
+        }
+
+        &--good {
+            .progress {
+                background-color: var(--clr-accent-green-1);
+            }
+        }
+
+        &--regular {
+            .progress {
+                &:nth-child(1),
+                &:nth-child(2) {
+                    background-color: var(--clr-accent-yellow-1);
+                }
+            }
+        }
+
+        &--bad {
+            .progress:nth-child(1) {
+                background-color: var(--clr-accent-red-1);
+            }
+        }
+    }
+
+    &__score {
+        font-weight: 700;
+        font-size: clamp(1.44rem, 1.3974rem + 0.213vw, 1.5625rem);
+    }
+
+    &__area {
+        color: var(--clr-gray-5);
+        font-size: var(--small);
+    }
+}

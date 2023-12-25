@@ -37,16 +37,16 @@ const metricsdAverage = computed(() => {
 </script>
 
 <template>
-  <NuxtLink :to="`/reports/${report.report_id}`" class="report">
-    <div class="report__date">
+  <NuxtLink :to="`/reports/${report.report_id}`" class="report-card">
+    <div class="report-card__date">
       <div>
         {{ report.title }}
       </div>
       <div>
-        <MiscIconLoader name="metrics" :class="`report__date--${metricsdAverage}`" :title="average" />
+        <MiscIconLoader name="metrics" :class="`report-card__date--${metricsdAverage}`" :title="average" />
       </div>
     </div>
-    <div class="report__details">
+    <div class="report-card__details">
       <span role="link" to="/" class="button button--primary">
         Details
       </span>
@@ -55,5 +55,5 @@ const metricsdAverage = computed(() => {
 </template>
 
 <style lang="scss">
-@use '~/assets/styles/components/report.scss';
+@use '~/assets/styles/components/reports/reportCard.scss';
 </style>

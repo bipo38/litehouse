@@ -1,0 +1,29 @@
+.stats-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    &__stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+
+        gap: 0.6rem;
+    }
+
+    @media (max-width: 700px) {
+        &__stats {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 400px) {
+        &__stats {
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+
+    &__factor {
+        font-weight: 500;
+        text-transform: capitalize;
+    }
+}
