@@ -38,7 +38,7 @@ export const ValidatePageReq = z
         title: z
             .string()
             .min(1, { message: 'Minimun 1 character' })
-            .max(30, { message: 'Max 30 characters' }),
+            .max(100, { message: 'Max 30 characters' }),
         cron: z.string(),
         page_id: z.number().optional(),
         urls: z.array(

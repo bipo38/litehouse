@@ -9,12 +9,48 @@
         text-align: center;
     }
 
+    &__cron {
+        display: flex;
+        justify-content: space-between;
+
+        > select {
+            padding: 0.6rem;
+
+            border: 1px solid var(--clr-border);
+            border-radius: var(--radius);
+
+            background-color: transparent;
+
+            outline: none;
+        }
+    }
+
+    &__new {
+        display: flex;
+        gap: 0.8rem;
+        > label {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        align-items: flex-end;
+        gap: 0.6rem;
+    }
+
     &__urls {
         display: flex;
         gap: 0.8rem;
         > label {
             display: flex;
             flex-direction: column;
+        }
+
+        > div {
+            display: flex;
+            align-items: flex-end;
         }
     }
 }

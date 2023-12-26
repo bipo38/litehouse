@@ -21,7 +21,9 @@ export const useApi = () => {
     post: (path: string, options: any = {}): Promise<response> => {
       return api(path, 'POST', options)
     },
-
+    put: (path: string, options: any = {}): Promise<response> => {
+      return api(path, 'PUT', options)
+    },
     delete: (path: string, options: any = {}): Promise<response> => {
       return api(path, 'DELETE', options)
     }
