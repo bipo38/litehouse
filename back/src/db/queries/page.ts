@@ -57,7 +57,12 @@ export const selectPage = (pageId: number, userId: number): Page => {
             'SELECT * FROM pages WHERE user_id = ? AND page_id = ?;'
         )
 
-        return query.get(userId, pageId)
+        const page: any = query.get(userId, pageId)
+
+        return {
+            ...page,
+            urls: JSON.parse(page.urls)
+        }
     })
 }
 

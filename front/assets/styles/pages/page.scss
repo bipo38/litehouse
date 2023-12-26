@@ -1,5 +1,20 @@
 .page--page {
-    color: red;
-
     margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+
+    > h1 {
+        text-align: center;
+    }
+
+    &__urls {
+        display: flex;
+        gap: 0.8rem;
+        > label {
+            display: flex;
+            flex-direction: column;
+        }
+    }
 }
