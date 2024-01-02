@@ -32,6 +32,13 @@ const addPage = () => {
   }
 }
 
+const deletePages : Ref<Array<number>> = ref([])
+const removePages = () => {
+  page.value.urls = useUtils().removeElements(page.value.urls, deletePages.value)
+
+  deletePages.value = []
+}
+
 const savePage = async () => {
   const res = await useApi().post('api/pages', {
     body: {
@@ -93,8 +100,13 @@ const savePage = async () => {
 
     <div class="page--new-page__add-urls">
       <span>Urls</span>
+
       <div v-if="page.urls.length > 0">
+        <button class="button--secondary" @click="removePages">
+          Delete
+        </button>
         <div v-for="(el,i) in page.urls" :key="i">
+          <input v-model="deletePages" :value="i" type="checkbox">
           <label>
             Title
             <input v-model="el.title" class="input--default" type="text">
@@ -105,7 +117,7 @@ const savePage = async () => {
           </label>
         </div>
       </div>
-      <div v-else>
+      <div v-else class="page--new-page__empty">
         Any pages
       </div>
     </div>

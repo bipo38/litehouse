@@ -38,10 +38,27 @@
 
     &__add-urls {
         > div {
+            display: flex;
+            flex-direction: column;
+
+            > button {
+                align-self: flex-end;
+            }
+
+            input[type="checkbox"] {
+                align-self: flex-end;
+                margin-bottom: 0.7rem;
+            }
+
             > div {
                 display: flex;
+
                 gap: 0.4rem;
             }
         }
+    }
+
+    &__empty {
+        text-align: center;
     }
 }

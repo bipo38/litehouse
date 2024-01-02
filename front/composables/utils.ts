@@ -12,6 +12,10 @@ export const useUtils = () => {
         return 'https://'.concat(url)
       }
       return url
+    },
+
+    removeElements: (filtered: Array<any>, values: Array<any>) : Array<any> => {
+      return filtered.filter((_, i) => !values.includes(i))
     }
   }
 }

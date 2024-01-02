@@ -85,7 +85,7 @@ const addPage = () => {
 }
 
 const removePages = () => {
-  page.value.urls = page.value.urls.filter((_, i) => !deletePages.value.includes(i))
+  page.value.urls = useUtils().removeElements(page.value.urls, deletePages.value)
 
   update()
 
