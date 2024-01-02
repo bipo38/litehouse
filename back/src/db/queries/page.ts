@@ -29,8 +29,7 @@ export const selectPagesByCron = (cron: string): Array<Page> => {
 
         return pages.map((page: Page) => ({
             ...page,
-            urls: JSON.parse(page.urls) as Array<PageUrl>
-
+            urls: JSON.parse(page.urls) as Array<PageUrl>,
         }))
     })
 }
@@ -43,11 +42,8 @@ export const selectPages = (userId: number): Array<Page> => {
 
         return pages.map((page: Page) => ({
             ...page,
-            urls: JSON.parse(page.urls) as Array<PageUrl>
-
+            urls: JSON.parse(page.urls) as Array<PageUrl>,
         }))
-
-
     })
 }
 
@@ -61,29 +57,30 @@ export const selectPage = (pageId: number, userId: number): Page => {
 
         return {
             ...page,
-            urls: JSON.parse(page.urls)
+            urls: JSON.parse(page.urls),
         }
     })
 }
 
 export const updatesPage = (
-    page: PageReq,
+    page: Page,
     userId: number,
     pageId: number
-): Page => {
+): Page | string => {
     return db((Db: Database) => {
         const query = Db.query(
-            'UPDATE pages SET title = ? ,urls = ?,cron = ? WHERE user_id = ? AND page_id = ?;'
+            'UPDATE pages SET title = ? ,urls = ?,cron = ?, updated_at = ? WHERE user_id = ? AND page_id = ?;'
         )
 
         query.run(
             page.title,
             JSON.stringify(page.urls),
             page.cron,
+            new Date().toISOString(),
             userId,
             pageId
         )
 
-        return selectPage(pageId, userId)
+        return page
     })
 }

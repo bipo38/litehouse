@@ -1,5 +1,5 @@
 import { Answer } from '../models/answer'
-import { PageReq } from '../models/page'
+import { Page, PageReq } from '../models/page'
 import {
     insertPage,
     selectPage,
@@ -55,7 +55,7 @@ export const showPage = (c: any): Answer => {
 
 export const updatePage = async (c: any): Promise<Answer> => {
     const { id } = c.req.param()
-    const req: PageReq = await c.req.json()
+    const req: any = await c.req.json()
 
     const validatePage = ValidatePageReq.safeParse(req)
 
@@ -64,7 +64,7 @@ export const updatePage = async (c: any): Promise<Answer> => {
     }
 
     try {
-        const page = updatesPage(req, jwtPayload(c), id)
+        const page = updatesPage(req?.page, jwtPayload(c), id)
 
         if (!page) {
             return responseBuild('Page not exist', 404, false)

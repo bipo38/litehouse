@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-  layout: 'empty',
+  layout: 'default',
   middleware: ['auth']
 
 })
@@ -16,6 +16,9 @@ const { data: report } = await useAsyncData(
 
 <template>
   <div v-if="report?.ok" class="page page--report">
+    <button class="page--page__back button--secondary" @click="useRouter().back()">
+      Back
+    </button>
     <h1>{{ report.data.title }}</h1>
     <div v-for="(analysis , i) in report.data.analysis" :key="i">
       <a :href="analysis.url" class="page--report__info" :title="analysis.url">

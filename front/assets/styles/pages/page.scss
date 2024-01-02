@@ -5,16 +5,33 @@
     flex-direction: column;
     gap: 0.8rem;
 
-    > h1 {
-        text-align: center;
+    &__back {
+        max-width: fit-content;
+    }
+
+    &__btn-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.6rem;
+    }
+
+    &__title {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
     }
 
     &__cron {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
+        gap: 0.6rem;
 
         > select {
             padding: 0.6rem;
+
+            text-transform: capitalize;
+
+            max-width: 80px;
 
             border: 1px solid var(--clr-border);
             border-radius: var(--radius);
@@ -25,32 +42,74 @@
         }
     }
 
-    &__new {
+    .section {
         display: flex;
-        gap: 0.8rem;
+        justify-content: space-between;
+        gap: 0.6rem;
+
+        > input {
+            align-self: end;
+            margin-bottom: 0.7rem;
+        }
+
         > label {
             display: flex;
             flex-direction: column;
-        }
-    }
 
-    &__actions {
-        display: flex;
-        align-items: flex-end;
-        gap: 0.6rem;
+            input {
+                box-shadow: var(--shadow-1);
+            }
+
+            gap: 0.6rem;
+        }
     }
 
     &__urls {
         display: flex;
+        flex-direction: column;
         gap: 0.8rem;
-        > label {
-            display: flex;
-            flex-direction: column;
-        }
 
         > div {
             display: flex;
-            align-items: flex-end;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+    }
+
+    &__empty-urls {
+        text-align: center;
+    }
+
+    &__urls-edit {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    &__section-urls {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .subtitle {
+        font-weight: bold;
+    }
+
+    &__add-url {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        > div {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+
+            > div {
+                display: flex;
+                justify-content: flex-end;
+                gap: 0.6rem;
+            }
         }
     }
 }

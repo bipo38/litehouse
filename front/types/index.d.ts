@@ -38,9 +38,5 @@ declare global {
     created_at: Date;
     updated_at: Date;
   }
-
-  interface Analysis {
-    
-  }
 }
 export {};
