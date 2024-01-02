@@ -6,14 +6,14 @@ declare global {
   }
 
   interface Page {
-    id: number;
+    id?: number;
     title: string;
-    page_id: number;
+    page_id?: number;
     urls: Array<PageUrl>;
-    user_id: number;
+    user_id?: number;
     cron: string;
-    created_at: Date;
-    updated_at: Date;
+    created_at?: Date;
+    updated_at?: Date;
   }
 
   interface PageUrl {

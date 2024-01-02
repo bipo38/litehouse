@@ -1,0 +1,47 @@
+.page--new-page {
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+
+    button {
+        max-width: 64px;
+    }
+
+    span {
+        font-weight: 700;
+    }
+
+    label {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+
+        > button {
+            align-self: flex-end;
+        }
+    }
+
+    &__urls {
+        display: flex;
+
+        align-items: flex-end;
+        gap: 0.4rem;
+    }
+
+    &__add-urls {
+        > div {
+            > div {
+                display: flex;
+                gap: 0.4rem;
+            }
+        }
+    }
+}

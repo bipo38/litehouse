@@ -25,21 +25,6 @@
         display: flex;
         flex-direction: column;
         gap: 0.6rem;
-
-        > select {
-            padding: 0.6rem;
-
-            text-transform: capitalize;
-
-            max-width: 80px;
-
-            border: 1px solid var(--clr-border);
-            border-radius: var(--radius);
-
-            background-color: transparent;
-
-            outline: none;
-        }
     }
 
     .section {

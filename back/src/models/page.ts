@@ -13,7 +13,6 @@ export interface PageReq {
     title: string
     urls: Array<PageUrl>
     cron: string
-    page_id?: number
 }
 
 export interface PageUrl {

@@ -8,7 +8,7 @@ export const insertPage = (page: PageReq, userId: number): void => {
 
     db((Db: Database) => {
         const query = Db.query(
-            'INSERT INTO pages(title,urls,user_id,page_id,cron) VALUES (?,?,?,?,?);'
+            'INSERT INTO pages(title, urls, user_id, page_id, cron) VALUES (?, ?, ?, ?, ?);'
         )
 
         query.run(

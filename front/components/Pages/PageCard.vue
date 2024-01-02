@@ -25,5 +25,5 @@ defineProps({
 </template>
 
 <style lang="scss">
-@use '~/assets/styles/components/pageCard.scss';
+@use '~/assets/styles/components/pages/pageCard.scss';
 </style>

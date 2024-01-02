@@ -40,8 +40,8 @@ const ValidatePageReqSchema = z
             .min(1, { message: 'Minimun 1 character' })
             .max(30, { message: 'Max 30 characters' }),
         cron: z.string(),
-        page_id: z.number(),
-        user_id: z.number(),
+        page_id: z.number().optional(),
+        user_id: z.number().optional(),
         urls: z.array(
             z.object({
                 title: z
@@ -51,8 +51,8 @@ const ValidatePageReqSchema = z
                 url: z.string().url(),
             })
         ),
-        created_at: z.string(),
-        updated_at: z.string(),
+        created_at: z.string().optional(),
+        updated_at: z.string().optional(),
     })
     .refine((page) => page.cron === 'month' || page.cron === 'week', {
         message: 'Invalid cron',

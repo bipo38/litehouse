@@ -10,16 +10,18 @@ import { jwtPayload, responseBuild } from '../utils'
 import { ValidatePageReq } from '../validators/schemas'
 
 export const savePage = async (c: any): Promise<Answer> => {
-    const req: PageReq = await c.req.json()
+    const req: any = await c.req.json()
 
     const validatePage = ValidatePageReq.safeParse(req)
+
+    const page: PageReq = req.page
 
     if (!validatePage.success) {
         return responseBuild('Content type invalid', 422, false)
     }
 
     try {
-        insertPage(req, jwtPayload(c))
+        insertPage(page, jwtPayload(c))
 
         return responseBuild('Sucessful creation', 201, true)
     } catch {

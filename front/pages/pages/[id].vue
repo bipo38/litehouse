@@ -73,11 +73,7 @@ const cleanPage = () => {
 
 const addPage = () => {
   const title = newPage.value.title
-  let url = newPage.value.url
-
-  if (!title.startsWith('https://') || !url.startsWith('http://')) {
-    url = 'https://'.concat(url)
-  }
+  const url = useUtils().parseUrl(newPage.value.url)
 
   page.value.urls.unshift({
     title,

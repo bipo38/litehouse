@@ -1,0 +1,20 @@
+select,
+.selects {
+    padding: 0.6rem;
+
+    text-transform: capitalize;
+
+    max-width: 80px;
+
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius);
+
+    background-color: transparent;
+
+    outline: none;
+
+    outline-offset: var(--outline-offset);
+    &:focus-visible {
+        outline: 2px solid var(--clr-gray-5);
+    }
+}

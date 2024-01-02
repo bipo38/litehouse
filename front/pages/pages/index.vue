@@ -14,7 +14,14 @@ const { data: pages } = await useAsyncData(
 
 <template>
   <div v-if="pages?.ok" class="page page--pages">
-    <PagesPageCard v-for="page in pages.data" :key="page.id" :page="page" />
+    <div>
+      <nuxt-link to="/pages/new" class="button button--primary">
+        New Page
+      </nuxt-link>
+    </div>
+    <div class="page--pages__cards">
+      <PagesPageCard v-for="page in pages.data" :key="page.id" :page="page" />
+    </div>
   </div>
 </template>
 
