@@ -32,6 +32,15 @@ button,
         }
     }
 
+    &--disable {
+        background-color: var(--clr-gray-5);
+        color: hsl(var(--hue), 80%, 98%);
+
+        &:focus-visible {
+            outline: 2px solid var(--clr-gray-5);
+        }
+    }
+
     &--big {
         padding-left: 2rem;
         padding-right: 2rem;

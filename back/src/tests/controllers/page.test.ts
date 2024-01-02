@@ -171,7 +171,7 @@ describe('Show Page Controller', () => {
 
         const token = await sign(user.id, Bun.env.JWT_SECRET!)
 
-        const req = new Request('http://localhost/api/pages/1', {
+        const req = new Request('http://localhost/api/pages/3', {
             method: 'GET',
             credentials: 'include',
             body: JSON.stringify(mockPageReq),

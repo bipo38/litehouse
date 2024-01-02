@@ -33,14 +33,15 @@ export const ValidateUserLogin = z.object({
     password: z.string().min(1, { message: errors.invalid_credentials }).trim(),
 })
 
-export const ValidatePageReq = z
+const ValidatePageReqSchema = z
     .object({
         title: z
             .string()
             .min(1, { message: 'Minimun 1 character' })
             .max(30, { message: 'Max 30 characters' }),
         cron: z.string(),
-        page_id: z.number().optional(),
+        page_id: z.number(),
+        user_id: z.number(),
         urls: z.array(
             z.object({
                 title: z
@@ -50,7 +51,13 @@ export const ValidatePageReq = z
                 url: z.string().url(),
             })
         ),
+        created_at: z.string(),
+        updated_at: z.string(),
     })
     .refine((page) => page.cron === 'month' || page.cron === 'week', {
         message: 'Invalid cron',
     })
+
+export const ValidatePageReq = z.object({
+    page: ValidatePageReqSchema,
+})
