@@ -14,9 +14,6 @@ const { data: reports } = await useAsyncData(
 
 <template>
   <div v-if="reports?.ok" class="page page--reports">
-    <!-- <pre>
-      {{ data?.data[0].analysis[0] }}
-    </pre> -->
     <div v-for="(report , i) in reports.data" :key="i" class="page--reports__reports">
       <h2 class="h4">
         Created {{ useUtils().parseDate(report.date) }}
